@@ -12,20 +12,20 @@
     <!--모바일 우선-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--swiper 연동-->
-    <link rel="stylesheet" href="./css/swiper_bundle.css" />
-    <script type="text/javascript" src="./js/swiper_bundle.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper_bundle.css" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
     <!--js 연동-->
-    <script type="text/javascript" src="./js/search.js"></script>
-    <script type="text/javascript" src="./js/dropdown.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
     <!--css 연동-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="./css/bootstrap.css">
-    <link rel="stylesheet" href="./css/homepage.css">
-    <link rel="stylesheet" href="./css/header.css">
-    <link rel="stylesheet" href="./css/header_sector1.css">
-    <link rel="stylesheet" href="./css/header_sector2.css">
-    <link rel="stylesheet" href="./css/container.css">
-    <link rel="stylesheet" href="./css/listpage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/homepage.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/listpage.css">
     <title>퍼퓸가이드</title>
 </head>
 
@@ -38,7 +38,7 @@
                 <!--상단 로고 영역-->
                 <div class="banner_logo">
                     <a href="./homepage.html">
-                        <img id="banner_logo" src="./image/perfume_guide_title_banner.png" alt="banner_logo">
+                        <img id="banner_logo" src="${pageContext.request.contextPath}/resources/image/perfume_guide_title_banner.png" alt="banner_logo">
                     </a>
                 </div>
                 <!--좌측 메뉴 영역(검색 부분)-->
@@ -47,7 +47,7 @@
                         <li class="search_perfume">
                             <!--검색 아이콘 클릭시 openNav() 실행 (./js/search.js)-->
                             <a href="#none" onclick="openNav()">
-                                <img src="./image/search_icon.png" alt="search_icon">
+                                <img src="${pageContext.request.contextPath}/resources/image/search_icon.png" alt="search_icon">
                             </a>
                         </li>
                     </div>
@@ -77,7 +77,7 @@
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Brands
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeBrand()">
-                                                                <img src="./image/close_btn.png" alt="닫기">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
                                                         <!--내부 스크롤 영역-->
@@ -266,7 +266,7 @@
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Gender
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeGender()">
-                                                                <img src="./image/close_btn.png" alt="닫기">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
                                                         <!--내부 스크롤 영역-->
@@ -303,7 +303,7 @@
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Accords
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeAccords()">
-                                                                <img src="./image/close_btn.png" alt="닫기">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
                                                         <!--내부 스크롤 영역-->
@@ -397,7 +397,7 @@
                 <!--검색 영역[openNav() 이후 검색창 영역]-->
                 <div id="mySearch" class="slide_search" style="top: -350px; opacity: 0;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-                        <img src="./image/close_btn.png" alt="닫기">
+                        <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                     </a>
                     <div class="search_inner">
                         <!--검색창 form method="get" 방식으로 search 넘겨줌-->
@@ -406,7 +406,7 @@
                             <!--검색 필드-->
                             <div class="search_field">
                                 <fieldset title="검색어를 입력해주세요."> <input id="keyword" name="keyword" fw-filter="" fw-label="검색어" fw-msg="" class="inputTypeText" placeholder="향수 이름으로 검색" onmousedown="clickSearchForm(this)" value="" type="text">
-                                    <input type="image" src="./image/top_search_icon.png" class="btn-sch" alt="검색이미지" onclick="submitSearchBanner(this); return false;">
+                                    <input type="image" src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" class="btn-sch" alt="검색이미지" onclick="submitSearchBanner(this); return false;">
                                 </fieldset>
                             </div>
                         </form>
