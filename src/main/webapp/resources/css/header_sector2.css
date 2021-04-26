@@ -1,4 +1,4 @@
-/* í—¤ë” ì„¹í„°2 css */
+/* Çì´õ ¼½ÅÍ2 css */
 
 #header .sector2 {
     position: relative;
@@ -37,7 +37,7 @@
 }
 
 
-/* ìƒë‹¨ ì¹´í…Œê³ ë¦¬ ì˜ì—­ css */
+/* »ó´Ü Ä«Å×°í¸® ¿µ¿ª css */
 
 #main_category {
     float: left;
@@ -69,7 +69,7 @@
 }
 
 
-/* ë¸Œëœë“œ ì „ì²´ë³´ê¸° css */
+/* ºê·£µå ÀüÃ¼º¸±â css */
 
 .category_brand {
     float: left;
@@ -83,7 +83,7 @@
 }
 
 
-/* ë¸Œëœë“œ í´ë¦­ì‹œ ì¶œë ¥ë˜ëŠ” ì°½ css */
+/* ºê·£µå Å¬¸¯½Ã Ãâ·ÂµÇ´Â Ã¢ css */
 
 .slide_brand {
     width: 100%;
@@ -133,7 +133,7 @@
 }
 
 
-/* ë¸Œëœë“œ ì „ì²´ë³´ê¸° ë‚´ì˜ css */
+/* ºê·£µå ÀüÃ¼º¸±â ³»ÀÇ css */
 
 .slide_brand .scrollbar_inner {
     max-height: 500px;
@@ -157,7 +157,6 @@
     margin: 0;
     max-height: none;
     max-width: none !important;
-    overflow: scroll !important;
     padding: 0;
     position: relative !important;
     top: 0;
@@ -178,14 +177,25 @@
 }
 
 
-/* ì„±ë³„ í´ë¦­ì‹œ ì¶œë ¥ì°½ css */
+/* ¼ºº° Å¬¸¯½Ã Ãâ·ÂÃ¢ css */
 
 div#myGender li.scrollbar_inner div.brand_group {
     text-align: right;
 }
 
+.scroll_gender::-webkit-scrollbar {
+    display: none;
+}
 
-/* ê²€ìƒ‰ í´ë¦­ì‹œ ì¶œë ¥ë˜ëŠ” ì°½ css */
+
+/* °è¿­ Å¬¸¯½Ã Ãâ·ÂÃ¢ css */
+
+.scroll_accords::-webkit-scrollbar {
+    display: none;
+}
+
+
+/* °Ë»ö Å¬¸¯½Ã Ãâ·ÂµÇ´Â Ã¢ css */
 
 .slide_search {
     width: 100%;
@@ -261,7 +271,7 @@ div#myGender li.scrollbar_inner div.brand_group {
 }
 
 
-/* ê²€ìƒ‰ì°½ ë‹«ê¸° ë²„íŠ¼ */
+/* °Ë»öÃ¢ ´İ±â ¹öÆ° */
 
 .closebtn img {
     width: 70px;

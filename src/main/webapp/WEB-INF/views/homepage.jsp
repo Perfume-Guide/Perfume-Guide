@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/homepage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?after">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
     <title>퍼퓸가이드</title>
 </head>
@@ -267,7 +267,7 @@
                                                             </a>
                                                         </h1>
                                                         <!--내부 스크롤 영역-->
-                                                        <div class="scroll_wrapper scrollbar_inner" style="position: relative;">
+                                                        <div class="scroll_wrapper scrollbar_inner scroll_gender" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-left: 30px; margin-right: 0px; max-height: 600px;">
                                                                 <!--성별 클릭시 listpage.html로 이동(./listpage.html)-->
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
@@ -304,7 +304,7 @@
                                                             </a>
                                                         </h1>
                                                         <!--내부 스크롤 영역-->
-                                                        <div class="scroll_wrapper scrollbar_inner" style="position: relative;">
+                                                        <div class="scroll_wrapper scrollbar_inner scroll_accords" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-left: 70px; margin-right: 0px; max-height: 600px;">
                                                                 <!--계열 클릭시 listpage.html로 이동(./listpage.html)-->
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
