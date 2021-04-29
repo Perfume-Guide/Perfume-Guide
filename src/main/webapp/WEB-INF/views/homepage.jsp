@@ -33,7 +33,7 @@
             <div class="sector1">
                 <!--상단 로고 영역-->
                 <div class="banner_logo">
-                    <a href="./homepage.html">
+                    <a href="./">
                         <!--로고 width 400px - 500px proper (./css/homepage.css)-->
                         <img id="banner_logo" src="${pageContext.request.contextPath}/resources/image/perfume_guide_title_banner.png" alt="banner_logo">
                     </a>

@@ -37,7 +37,7 @@
             <div class="sector1">
                 <!--상단 로고 영역-->
                 <div class="banner_logo">
-                    <a href="./homepage.html">
+                    <a href="./">
                         <img id="banner_logo" src="${pageContext.request.contextPath}/resources/image/perfume_guide_title_banner.png" alt="banner_logo">
                     </a>
                 </div>
