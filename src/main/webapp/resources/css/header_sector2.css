@@ -157,6 +157,7 @@
     margin: 0;
     max-height: none;
     max-width: none !important;
+    overflow: scroll;
     padding: 0;
     position: relative !important;
     top: 0;
@@ -181,17 +182,6 @@
 
 div#myGender li.scrollbar_inner div.brand_group {
     text-align: right;
-}
-
-.scroll_gender::-webkit-scrollbar {
-    display: none;
-}
-
-
-/* 계열 클릭시 출력창 css */
-
-.scroll_accords::-webkit-scrollbar {
-    display: none;
 }
 
 
