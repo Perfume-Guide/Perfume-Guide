@@ -25,7 +25,7 @@ public class AbstractEntity {
 
     @Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String name;
+    private Long id;
    
     @Override
     public boolean equals(Object obj) {
@@ -35,11 +35,11 @@ public class AbstractEntity {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        return Objects.equals(this.name, AbstractEntity.class.cast(obj).name);
+        return Objects.equals(this.id, AbstractEntity.class.cast(obj).id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(name);
+        return Objects.hashCode(id);
     }
 }

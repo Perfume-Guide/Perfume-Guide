@@ -9,11 +9,11 @@ public interface PerfumeService {
 
 	List<Perfume> getAllPerfumes();
 	
-	Perfume getPerfumeByName(String name);
+	Perfume getPerfumeById(Long id);
 	
-	Perfume createPerfume(String name);
+	Perfume createPerfume(String name, String brand);
 
-    void updatePerfume(Perfume category);
+    void updatePerfume(Perfume perfume);
 
-    void deletePerfume(Perfume category);
+    void deletePerfume(Perfume perfume);
 }

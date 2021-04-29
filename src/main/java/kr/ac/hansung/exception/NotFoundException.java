@@ -5,13 +5,13 @@ public class NotFoundException extends RuntimeException {
 	
 	private static final long serialVersionUID = 8795546082074185666L;
 	
-	private String Name;
+	private Long Id;
 	
-	public NotFoundException(String Name) {
-		this.Name = Name;
+	public NotFoundException(Long Id) {
+		this.Id = Id;
 	}
 	
-	public String getName() {
-		return Name;
+	public long getId() {
+		return Id;
 	}
 }

@@ -22,15 +22,17 @@ public class PerfumeServiceImpl implements PerfumeService {
 	}
 
 	@Override
-	public Perfume getPerfumeByName(String name) {
-		return perfumeRepository.getPerfumeByName(name);
+	public Perfume getPerfumeById(Long id) {
+		return perfumeRepository.getPerfumeById(id);
 	}
 
 	@Override
-	public Perfume createPerfume(String name) {
+	public Perfume createPerfume(String name, String brand) {
 		Perfume perfume = new Perfume();
 		perfume.setName(name);
-
+        perfume.setBrand(brand);
+        Long id =  perfumeRepository.addPerfume(perfume);
+        perfume.setId(id);
         
         return perfume;
 	}

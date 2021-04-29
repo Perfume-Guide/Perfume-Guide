@@ -16,9 +16,9 @@ public class PerfumeDao {
 	@Autowired
 	private SessionFactory sessionFactory;
 
-	public Perfume getPerfumeByName(String name) {
+	public Perfume getPerfumeById(Long id) {
 		Session session = sessionFactory.getCurrentSession();
-		Perfume perfume = (Perfume) session.get(Perfume.class, name);
+		Perfume perfume = (Perfume) session.get(Perfume.class, id);
 		
 		return perfume;
 	}
@@ -33,11 +33,11 @@ public class PerfumeDao {
 		return perfumes;
 	}
 
-	public String addPerfume(Perfume perfume) {
+	public Long addPerfume(Perfume perfume) {
 		Session session = sessionFactory.getCurrentSession();
-		String name = (String) session.save(perfume);
+		Long id = (Long) session.save(perfume);
 		session.flush();
-		return name;
+		return id;
 	}
 
 	public void deletePerfume(Perfume perfume) {

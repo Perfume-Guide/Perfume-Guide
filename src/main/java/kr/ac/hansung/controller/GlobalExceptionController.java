@@ -21,8 +21,8 @@ public class GlobalExceptionController {
 		
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setRequestURL(requestURL);
-		errorResponse.setErrorCode("name.notfound.exception");
-		errorResponse.setErrorMsg("name " + ex.getName() + " not found");
+		errorResponse.setErrorCode("id.notfound.exception");
+		errorResponse.setErrorMsg("id " + ex.getId() + " not found");
 		
 		return new ResponseEntity<ErrorResponse>(errorResponse, HttpStatus.NOT_FOUND);
 		

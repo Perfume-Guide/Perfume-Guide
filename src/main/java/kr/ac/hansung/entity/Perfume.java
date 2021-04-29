@@ -24,11 +24,6 @@ import lombok.ToString;
 @Table(name="perfume")
 public class Perfume extends AbstractEntity{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 
 	@Column(name = "brand", nullable = false)
 	private String brand;	

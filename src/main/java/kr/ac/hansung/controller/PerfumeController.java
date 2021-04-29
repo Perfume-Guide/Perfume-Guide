@@ -47,12 +47,12 @@ public class PerfumeController {
 		
 	}
 
-	@RequestMapping(path = "/{name}", method = RequestMethod.GET)
-	public ResponseEntity<?> retrieveCategory(@PathVariable String name) {
-		Perfume perfume = perfumeService.getPerfumeByName(name);
+	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> retrieveCategory(@PathVariable Long id) {
+		Perfume perfume = perfumeService.getPerfumeById(id);
 		
 		if(perfume == null) {
-			throw new NotFoundException(name);
+			throw new NotFoundException(id);
 		}
 		
 		return new ResponseEntity<Perfume>(perfume, HttpStatus.OK);
@@ -65,34 +65,36 @@ public class PerfumeController {
 	public ResponseEntity<?> createPerfume(@RequestBody @Valid PerfumeDto request) {
 
 		// Creating a new category in the application...
-		final Perfume perfume = perfumeService.createPerfume(request.getName());
+		final Perfume perfume = perfumeService.createPerfume(request.getName(), request.getBrand());
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(perfume);
 	}
 
-	@RequestMapping(path = "/{name}", method = RequestMethod.PUT)
-	public ResponseEntity<?> updateCategory(@PathVariable String name, @RequestBody @Valid PerfumeDto request) {
+	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody @Valid PerfumeDto request) {
 		
-		Perfume currentPerfume = perfumeService.getPerfumeByName(name);
+		Perfume currentPerfume = perfumeService.getPerfumeById(id);
 		
 		if(currentPerfume == null) {
-			throw new NotFoundException(name);
+			throw new NotFoundException(id);
 		}
 		
 		currentPerfume.setName(request.getName());
+		currentPerfume.setBrand(request.getBrand());
+		
 		perfumeService.updatePerfume(currentPerfume);
 		
 		return new ResponseEntity<Perfume>(currentPerfume, HttpStatus.OK);
 	}
 
-	@RequestMapping(path = "/{name}", method = RequestMethod.DELETE)
-	public ResponseEntity<?> deletePerfume(@PathVariable String name) {
+	@RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<?> deletePerfume(@PathVariable Long id) {
 
 		// Getting the requiring category; or throwing exception if not found
-		final Perfume perfume = perfumeService.getPerfumeByName(name);
+		final Perfume perfume = perfumeService.getPerfumeById(id);
 
 		if (perfume == null)
-			throw new NotFoundException(name);
+			throw new NotFoundException(id);
 
 		// Deleting category from the application...
 		perfumeService.deletePerfume(perfume);
@@ -106,13 +108,22 @@ public class PerfumeController {
 		@NotNull(message = "name is required")
 		@Size(message = "name must be equal to or lower than 100", min = 1, max = 100)
 		private String name;
-
+		private String brand;
+		
 		public String getName() {
 			return name;
 		}
 
 		public void setName(String name) {
 			this.name = name;
+		}
+		
+		public String getBrand() {
+			return brand;
+		}
+
+		public void setBrand(String brand) {
+			this.brand = brand;
 		}
 	}
 
