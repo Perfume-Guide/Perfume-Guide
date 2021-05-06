@@ -25,8 +25,8 @@ import lombok.ToString;
 public class Perfume extends AbstractEntity{
 
 
-	@Column(name = "brand", nullable = false)
-	private String brand;	
+	//@Column(name = "brand", nullable = false)
+	//private String brand;	
 	
 
 	@Column(name = "name", nullable = false)

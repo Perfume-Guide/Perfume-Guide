@@ -47,30 +47,37 @@ public class PerfumeController {
 
 	}
 
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> retrieveCategory(@PathVariable Long id) {
-		Perfume perfume = perfumeService.getPerfumeById(id);
+	/*
+	 * @RequestMapping(path = "/{id}", method = RequestMethod.GET) public
+	 * ResponseEntity<?> retrieveCategory(@PathVariable Long id) { Perfume perfume =
+	 * perfumeService.getPerfumeById(id);
+	 * 
+	 * if (perfume == null) { throw new NotFoundException(id); }
+	 * 
+	 * return new ResponseEntity<Perfume>(perfume, HttpStatus.OK); }
+	 */
 
-		if (perfume == null) {
-			throw new NotFoundException(id);
-		}
-
-		return new ResponseEntity<Perfume>(perfume, HttpStatus.OK);
-	}
-
-	/*@RequestMapping(path = "/{brand}", method = RequestMethod.GET)
+	@RequestMapping(path = "/{brand}", method = RequestMethod.GET)
 	public ResponseEntity<?> retrieveCategory(@PathVariable String brand) {
-		//Perfume perfume = perfumeService.getPerfumeByBrand(brand);
-		//@SuppressWarnings("unchecked")
-		//final List<Perfume> perfumes = (List<Perfume>) perfumeService.getPerfumeByBrand(brand);
-		//Perfume perfume = perfumeService.getPerfumeByBrand(brand);
-		final List<Perfume> perfumes = perfumeService.getPerfumeByBrand();
-		if (perfumes == null) {
-			throw new NotFoundException(brand);
+
+		// @SuppressWarnings("unchecked")
+		// final List<Perfume> perfumes = (List<Perfume>)
+		// perfumeService.getPerfumeByBrand(brand);
+		// Perfume perfume = perfumeService.getPerfumeByBrand(brand);
+		// final List<Perfume> perfumes = perfumeService.getPerfumeByBrand();
+
+		final List<Perfume> perfumes = perfumeService.getPerfumeByBrand(brand);
+		
+		if (perfumes.isEmpty()) {
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		}
+		/*
+		 * Perfume perfume = perfumeService.getPerfumeByBrand(brand); if
+		 * (brand.equals(perfume.getBrand())) perfumes.add(perfume);
+		 */
 
 		return ResponseEntity.ok(perfumes);
-	}*/
+	}
 
 	// DTO(Data Transfer Object) : 계층간 데이터 교환을 위한 객체, 여기서는 클라이언트(Postman)에서 오는 데이터를
 	// 수신할 목적으로 사용

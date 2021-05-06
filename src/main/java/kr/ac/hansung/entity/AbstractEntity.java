@@ -24,9 +24,10 @@ import lombok.Setter;
 public class AbstractEntity {
 
     @Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-   
+	//@GeneratedValue(strategy = GenerationType.IDENTITY)
+    //private Long id;
+    private String brand;
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -35,11 +36,12 @@ public class AbstractEntity {
         if (obj == null || this.getClass() != obj.getClass()) {
             return false;
         }
-        return Objects.equals(this.id, AbstractEntity.class.cast(obj).id);
+        return Objects.equals(this.brand, AbstractEntity.class.cast(obj).brand);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id);
+        return Objects.hashCode(brand);
     }
+
 }

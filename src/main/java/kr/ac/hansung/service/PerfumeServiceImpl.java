@@ -14,8 +14,8 @@ import kr.ac.hansung.entity.Perfume;
 public class PerfumeServiceImpl implements PerfumeService {
 
 	@Autowired
-    private PerfumeDao perfumeRepository;
-	
+	private PerfumeDao perfumeRepository;
+
 	@Override
 	public List<Perfume> getAllPerfumes() {
 		return perfumeRepository.getPerfumes();
@@ -26,32 +26,32 @@ public class PerfumeServiceImpl implements PerfumeService {
 		return perfumeRepository.getPerfumeById(id);
 	}
 
-	/*
-	 * @Override public Perfume getPerfumeByBrand(String brand) { return
-	 * perfumeRepository.getPerfumeByBrand(brand); }
-	 */
-	
+	@Override
+	public List<Perfume> getPerfumeByBrand(String brand) {
+		return perfumeRepository.getPerfumesByBrand(brand);
+	}
+
 	@Override
 	public Perfume createPerfume(String name, String brand) {
 		Perfume perfume = new Perfume();
 		perfume.setName(name);
-        perfume.setBrand(brand);
-        Long id =  perfumeRepository.addPerfume(perfume);
-        perfume.setId(id);
-        
-        return perfume;
+		perfume.setBrand(brand);
+		Long id = perfumeRepository.addPerfume(perfume);
+		//perfume.setId(id);
+
+		return perfume;
 	}
 
 	@Override
 	public void updatePerfume(Perfume perfume) {
 		perfumeRepository.updatePerfume(perfume);
-		
+
 	}
 
 	@Override
 	public void deletePerfume(Perfume perfume) {
 		perfumeRepository.deletePerfume(perfume);
-		
+
 	}
 
 }
