@@ -2,6 +2,7 @@ package kr.ac.hansung.service;
 
 import java.util.List;
 
+import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.entity.Perfume;
 
 
@@ -11,11 +12,12 @@ public interface PerfumeService {
 	
 	Perfume getPerfumeById(Long id);
 	
-	List<Perfume> getPerfumeByBrand(String brand);
+	List<Perfume> getPerfumesByBrand(String brand);
 	
-	Perfume createPerfume(String name, String brand);
+	//Perfume createPerfume(String brand, String name);
+	Perfume createPerfume(PerfumeDto request);
 
-    void updatePerfume(Perfume perfume);
+    void updatePerfume(Perfume category);
 
-    void deletePerfume(Perfume perfume);
+    void deletePerfume(Perfume category);
 }
