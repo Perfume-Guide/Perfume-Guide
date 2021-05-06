@@ -1,4 +1,4 @@
-package kr.ac.hansung.Dto;
+package kr.ac.hansung.dto;
 
 import lombok.Getter;
 

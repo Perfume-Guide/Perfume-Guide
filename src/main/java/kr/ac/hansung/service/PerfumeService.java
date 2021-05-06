@@ -2,7 +2,7 @@ package kr.ac.hansung.service;
 
 import java.util.List;
 
-import kr.ac.hansung.Dto.PerfumeDto;
+import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.entity.Perfume;
 
 
