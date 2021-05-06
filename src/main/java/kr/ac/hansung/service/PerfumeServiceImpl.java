@@ -28,6 +28,11 @@ public class PerfumeServiceImpl implements PerfumeService {
 	}
 	
 	@Override
+	public List<Perfume> getPerfumesByName(String name){
+		return perfumeRepository.getPerfumesByName(name);
+	}
+	
+	@Override
 	public List<Perfume> getPerfumesByBrand(String brand){
 		return perfumeRepository.getPerfumesByBrand(brand);
 	}
