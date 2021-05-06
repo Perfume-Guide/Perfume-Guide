@@ -14,6 +14,10 @@ public interface PerfumeService {
 	
 	List<Perfume> getPerfumesByBrand(String brand);
 	
+	List<Perfume> getPerfumesByName(String name);
+	
+	List<Perfume> getPerfumesByAccord(String accord);
+	
 	//Perfume createPerfume(String brand, String name);
 	Perfume createPerfume(PerfumeDto request);
 

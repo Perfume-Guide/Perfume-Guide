@@ -62,22 +62,65 @@ public class PerfumeController {
 	}
 	
 	// ¼öÁ¤ requestParm ?
+	/*
+	 * @RequestMapping(path = "/category/brand", method = RequestMethod.GET) public
+	 * ResponseEntity<?> retrievePerfumeByBrand(@RequestParam("brand")String brand){
+	 * final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
+	 * 
+	 * if(perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes);
+	 * 
+	 * }
+	 * 
+	 * @RequestMapping(path = "/category/accord", method = RequestMethod.GET) public
+	 * ResponseEntity<?> retrievePerfumeByAccord(@RequestParam("accord")String
+	 * accord){ final List<Perfume> perfumes =
+	 * perfumeService.getPerfumesByAccord(accord);
+	 * 
+	 * if(perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes);
+	 * 
+	 * }
+	 */
+	
+	
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam("brand")String brand){
-		final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
-		
-		if(perfumes.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		}
-		
-		return ResponseEntity.ok(perfumes);
-		
-	}
-	 
-	
-	
-	
-	
+	   public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value="brand", required=false)String brand,
+	         @RequestParam(value="name", required=false)String name){
+	      
+	      if(brand!=null) {
+	         final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
+	         
+	         if(perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);      
+	         }
+	         
+	         return ResponseEntity.ok(perfumes);
+	         
+	      }
+	      else if(name!=null) {
+	         final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
+	         
+	         if (perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	         }
+	         
+	         return ResponseEntity.ok(perfumes);
+	      }
+	      else {
+	         final List<Perfume> perfumes = perfumeService.getAllPerfumes();
+
+	         if (perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	         }
+
+	         return ResponseEntity.ok(perfumes);
+	      }      
+	   }
 	
 	
 	
