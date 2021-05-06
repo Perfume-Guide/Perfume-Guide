@@ -1,0 +1,73 @@
+/* 일반 태그 CSS */
+
+a {
+    color: #333;
+    text-decoration: none;
+    outline: 0;
+}
+
+a:-webkit-any-link {
+    cursor: pointer;
+}
+
+img {
+    vertical-align: middle;
+}
+
+img#banner_logo {
+    width: 500px;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+li {
+    list-style: none;
+    text-align: -webkit-match-parent;
+}
+
+ul {
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    padding-inline-start: 40px;
+}
+
+div,
+a,
+img,
+form,
+li,
+ul,
+span {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+}
+
+input {
+    font-size: 100%;
+    color: #353535;
+    vertical-align: middle;
+    font-family: 'Lato', 'Noto Sans KR', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+input[type="hidden" i] {
+    display: none;
+    appearance: initial;
+    background-color: initial;
+    cursor: default;
+    padding: initial;
+    border: initial;
+}
+
+hr {
+    margin: 15px 0;
+}
