@@ -23,6 +23,13 @@ public class PerfumeDao {
 		return perfume;
 	}
 
+	public Perfume getPerfumeByBrand(String brand) {
+		Session session = sessionFactory.getCurrentSession();
+		Perfume perfume = (Perfume) session.get(Perfume.class, brand);
+		
+		return perfume;
+	}
+	
 	public List<Perfume> getPerfumes() {
 		Session session = sessionFactory.getCurrentSession();
 		String hql = "from Perfume";

@@ -44,19 +44,33 @@ public class PerfumeController {
 		}
 
 		return ResponseEntity.ok(perfumes);
-		
+
 	}
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<?> retrieveCategory(@PathVariable Long id) {
 		Perfume perfume = perfumeService.getPerfumeById(id);
-		
-		if(perfume == null) {
+
+		if (perfume == null) {
 			throw new NotFoundException(id);
 		}
-		
+
 		return new ResponseEntity<Perfume>(perfume, HttpStatus.OK);
 	}
+
+	/*@RequestMapping(path = "/{brand}", method = RequestMethod.GET)
+	public ResponseEntity<?> retrieveCategory(@PathVariable String brand) {
+		//Perfume perfume = perfumeService.getPerfumeByBrand(brand);
+		//@SuppressWarnings("unchecked")
+		//final List<Perfume> perfumes = (List<Perfume>) perfumeService.getPerfumeByBrand(brand);
+		//Perfume perfume = perfumeService.getPerfumeByBrand(brand);
+		final List<Perfume> perfumes = perfumeService.getPerfumeByBrand();
+		if (perfumes == null) {
+			throw new NotFoundException(brand);
+		}
+
+		return ResponseEntity.ok(perfumes);
+	}*/
 
 	// DTO(Data Transfer Object) : 계층간 데이터 교환을 위한 객체, 여기서는 클라이언트(Postman)에서 오는 데이터를
 	// 수신할 목적으로 사용
@@ -72,18 +86,18 @@ public class PerfumeController {
 
 	@RequestMapping(path = "/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody @Valid PerfumeDto request) {
-		
+
 		Perfume currentPerfume = perfumeService.getPerfumeById(id);
-		
-		if(currentPerfume == null) {
+
+		if (currentPerfume == null) {
 			throw new NotFoundException(id);
 		}
-		
+
 		currentPerfume.setName(request.getName());
 		currentPerfume.setBrand(request.getBrand());
-		
+
 		perfumeService.updatePerfume(currentPerfume);
-		
+
 		return new ResponseEntity<Perfume>(currentPerfume, HttpStatus.OK);
 	}
 
@@ -109,7 +123,7 @@ public class PerfumeController {
 		@Size(message = "name must be equal to or lower than 100", min = 1, max = 100)
 		private String name;
 		private String brand;
-		
+
 		public String getName() {
 			return name;
 		}
@@ -117,7 +131,7 @@ public class PerfumeController {
 		public void setName(String name) {
 			this.name = name;
 		}
-		
+
 		public String getBrand() {
 			return brand;
 		}

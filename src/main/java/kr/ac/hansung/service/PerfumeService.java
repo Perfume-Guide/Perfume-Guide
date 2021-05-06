@@ -11,6 +11,8 @@ public interface PerfumeService {
 	
 	Perfume getPerfumeById(Long id);
 	
+	//List<Perfume> getPerfumeByBrand();
+	
 	Perfume createPerfume(String name, String brand);
 
     void updatePerfume(Perfume perfume);
