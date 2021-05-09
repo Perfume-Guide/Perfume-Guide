@@ -14,6 +14,61 @@
     <!--js 연동-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
+   
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+/* function reqAjax1() {
+    $.ajax({
+        url:'api/perfumes/test'
+        , method : 'GET'
+        , contentType: "application/json"
+        , dataType: "text"
+        , success :  function(resp){
+           $('#req1').text(resp)
+            
+        }
+    })	
+} */
+
+function reqAjax1() {
+	var mId = 2
+    $.ajax({
+        url:'api/perfumes/'+mId
+        , method : 'GET'
+        , contentType: "application/json"
+        , dataType: "text"
+        , data : 'id='+mId
+        , success :  function(data){
+        	var json = JSON.parse(data).name
+        	/* var str = JSON.stringify(json) */
+           $('#req1').text(json)
+            
+        }
+    })	
+}
+reqAjax1()
+
+function reqAjax2() {
+	var mId = 3
+    $.ajax({
+        url:'api/perfumes/'+mId
+        , method : 'GET'
+        , contentType: "application/json"
+        , dataType: "text"
+        , data : 'id='+mId
+        , success :  function(data){
+        	var json = JSON.parse(data).name
+        	/* var str = JSON.stringify(json) */
+           $('#req2').text(json)
+            
+        }
+    })	
+}
+reqAjax2()
+</script>
+
+   
     <!--css 연동-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
@@ -451,6 +506,9 @@
                                                     <div class="name">
                                                         <a href="#" class="_evt_tracker">
                                                             <span style="font-size: 15px;color: #111111;">샘플향수</span>
+                                                        	<!-- ajax 변경한 부분 -->
+                                                        	<!-- <span id="req1"></span></li> -->
+                                                        	<span id="req1"></span></li>
                                                         </a>
                                                     </div>
                                                     <!--대표계열-->
@@ -475,6 +533,7 @@
                                                     <div class="name">
                                                         <a href="#" class="_evt_tracker">
                                                             <span style="font-size: 15px;color: #111111;">샘플향수</span>
+                                                            <span id="req2"></span></li>
                                                         </a>
                                                     </div>
                                                     <ul class="spec">
