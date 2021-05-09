@@ -31,8 +31,9 @@
     })	
 } */
 
+
 function reqAjax1() {
-	var mId = 2
+	var mId = 2 //mId 바꾸면 그 id 불러옴
     $.ajax({
         url:'api/perfumes/'+mId
         , method : 'GET'
@@ -40,7 +41,7 @@ function reqAjax1() {
         , dataType: "text"
         , data : 'id='+mId
         , success :  function(data){
-        	var json = JSON.parse(data).name
+        	var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
         	/* var str = JSON.stringify(json) */
            $('#req1').text(json)
             
@@ -507,7 +508,6 @@ reqAjax2()
                                                         <a href="#" class="_evt_tracker">
                                                             <span style="font-size: 15px;color: #111111;">샘플향수</span>
                                                         	<!-- ajax 변경한 부분 -->
-                                                        	<!-- <span id="req1"></span></li> -->
                                                         	<span id="req1"></span></li>
                                                         </a>
                                                     </div>
