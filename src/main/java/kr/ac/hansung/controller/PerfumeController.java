@@ -27,7 +27,7 @@ public class PerfumeController {
 	@Autowired
 	private PerfumeService perfumeService;
 
-	// dbÀüÃ¼ ºÒ·¯¿À±â
+	// dbì „ì²´ ë¶ˆëŸ¬ì˜¤ê¸°
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
@@ -54,7 +54,45 @@ public class PerfumeController {
 	}
 
 	//@ResponseBody
-	@RequestMapping(method = RequestMethod.GET)
+	/*
+	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
+	 * retrievePerfumeByBrand(@RequestParam(value = "keyword", required = false)
+	 * String keyword) {
+	 * 
+	 * if (keyword != null &&
+	 * keyword.equals(perfumeService.getPerfumesByBrand(keyword))) { final
+	 * List<Perfume> perfumes = perfumeService.getPerfumesByBrand(keyword);
+	 * 
+	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes);
+	 * 
+	 * } else if (keyword != null &&
+	 * keyword.equals(perfumeService.getPerfumesByName(keyword))) { final
+	 * List<Perfume> perfumes = perfumeService.getPerfumesByName(keyword);
+	 * 
+	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes); } else if (keyword != null &&
+	 * keyword.equals(perfumeService.getPerfumesByAccord(keyword))) { final
+	 * List<Perfume> perfumes = perfumeService.getPerfumesByAccord(keyword);
+	 * 
+	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes); } else { final List<Perfume> perfumes =
+	 * perfumeService.getAllPerfumes();
+	 * 
+	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	 * }
+	 * 
+	 * return ResponseEntity.ok(perfumes); } }
+	 */
+	
+	@ResponseBody
+	@RequestMapping(path = "/keyword", method = RequestMethod.GET)
 	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value = "brand", required = false) String brand,
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "accord", required = false) String accord) {
@@ -95,14 +133,14 @@ public class PerfumeController {
 		}
 	}
 
-	// DTO(Data Transfer Object) : °èÃş°£ µ¥ÀÌÅÍ ±³È¯À» À§ÇÑ °´Ã¼, ¿©±â¼­´Â Å¬¶óÀÌ¾ğÆ®(Postman)¿¡¼­ ¿À´Â µ¥ÀÌÅÍ¸¦
-	// ¼ö½ÅÇÒ ¸ñÀûÀ¸·Î »ç¿ë
+	// DTO(Data Transfer Object) : ê³„ì¸µê°„ ë°ì´í„° êµí™˜ì„ ìœ„í•œ ê°ì²´, ì—¬ê¸°ì„œëŠ” í´ë¼ì´ì–¸íŠ¸(Postman)ì—ì„œ ì˜¤ëŠ” ë°ì´í„°ë¥¼
+	// ìˆ˜ì‹ í•  ëª©ì ìœ¼ë¡œ ì‚¬ìš©
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> createPerfume(@RequestBody @Valid PerfumeDto request) {
 
 		// Creating a new category in the application...
 
-		// »ı¼ºÀÚ ÀÎÀÚ°¡ ³Ê¹« ¸¹´Ù... ºôµåÆĞÅÏ?
+		// ìƒì„±ì ì¸ìê°€ ë„ˆë¬´ ë§ë‹¤... ë¹Œë“œíŒ¨í„´?
 		// final Perfume perfume = perfumeService.createPerfume(request.getBrand(),
 		// request.getName());
 		final Perfume perfume = perfumeService.createPerfume(request);

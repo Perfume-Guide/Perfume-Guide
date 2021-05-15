@@ -223,6 +223,12 @@ div#myGender li.scrollbar_inner div.brand_group {
     border-bottom: 2px solid #111;
 }
 
+.slide_search .search_field label {
+    font-size: larger;
+    font-weight: normal;
+    cursor: pointer;
+}
+
 .slide_search fieldset {
     position: relative;
     width: 700px;
@@ -248,6 +254,8 @@ div#myGender li.scrollbar_inner div.brand_group {
 
 .slide_search .btn-sch {
     position: absolute;
+    border: none;
+    background-color: transparent;
     top: 12px;
     right: 0px;
 }

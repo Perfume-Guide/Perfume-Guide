@@ -10,7 +10,7 @@
 <script>
 /* function reqAjax1() {
     $.ajax({
-        url:'api/perfumes/test'
+        url:'api/perfumes/keyword'
         , method : 'GET'
         , contentType: "application/json"
         , dataType: "text"
@@ -19,30 +19,33 @@
             
         }
     })	
-} */
+} 
+reqAjax1() */
 
-function reqAjax1() {
-	var mId = 2
-    $.ajax({
-        url:'api/perfumes/'+mId
-        , method : 'GET'
-        , contentType: "application/json"
-        , dataType: "text"
-        , data : 'id='+mId
-        , success :  function(data){
-        	var json = JSON.parse(data)
-        	var str = JSON.stringify(json.name)
-           $('#req1').text(str)
-            
-        }
-    })	
+function brandAjax(brand) {
+	var mBrand = brand //mId 바꾸면 그 id 불러옴
+	
+		$.ajax({
+	        url:'api/perfumes/keyword'
+	        , method : 'GET'
+	        , contentType: "application/json"
+	        , dataType: "text"
+	        , data : 'brand='+mBrand
+	        , success :  function(data){
+	        	//$('#req1').text(data)
+	        	//var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
+	        	//$('#req1').text(json)
+	        }
+	    })
+	
 }
-reqAjax1()
+brandAjax("CK")
+
 </script>
 
 </head>
 <body>
-<span id="req1"></span></li>
-
+<span id="req1">fd</span></li>
+<span id="req2">fd</span></li>
 </body>
 </html>
