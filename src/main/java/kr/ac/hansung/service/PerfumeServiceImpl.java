@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.dao.PerfumeDao;
+import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.entity.Perfume;
 
 @Service
@@ -25,6 +27,11 @@ public class PerfumeServiceImpl implements PerfumeService {
 	@Override
 	public Perfume getPerfumeById(Long id) {
 		return perfumeRepository.getPerfumeById(id);
+	}
+	
+	@Override
+	public List<Perfume> getPerfumesByName(String name){
+		return perfumeRepository.getPerfumesByName(name);
 	}
 	
 	@Override

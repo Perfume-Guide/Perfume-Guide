@@ -47,6 +47,18 @@ public class PerfumeDao {
 		
 	}
 	
+	public List<Perfume> getPerfumesByName(String name){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where name=:name";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("name",name);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}
 	
 	
 	

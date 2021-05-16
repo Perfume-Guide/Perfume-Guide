@@ -63,15 +63,37 @@ public class PerfumeController {
 	
 	// 수정 requestParm ?
 	@RequestMapping(method = RequestMethod.GET)
-	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam("brand")String brand){
-		final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
+	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value="brand", required=false)String brand,
+			@RequestParam(value="name", required=false)String name){
 		
-		if(perfumes.isEmpty()) {
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		if(brand!=null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
+			
+			if(perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);		
+			}
+			
+			return ResponseEntity.ok(perfumes);
+			
 		}
-		
-		return ResponseEntity.ok(perfumes);
-		
+		else if(name!=null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
+			
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+			
+			return ResponseEntity.ok(perfumes);
+		}
+		else {
+			final List<Perfume> perfumes = perfumeService.getAllPerfumes();
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		}		
 	}
 	 
 	
