@@ -11,16 +11,16 @@
             success: function(data) {
 
                 var res = JSON.parse(data)
-                var line_count = 0
-                var prdList_num = 0
+                var list_count = 0
+                var prdList_num = -1
 
                 $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 
                 $.each(res, function(i, val) {
                     //document.write(val.name)
-                    if (line_count % 4 == 0) { // 한줄에 네 개씩
-                        $("#prdList_wrap").append('<ul class="prdList' + prdList_num + '"></ul>')
+                    if (list_count % 4 == 0) { // 한줄에 네 개씩
                         prdList_num++
+                        $("#prdList_wrap").append('<ul class="prdList' + prdList_num + '"></ul>')
                     }
                     $(".prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
                             '<div class="box">' +
@@ -51,7 +51,7 @@
                             '</div>' +
                             '</li>')
                         // $('#req' + i).text(val.name)
-                    line_count++
+                    list_count++
                 })
 
             }
