@@ -13,11 +13,11 @@
                 var res = JSON.parse(data)
                 var prdList_num = -1
 
-                $(".title_t").text(res.brand)
                 $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 
                 $.each(res, function(i, val) {
                     //document.write(val.name)
+                    $(".title_t").text(val.brand)
                     if (i % 4 == 0) { // 한줄에 네 개씩
                         prdList_num++
                         $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
