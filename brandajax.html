@@ -13,7 +13,7 @@
                 var res = JSON.parse(data)
                 var prdList_num = -1
 
-                $(".title_t").text(val.brand)
+                $(".title_t").text(res.brand)
                 $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 
                 $.each(res, function(i, val) {
