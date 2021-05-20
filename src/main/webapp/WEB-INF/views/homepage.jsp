@@ -31,7 +31,6 @@
     })	
 } */
 
-
 /* function reqAjax1(id) {
 	var mId = id //mId 바꾸면 그 id 불러옴
 	if(mId == 1) {
@@ -47,92 +46,155 @@
 	        	$('#req1').text(json)
 	        }
 	    })
-	} else if(mId == 2) {
-		$.ajax({
-	        url:'api/perfumes/'+mId
-	        , method : 'GET'
-	        , contentType: "application/json"
-	        , dataType: "text"
-	        , data : 'id='+mId
-	        , success :  function(data){
-	        	var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
-	        	
-	        	$('#req2').text(json)
-	        }
-	    })
-	} else if(mId == 3) {
-		$.ajax({
-	        url:'api/perfumes/'+mId
-	        , method : 'GET'
-	        , contentType: "application/json"
-	        , dataType: "text"
-	        , data : 'id='+mId
-	        , success :  function(data){
-	        	var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
-	       
-	        	$('#req3').text(json)
-	        }
-	    })
-	}
-    	
-}
-
-for(i=1; i<4; i++) {
-	reqAjax1(i)
+	} 
 }
  */
 
- 
-//jQuery.ajaxSettings.traditional = true;
+ function brandAjax(brand) {
+     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'brand=' + mBrand,
+         success: function(data) {
 
-function brandAjax(brand) {
-	var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.brand)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<img src="" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         }
+     })
+     closeBrand()
+ }
+
+//brandAjax("CK")
+
+function brandSearch() {
+	
+	var mBrand = $('#keyword1').val() //mBrand 바꾸면 그 brand 불러옴
+	var mOption = $(':input:radio[name=searchOpt]:checked').val()
+	/* if(mOption =='brand') {
+		mBrand = 'brand'
+	} else {
+		mBrand = 'name'
+	} */
+	//document.write(mOption)
 		$.ajax({
-	        url:'api/perfumes/keyword'
+	        url:'${pageContext.request.contextPath}/api/perfumes/search?searchOpt=' + mOption
 	        , method : 'GET'
 	        , contentType: "application/json"
 	        , dataType: "text"
 	        , traditional: true
-	        , data : 'brand='+mBrand
+	        , data : 'keyword=' + mBrand
 	        , success :  function(data){
-				
-	        	 var res = JSON.parse(data)
-	        	
-	        	for(var i=0; i<7; i++) {
-	        		$('#req'+i).text('')
-	        	}
-	        	$.each(res, function(i, val) {
-	        		//document.write(val.name)
-	        		 
-	        		$('#req'+i).text(val.name)
-	        	}) 
-	        	
-	        }
-	    })
-}
-brandAjax("CK")
 
-/* reqAjax1(2)
-reqAjax1(3) */
+	             var res = JSON.parse(data)
+	             var prdList_num = -1
 
-/* function reqAjax2() {
-	var mId = 3
-    $.ajax({
-        url:'api/perfumes/'+mId
-        , method : 'GET'
-        , contentType: "application/json"
-        , dataType: "text"
-        , data : 'id='+mId
-        , success :  function(data){
-        	var json = JSON.parse(data).name
-           $('#req2').text(json)
-            
-        }
-    })	
+	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+					$.each(res, function(i, val) {
+						$(".title_t").text(val.brand)
+						//$("#simple img").attr("src", "${pageContext.request.contextPath}/resources/image.1_걸.jpg");
+			             
+	                 //document.write(val.name)
+	                 if (i % 4 == 0) { // 한줄에 네 개씩
+	                     prdList_num++
+	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+	                 }
+	                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+	                         '<div class="box">' +
+	                         '<div class="thumbnail">' +
+	                         '<!--향수 이미지-->' +
+	                         '<div class="prdImg">' +
+	                         '<a href="#" class="_evt_tracker">' +
+	                         '<img id="simple" src="#" alt="샘플사진">' +
+	                         '</a>' +
+	                         '</div>' +
+	                         '</div>' +
+	                         '<div class="description">' +
+	                         '<!--향수 이름-->' +
+	                         '<div class="name">' +
+	                         '<a href="#" class="_evt_tracker">' +
+	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+	                         '<!-- ajax 변경한 부분 -->' +
+	                         '<span id="req0"></span>' +
+	                         '</a>' +
+	                         '</div>' +
+	                         '<!--대표계열-->' +
+	                         '<ul class="spec">' +
+	                         '<li rel="계열">' +
+	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+	                         '</li>' +
+	                         '</ul>' +
+	                         '</div>' +
+	                         '</div>' +
+	                         '</li>')
+	                     // $('#req' + i).text(val.name)
+	                     
+	             })
+
+	         }
+	     })
+	     closeBrand()
 }
-reqAjax2() */
+//brandSearch("겐조")
+
 </script>
 
+<script>
+function move() {
+    $(req1).ready(function() {
+    	$.ajax({
+	        success :  function(data){
+				
+	        	location.href = "./listpage.html"
+	        }
+	    })
+    })
+}
+</script>
    
     <!--css 연동-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
@@ -212,13 +274,13 @@ reqAjax2() */
                                                                     <div class="brand_group" style="display: block;">
                                                                         <h1>ㄱ</h1>
                                                                         <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="#" onclick="brandAjax('게스')">게스</a>
+                                                                            <a href="javascript:void(0)" onclick="brandAjax('게스')">게스</a>
                                                                         </div>
                                                                         <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="./listpage.html">겐조</a>
+                                                                            <a href="#" onclick="brandAjax('겐조')">겐조</a>
                                                                         </div>
                                                                         <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="./listpage.html">구찌</a>
+                                                                            <a href="javascript:void(0)"  onclick="brandSearch('구찌')">구찌</a>
                                                                         </div>
                                                                         <div class="brand" char="ㄱ" style="display: block;">
                                                                             <a href="./listpage.html">끌로에</a>
@@ -518,22 +580,22 @@ reqAjax2() */
                     </a>
                     <div class="search_inner">
                         <!--검색창 form method="get" 방식으로 search 넘겨줌-->
-                        <form id="searchBarForm" action='/perfumeGuide' method="get" target="_self" enctype="multipart/form-data">
-                            <!-- <input id="banner_action" name="banner_action" value="" type="hidden"> -->
-                            <!—검색 필드—>
-                            <div class="search_field">
-                                <input type="radio" name="keyword" id="radio_brand" value="brand" style="visibility: hidden;">
-                                <label for="radio_brand" id="radio_brand_label" onclick="brandLabelClick()">브랜드명</label>
-                                <input type="radio" name="keyword" id="radio_name" value="name" style="visibility: hidden;">
-                                <label for="radio_name" id="radio_name_label" onclick="nameLabelClick()">향수명</label>
-                                <fieldset form="searchBarForm" title="검색어를 입력해주세요." onkeypress="enterSearchBanner(this);">
-                                    <input id="keyword" name="name" fw-label="검색어" class="inputTypeText" type="text" value="" />
-                                    <button type="button" class="btn-sch" alt="검색이미지" onclick="submitSearchBanner(this);">
-                                        <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="검색">
-                                    </button>
-                                </fieldset>
-                            </div>
-                        </form>
+                        
+                     <!--검색 필드-->
+                     <div class="search_field">
+                        <input type="radio" name="searchOpt" id="radio_brand"   value="brand" style="visibility: hidden;"> 
+                        <label for="radio_brand" id="radio_brand_label" onclick="brandLabelClick()">브랜드명</label> 
+                        <input type="radio"   name="searchOpt" id="radio_name" value="name"   style="visibility: hidden;"> 
+                        <label for="radio_name"   id="radio_name_label" onclick="nameLabelClick()">향수명</label>
+                        <fieldset form="searchBarForm" title="검색어를 입력해주세요." onkeypress="">
+                           <input id="keyword1" name="keyword" fw-label="검색어"   class="inputTypeText" type="text" value="" />
+                           <button id="btn1" type="button" class="btn-sch" alt="검색이미지"   onclick="brandSearch()">
+                              <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="검색">
+                           </button>
+                        </fieldset>
+                     </div>
+
+                 
                         <!--세부검색 영역 (삭제? 보류)-->
                         <div class="xans-element- xans-search xans-search-hotkeyword detail_search">
 
@@ -559,184 +621,9 @@ reqAjax2() */
                         <!--카테고리별 향수 출력 영역-->
                         <div class="tabcontent current">
                             <div class="cboth ec-base-product">
-                                <div class="swiper-container swiper_tab swiper-container-horizontal">
+                                <div id="prdList_wrap" class="swiper-container swiper_tab swiper-container-horizontal">
                                     <!--ul 내부에 li 하나당 향수 한개-->
-                                    <ul class="prdList swiper-wrapper" style="width: 2620px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
-                                        <!--thumbnail == 사진 영역 / description == 글자 영역-->
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <!--향수 이미지-->
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <!--향수 이름-->
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                        	<!-- ajax 변경한 부분 -->
-                                                        	<span id="req0"></span>
-                                                        </a>
-                                                    </div>
-                                                    <!--대표계열-->
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                            <span id="req1"></span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                       		<span id="req2"></span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                            <span id="req3"></span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                            <span id="req4"></span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="샘플사진">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">샘플향수</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="계열">
-                                                            <span style="font-size: 14px;color: #999999;">샘플계열</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="swiper-scrollbar swiper-scrollbar-tab">
-                                        <div class="swiper-scrollbar-drag" style="transform: translate3d(0px,0px,0px); width: 300px; transition-duration: 0ms;"></div>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -746,31 +633,31 @@ reqAjax2() */
         </div>
     </div>
     <script>
-        /* 카테고리별 상품 진열 swiper_tab */
-        var swiper_tab = new Swiper('.swiper-container', {
-            direction: 'horizontal',
-            roundLengths: true,
-            slidesPerView: 5, // 한줄에 보이는 향수 개수
-            spaceBetween: 28,
-            scrollbar: {
-                el: '.swiper-scrollbar',
-                dragSize: 300
-            }
-        });
-    </script>
-    <script>
-        function submitSearchBanner() {
-            var searchBarForm = document.getElementById('searchBarForm');
-            searchBarForm.submit();
-        }
+      /* 카테고리별 상품 진열 swiper_tab */
+      var swiper_tab = new Swiper('.swiper-container', {
+         direction : 'horizontal',
+         roundLengths : true,
+         slidesPerView : 5, // 한줄에 보이는 향수 개수
+         spaceBetween : 28,
+         scrollbar : {
+            el : '.swiper-scrollbar',
+            dragSize : 300
+         }
+      });
+   </script>
 
-        function enterSearchBanner() {
-            if (event.keyCode == 13) {
-                var searchBarForm = document.getElementById('searchBarForm');
-                searchBarForm.submit();
-            }
-        }
-    </script>
+
+   <script>
+      function brandLabelClick() {
+         document.getElementById("radio_brand_label").style.fontWeight = "bold";
+         document.getElementById("radio_name_label").style.fontWeight = "normal";
+      }
+
+      function nameLabelClick() {
+         document.getElementById("radio_brand_label").style.fontWeight = "normal";
+         document.getElementById("radio_name_label").style.fontWeight = "bold";
+      }
+   </script>
 </body>
 
 </html>

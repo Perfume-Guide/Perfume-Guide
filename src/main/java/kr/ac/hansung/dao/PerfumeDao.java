@@ -73,7 +73,18 @@ public class PerfumeDao {
 		
 	}
 	
-	
+	public List<Perfume> getPerfumesByImage(String image){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where image=:image";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("image",image);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}
 	
 	
 	public Long addPerfume(Perfume perfume) {

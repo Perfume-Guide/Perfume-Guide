@@ -30,5 +30,6 @@ public class PerfumeDto {
 	private String niche;
 
 	private String accord;
+	private String image;
 	
 }

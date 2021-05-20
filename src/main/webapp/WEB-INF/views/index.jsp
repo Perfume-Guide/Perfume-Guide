@@ -22,25 +22,33 @@
 } 
 reqAjax1() */
 
-function brandAjax(brand) {
-	var mBrand = brand //mId 바꾸면 그 id 불러옴
-	
+function brandAjax(opt, brand) {
+	var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
 		$.ajax({
-	        url:'api/perfumes/keyword'
+	        url:'api/perfumes/search'
 	        , method : 'GET'
 	        , contentType: "application/json"
 	        , dataType: "text"
-	        , data : 'brand='+mBrand
+	        , traditional: true
+	        , data : {'searchOpt' : opt, 'brand=' : mBrand}
 	        , success :  function(data){
-	        	//$('#req1').text(data)
-	        	//var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
-	        	//$('#req1').text(json)
+				
+	        	 var res = JSON.parse(data)
+	        	
+	        	for(var i=1; i<3; i++) {
+	        		$('#req'+i).text('')
+	        	}
+	        	$.each(res, function(i, val) {
+	        		//document.write(val.name)
+	        		 
+	        		$('#req'+i).text(val.name)
+	        	}) 
+	        	
 	        }
 	    })
-	
+	closeBrand()
 }
-brandAjax("CK")
-
+brandAjax(brand, "CK")
 </script>
 
 </head>

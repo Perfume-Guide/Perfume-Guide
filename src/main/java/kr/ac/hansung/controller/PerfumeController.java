@@ -95,7 +95,8 @@ public class PerfumeController {
 	@RequestMapping(path = "/keyword", method = RequestMethod.GET)
 	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value = "brand", required = false) String brand,
 			@RequestParam(value = "name", required = false) String name,
-			@RequestParam(value = "accord", required = false) String accord) {
+			@RequestParam(value = "accord", required = false) String accord,
+			@RequestParam(value = "image", required = false) String image) {
 
 		if (brand != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
@@ -122,6 +123,14 @@ public class PerfumeController {
 			}
 
 			return ResponseEntity.ok(perfumes);
+		} else if (image != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByImage(image);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
 		} else {
 			final List<Perfume> perfumes = perfumeService.getAllPerfumes();
 
@@ -133,6 +142,54 @@ public class PerfumeController {
 		}
 	}
 
+	@RequestMapping(path = "/search", method = RequestMethod.GET)
+	   public ResponseEntity<?> retrievePerfumeByKeyword(
+	         @RequestParam(value = "searchOpt", required = false) String searchOpt,
+	         @RequestParam(value = "keyword", required = false) String keyword) {
+
+	      if (searchOpt.equals("brand") && keyword != null) {
+	         List<Perfume> perfumes = perfumeService.getPerfumesByBrand(keyword);
+
+	         if (perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	         }
+
+	         return ResponseEntity.ok(perfumes);
+	      } else if (searchOpt.equals("name") && keyword != null) {
+	         List<Perfume> perfumes = perfumeService.getPerfumesByName(keyword);
+
+	         if (perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	         }
+
+	         return ResponseEntity.ok(perfumes);
+	      } else if (searchOpt.equals("accord") && keyword != null) {
+		         List<Perfume> perfumes = perfumeService.getPerfumesByAccord(keyword);
+
+		         if (perfumes.isEmpty()) {
+		            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		         }
+
+		         return ResponseEntity.ok(perfumes);
+		  } else if (searchOpt.equals("image") && keyword != null) {
+		         List<Perfume> perfumes = perfumeService.getPerfumesByImage(keyword);
+
+		         if (perfumes.isEmpty()) {
+		            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		         }
+
+		         return ResponseEntity.ok(perfumes);
+		  } else {
+	         final List<Perfume> perfumes = perfumeService.getAllPerfumes();
+
+	         if (perfumes.isEmpty()) {
+	            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	         }
+
+	         return ResponseEntity.ok(perfumes);
+	      }
+	   }
+	
 	// DTO(Data Transfer Object) : 계층간 데이터 교환을 위한 객체, 여기서는 클라이언트(Postman)에서 오는 데이터를
 	// 수신할 목적으로 사용
 	@RequestMapping(method = RequestMethod.POST)

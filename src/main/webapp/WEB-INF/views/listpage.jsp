@@ -27,6 +27,52 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/listpage.css">
     <title>퍼퓸가이드</title>
+    <script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<script>
+/* $(document).ready(function() {
+	
+	//document.write(typeof mOption)
+		$.ajax({
+	        url:'http://localhost:8080/perfumeGuide/'
+	        , method : 'GET'
+	        , contentType: "application/json"
+	        , dataType: "text"
+	        , traditional: true
+	        //, data : 'keyword=' + mBrand
+	        , success :  function(data){
+	        	//alert(data)
+	        	//$("#list_name1").load('/perfumeGuide/ #req1')
+	        	//var res = JSON.parse(data)
+	        	//alert(data.find('req0'))
+	        	$('#list_name1').load('/perfumeGuide/ #req1')
+	        	
+	        	/* var res = JSON.parse(data)
+	        	//alert(data)
+	        	for(var i=0; i<7; i++) {
+	        		$('#req'+i).text('')
+	        	}
+	        	$.each(res, function(i, val) {
+	        		//document.write(val.name)
+	        		$('#req'+i).text(val.name)
+	        		
+	        	}) 
+	        	move() 
+	        	//$('#req0').load('listpage.html #list_name1')
+	        	//$("#req1").load('listpage.html #list_name1')
+	        	//location.href = "./listpage.html"
+	        }
+	    })
+}) */
+//brandSearch1()
+   $(document).ready(function() {
+    	
+    	//$('#list_name1').text(name)
+        $("#list_name1").load('/perfumeGuide/')
+    })
+</script>
+    
 </head>
 
 <body>
@@ -452,6 +498,7 @@
                                             <div class="name">
                                                 <a href="#" class="_evt_tracker">
                                                     <span style="font-size: 15px;color: #111111;">샘플향수</span>
+                                                    <span id="list_name1"></span>
                                                 </a>
                                             </div>
                                             <!--대표계열-->

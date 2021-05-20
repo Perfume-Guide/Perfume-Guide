@@ -7,7 +7,7 @@ function openNav() {
     document.getElementById("radio_brand_label").style.fontWeight = "normal";
     document.getElementById("radio_name_label").style.fontWeight = "normal";
 
-    document.getElementById("keyword").value = "";
+    document.getElementById("keyword1").value = "";
 }
 
 function closeNav() {
@@ -19,5 +19,5 @@ function closeNav() {
     document.getElementById("radio_brand_label").style.fontWeight = "normal";
     document.getElementById("radio_name_label").style.fontWeight = "normal";
 
-    document.getElementById("keyword").value = "";
+    document.getElementById("keyword1").value = "";
 }

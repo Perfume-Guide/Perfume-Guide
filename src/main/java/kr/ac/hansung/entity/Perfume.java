@@ -43,6 +43,7 @@ public class Perfume extends AbstractEntity {
 	private String niche;
 
 	private String accord;
+	private String image;
 	
 	// imgurl
 
