@@ -1,254 +1,403 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="ko">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <!--∏πŸ¿œ øÏº±-->
+    <!--Î™®Î∞îÏùº Ïö∞ÏÑ†-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--swiper ø¨µø-->
+    <!--swiper Ïó∞Îèô-->
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper_bundle.css" />
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
-    <!--js ø¨µø-->
+    <!--js Ïó∞Îèô-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
-    <!--css ø¨µø-->
+   
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+
+
+ function brandAjax(brand) {
+     var mBrand = brand //mBrand Î∞îÍæ∏Î©¥ Í∑∏ brand Î∂àÎü¨Ïò¥
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'brand=' + mBrand,
+         success: function(data) {
+
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // Ï¥àÍ∏∞Ìôî (Î¶¨Ïä§Ìä∏ ÎπÑÏö∞Í∏∞)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.brand)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // ÌïúÏ§ÑÏóê ÎÑ§ Í∞úÏî©
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--Ìñ•Ïàò Ïù¥ÎØ∏ÏßÄ-->' +
+                         '<div class="prdImg">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<img src="" alt="ÏÉòÌîåÏÇ¨ÏßÑ">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--Ìñ•Ïàò Ïù¥Î¶Ñ-->' +
+                         '<div class="name">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax Î≥ÄÍ≤ΩÌïú Î∂ÄÎ∂Ñ -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--ÎåÄÌëúÍ≥ÑÏó¥-->' +
+                         '<ul class="spec">' +
+                         '<li rel="Í≥ÑÏó¥">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         }
+     })
+     closeBrand()
+ }
+
+//brandAjax("CK")
+
+function brandSearch() {
+	
+	var keyword = $('#keyword1').val() //mBrand Î∞îÍæ∏Î©¥ Í∑∏ brand Î∂àÎü¨Ïò¥
+	var mOption = $(':input:radio[name=searchOpt]:checked').val()
+	
+		$.ajax({
+	        url:'${pageContext.request.contextPath}/api/perfumes/search?searchOpt=' + mOption
+	        , method : 'GET'
+	        , contentType: "application/json"
+	        , dataType: "text"
+	        , traditional: true
+	        , data : 'keyword=' + keyword
+	        , success :  function(data){
+
+	             var res = JSON.parse(data)
+	             var prdList_num = -1
+
+	             $("#prdList_wrap").html('') // Ï¥àÍ∏∞Ìôî (Î¶¨Ïä§Ìä∏ ÎπÑÏö∞Í∏∞)
+					$.each(res, function(i, val) {
+						$(".title_t").text(val.brand)
+						//$("#simple img").attr("src", "${pageContext.request.contextPath}/resources/image.1_Í±∏.jpg");
+			             
+	                 //document.write(val.name)
+	                 if (i % 4 == 0) { // ÌïúÏ§ÑÏóê ÎÑ§ Í∞úÏî©
+	                     prdList_num++
+	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+	                 }
+	                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+	                         '<div class="box">' +
+	                         '<div class="thumbnail">' +
+	                         '<!--Ìñ•Ïàò Ïù¥ÎØ∏ÏßÄ-->' +
+	                         '<div class="prdImg">' +
+	                         '<a href="#" class="_evt_tracker">' +
+	                         '<img id="simple" src="#" alt="ÏÉòÌîåÏÇ¨ÏßÑ">' +
+	                         '</a>' +
+	                         '</div>' +
+	                         '</div>' +
+	                         '<div class="description">' +
+	                         '<!--Ìñ•Ïàò Ïù¥Î¶Ñ-->' +
+	                         '<div class="name">' +
+	                         '<a href="#" class="_evt_tracker">' +
+	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+	                         '<!-- ajax Î≥ÄÍ≤ΩÌïú Î∂ÄÎ∂Ñ -->' +
+	                         '<span id="req0"></span>' +
+	                         '</a>' +
+	                         '</div>' +
+	                         '<!--ÎåÄÌëúÍ≥ÑÏó¥-->' +
+	                         '<ul class="spec">' +
+	                         '<li rel="Í≥ÑÏó¥">' +
+	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+	                         '</li>' +
+	                         '</ul>' +
+	                         '</div>' +
+	                         '</div>' +
+	                         '</li>')
+	                     // $('#req' + i).text(val.name)
+	                     
+	             })
+
+	         }
+	     })
+	     closeBrand()
+}
+//brandSearch("Í≤êÏ°∞")
+
+</script>
+
+<script>
+function move() {
+    $(req1).ready(function() {
+    	$.ajax({
+	        success :  function(data){
+				
+	        	location.href = "./listpage.html"
+	        }
+	    })
+    })
+}
+</script>
+   
+    <!--css Ïó∞Îèô-->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/homepage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css?after">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?after">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css?ver=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?ver=1">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
-    <title>∆€«æ∞°¿ÃµÂ</title>
+    <title>ÌçºÌì∏Í∞ÄÏù¥Îìú</title>
 </head>
 
 <body>
     <div id="wrap">
-        <!--«Ï¥ı(√÷ªÛ¥‹)-->
+        <!--Ìó§Îçî(ÏµúÏÉÅÎã®)-->
         <div id="header">
-            <!--«Ï¥ı ºΩ≈Õ1-->
+            <!--Ìó§Îçî ÏÑπÌÑ∞1-->
             <div class="sector1">
-                <!--ªÛ¥‹ ∑Œ∞Ì øµø™-->
+                <!--ÏÉÅÎã® Î°úÍ≥† ÏòÅÏó≠-->
                 <div class="banner_logo">
                     <a href="./">
-                        <!--∑Œ∞Ì width 400px - 500px proper (./css/homepage.css)-->
+                        <!--Î°úÍ≥† width 400px - 500px proper (./css/homepage.css)-->
                         <img id="banner_logo" src="${pageContext.request.contextPath}/resources/image/perfume_guide_title_banner.png" alt="banner_logo">
                     </a>
                 </div>
-                <!--¡¬√¯ ∏ﬁ¥∫ øµø™(∞Àªˆ ∫Œ∫–)-->
+                <!--Ï¢åÏ∏° Î©îÎâ¥ ÏòÅÏó≠(Í≤ÄÏÉâ Î∂ÄÎ∂Ñ)-->
                 <div class="left_menu">
                     <div class="search_menu">
                         <li class="search_perfume">
-                            <!--∞Àªˆ æ∆¿Ãƒ‹ ≈¨∏ØΩ√ openNav() Ω««‡ (./js/search.js)-->
+                            <!--Í≤ÄÏÉâ ÏïÑÏù¥ÏΩò ÌÅ¥Î¶≠Ïãú openNav() Ïã§Ìñâ (./js/search.js)-->
                             <a href="#none" onclick="openNav()">
                                 <img src="${pageContext.request.contextPath}/resources/image/search_icon.png" alt="search_icon">
                             </a>
                         </li>
                     </div>
                 </div>
-                <!--øÏ√¯ ∏ﬁ¥∫ øµø™(∑Œ±◊¿Œ ∫Œ∫–)-->
+                <!--Ïö∞Ï∏° Î©îÎâ¥ ÏòÅÏó≠(Î°úÍ∑∏Ïù∏ Î∂ÄÎ∂Ñ)-->
                 <div class="right_menu">
 
                 </div>
             </div>
-            <!--«Ï¥ı ºΩ≈Õ2-->
+            <!--Ìó§Îçî ÏÑπÌÑ∞2-->
             <div class="sector2 cboth" id="category_top">
                 <div class="inner">
-                    <!--ªÛ¥‹ ƒ´≈◊∞Ì∏Æ √‚∑¬-->
+                    <!--ÏÉÅÎã® Ïπ¥ÌÖåÍ≥†Î¶¨ Ï∂úÎ†•-->
                     <div class="top_category">
                         <hr>
-                        <!--ªÛ¥‹ ƒ´≈◊∞Ì∏Æ ºˆµø π◊ ¿⁄µø √‚∑¬-->
+                        <!--ÏÉÅÎã® Ïπ¥ÌÖåÍ≥†Î¶¨ ÏàòÎèô Î∞è ÏûêÎèô Ï∂úÎ†•-->
                         <div class="category_menu">
                             <ul class="top_menu">
                                 <div id="main_category">
                                     <div id="slide_category_list">
-                                        <!--ªÛ¥‹ ƒ´≈◊∞Ì∏Æ ¿⁄µø √‚∑¬-->
+                                        <!--ÏÉÅÎã® Ïπ¥ÌÖåÍ≥†Î¶¨ ÏûêÎèô Ï∂úÎ†•-->
                                         <div class="category_brand">
                                             <div class="open">
-                                                <!--∫Í∑£µÂ∫∞ ≈¨∏ØΩ√ ∫Í∑£µÂ ¿¸√º∫∏±‚ √¢ √‚∑¬-->
-                                                <a href="#" onclick="openBrand()">∫Í∑£µÂ∫∞</a>
+                                                <!--Î∏åÎûúÎìúÎ≥Ñ ÌÅ¥Î¶≠Ïãú Î∏åÎûúÎìú Ï†ÑÏ≤¥Î≥¥Í∏∞ Ï∞Ω Ï∂úÎ†•-->
+                                                <a href="#" onclick="openBrand()">Î∏åÎûúÎìúÎ≥Ñ</a>
                                                 <div id="myBrand" id="brand_sort_outer" class="slide_brand" style="top:-600px; opacity: 0; height: 0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Brands
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeBrand()">
-                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="¥›±‚">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="Îã´Í∏∞">
                                                             </a>
                                                         </h1>
-                                                        <!--≥ª∫Œ Ω∫≈©∑— øµø™-->
+                                                        <!--ÎÇ¥Î∂Ä Ïä§ÌÅ¨Î°§ ÏòÅÏó≠-->
                                                         <div class="scroll_wrapper scrollbar_inner" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 600px;">
-                                                                <!--∫Í∑£µÂ∏Ì ≈¨∏ØΩ√ listpage.html∑Œ ¿Ãµø(./listpage.html)-->
-                                                                <!--.jsp∑Œ ∫Ø∞Ê »ƒ listpage.htmlø° DB∞™ »£√‚-->
-                                                                <div class="brand_link">
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>C</h1>
-                                                                        <div class="brand" char="C" style="display: block;">
-                                                                            <a href="./listpage.html">CK</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§°</h1>
-                                                                        <div class="brand" char="§°" style="display: block;">
-                                                                            <a href="./listpage.html">∞‘Ω∫</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§°" style="display: block;">
-                                                                            <a href="./listpage.html">∞’¡∂</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§°" style="display: block;">
-                                                                            <a href="./listpage.html">±∏¬Ó</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§°" style="display: block;">
-                                                                            <a href="./listpage.html">≤¯∑Œø°</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§§</h1>
-                                                                        <div class="brand" char="§§" style="display: block;">
-                                                                            <a href="./listpage.html">≥™∏£Ω√º“ ∑ŒµÂ∏Æ∞‘¡Ó</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§ß</h1>
-                                                                        <div class="brand" char="§ß" style="display: block;">
-                                                                            <a href="./listpage.html">µπ√ºæÿ∞°πŸ≥™</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§ß" style="display: block;">
-                                                                            <a href="./listpage.html">µø√</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§ß" style="display: block;">
-                                                                            <a href="./listpage.html">µˆµ≈©</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§©</h1>
-                                                                        <div class="brand" char="§©" style="display: block;">
-                                                                            <a href="./listpage.html">∂ˆ«¡∑Œ∑ª</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§©" style="display: block;">
-                                                                            <a href="./listpage.html">∂˚πÊ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§±</h1>
-                                                                        <div class="brand" char="§±" style="display: block;">
-                                                                            <a href="./listpage.html">∏∂≈©¡¶¿ÃƒﬂΩ∫</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§±" style="display: block;">
-                                                                            <a href="./listpage.html">∏ﬁ∏£ººµ•Ω∫ ∫•√˜</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§±" style="display: block;">
-                                                                            <a href="./listpage.html">∏˘∫Ì∂˚</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§≤</h1>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">πŸ¿Ã∑πµµ</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">πﬂ∑ª∆º≥Î</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">πˆπˆ∏Æ</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">∫£∏£ªÁ√º</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">∫–¥ıº•</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§≤" style="display: block;">
-                                                                            <a href="./listpage.html">∫“∞°∏Æ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§µ</h1>
-                                                                        <div class="brand" char="§µ" style="display: block;">
-                                                                            <a href="./listpage.html">ªÍ≈∏∏∂∏Ææ∆≥Î∫ß∂Û</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§µ" style="display: block;">
-                                                                            <a href="./listpage.html">ª˛≥⁄</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§µ" style="display: block;">
-                                                                            <a href="./listpage.html">ºÓ∆ƒµÂ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§∑</h1>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">æ∆∏Ææ∆≥™±◊∂ıµ•</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">æ∆∫£≈©∑“∫Ò</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">æ∆ƒÌæ∆ µ ∆ƒ∏£∏∂</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">æ»≥™ºˆ¿Ã</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">ø°∏£∏ﬁΩ∫</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">ø§∏Æ¿⁄∫£Ω∫æ∆µß</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∑" style="display: block;">
-                                                                            <a href="./listpage.html">¿‘ª˝∑Œ∂˚</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§∏</h1>
-                                                                        <div class="brand" char="§∏" style="display: block;">
-                                                                            <a href="./listpage.html">¡∂∏ª∑–</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∏" style="display: block;">
-                                                                            <a href="./listpage.html">¡∏πŸπŸ≈‰Ω∫</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∏" style="display: block;">
-                                                                            <a href="./listpage.html">¡ÍΩ√≤Ÿ∂Ÿ∏£</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§∏" style="display: block;">
-                                                                            <a href="./listpage.html">¡ˆπÃ√ﬂ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§ª</h1>
-                                                                        <div class="brand" char="§ª" style="display: block;">
-                                                                            <a href="./listpage.html">ƒ⁄ƒ°</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§ª" style="display: block;">
-                                                                            <a href="./listpage.html">≈©∏ÆµÂ</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§ª" style="display: block;">
-                                                                            <a href="./listpage.html">≈¨∏∞</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§º</h1>
-                                                                        <div class="brand" char="§º" style="display: block;">
-                                                                            <a href="./listpage.html">≈Ë∆˜µÂ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>§Ω</h1>
-                                                                        <div class="brand" char="§Ω" style="display: block;">
-                                                                            <a href="./listpage.html">∆ƒƒ⁄∂Ûπ›</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§Ω" style="display: block;">
-                                                                            <a href="./listpage.html">∆‰∂Û∞°∏</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§Ω" style="display: block;">
-                                                                            <a href="./listpage.html">«¡∂Û∞Ì≥™∏£</a>
-                                                                        </div>
-                                                                        <div class="brand" char="§Ω" style="display: block;">
-                                                                            <a href="./listpage.html">«¡∂Û¥Ÿ</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                                <!--Î∏åÎûúÎìúÎ™Ö ÌÅ¥Î¶≠Ïãú listpage.htmlÎ°ú Ïù¥Îèô(./listpage.html)-->
+                                                                <!--.jspÎ°ú Î≥ÄÍ≤Ω ÌõÑ listpage.htmlÏóê DBÍ∞í Ìò∏Ï∂ú-->
+                                                               
+                                                               <div class="brand_link">
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>C</h1>
+                                                      <div class="brand" char="C" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('CK');closeBrand();">CK</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Ñ±</h1>
+                                                      <div class="brand" char="„Ñ±" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Í≤åÏä§');closeBrand();">Í≤åÏä§</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñ±" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Í≤êÏ°∞');closeBrand();">Í≤êÏ°∞</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñ±" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Íµ¨Ï∞å');closeBrand();">Íµ¨Ï∞å</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñ±" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎÅåÎ°úÏóê');closeBrand();">ÎÅåÎ°úÏóê</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Ñ¥</h1>
+                                                      <div class="brand" char="„Ñ¥" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎÇòÎ•¥ÏãúÏÜå Î°úÎìúÎ¶¨Í≤åÏ¶à');closeBrand();">ÎÇòÎ•¥ÏãúÏÜå Î°úÎìúÎ¶¨Í≤åÏ¶à</a>
+                                                      </div>
+                                                   </div>                                                                        
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Ñ∑</h1>
+                                                      <div class="brand" char="„Ñ∑" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎèåÏ≤¥Ïï§Í∞ÄÎ∞îÎÇò');closeBrand();">ÎèåÏ≤¥Ïï§Í∞ÄÎ∞îÎÇò</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñ∑" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎîîÏò¨');closeBrand();">ÎîîÏò¨</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñ∑" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Îî•ÎîîÌÅ¨');closeBrand();">Îî•ÎîîÌÅ¨</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Ñπ</h1>
+                                                      <div class="brand" char="„Ñπ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎûÑÌîÑÎ°úÎ†å');closeBrand();">ÎûÑÌîÑÎ°úÎ†å</a>
+                                                      </div>
+                                                      <div class="brand" char="„Ñπ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎûëÎ∞©');closeBrand();">ÎûëÎ∞©</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„ÖÅ</h1>
+                                                      <div class="brand" char="„ÖÅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÎßàÌÅ¨Ï†úÏù¥ÏΩ•Ïä§');closeBrand();">ÎßàÌÅ¨Ï†úÏù¥ÏΩ•Ïä§</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î©îÎ•¥ÏÑ∏Îç∞Ïä§ Î≤§Ï∏†');closeBrand();">Î©îÎ•¥ÏÑ∏Îç∞Ïä§ Î≤§Ï∏†</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î™ΩÎ∏îÎûë');closeBrand();">Î™ΩÎ∏îÎûë</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„ÖÇ</h1>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î∞îÏù¥Î†àÎèÑ');closeBrand();">Î∞îÏù¥Î†àÎèÑ</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î∞úÎ†åÌã∞ÎÖ∏');closeBrand();">Î∞úÎ†åÌã∞ÎÖ∏</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î≤ÑÎ≤ÑÎ¶¨');closeBrand();">Î≤ÑÎ≤ÑÎ¶¨</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î≤†Î•¥ÏÇ¨Ï≤¥');closeBrand();">Î≤†Î•¥ÏÇ¨Ï≤¥</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î∂ÑÎçîÏÉµ');closeBrand();">Î∂ÑÎçîÏÉµ</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Î∂àÍ∞ÄÎ¶¨');closeBrand();">Î∂àÍ∞ÄÎ¶¨</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„ÖÖ</h1>
+                                                      <div class="brand" char="„ÖÖ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏÇ∞ÌÉÄÎßàÎ¶¨ÏïÑÎÖ∏Î≤®Îùº');closeBrand();">ÏÇ∞ÌÉÄÎßàÎ¶¨ÏïÑÎÖ∏Î≤®Îùº</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÖ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏÉ§ÎÑ¨');closeBrand();">ÏÉ§ÎÑ¨</a>
+                                                      </div>
+                                                      <div class="brand" char="„ÖÖ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏáºÌååÎìú');closeBrand();">ÏáºÌååÎìú</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Öá</h1>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏïÑÎ¶¨ÏïÑÎÇòÍ∑∏ÎûÄÎç∞');closeBrand();">ÏïÑÎ¶¨ÏïÑÎÇòÍ∑∏ÎûÄÎç∞</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏïÑÎ≤†ÌÅ¨Î°¨ÎπÑ');closeBrand();">ÏïÑÎ≤†ÌÅ¨Î°¨ÎπÑ</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏïÑÏø†ÏïÑ Îîî ÌååÎ•¥Îßà');closeBrand();">ÏïÑÏø†ÏïÑ Îîî ÌååÎ•¥Îßà</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏïàÎÇòÏàòÏù¥');closeBrand();">ÏïàÎÇòÏàòÏù¥</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏóêÎ•¥Î©îÏä§');closeBrand();">ÏóêÎ•¥Î©îÏä§</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏóòÎ¶¨ÏûêÎ≤†Ïä§ÏïÑÎç¥');closeBrand();">ÏóòÎ¶¨ÏûêÎ≤†Ïä§ÏïÑÎç¥</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öá" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏûÖÏÉùÎ°úÎûë');closeBrand();">ÏûÖÏÉùÎ°úÎûë</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Öà</h1>
+                                                      <div class="brand" char="„Öà" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Ï°∞ÎßêÎ°†');closeBrand();">Ï°∞ÎßêÎ°†</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öà" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Ï°¥Î∞îÎ∞îÌÜ†Ïä§');closeBrand();">Ï°¥Î∞îÎ∞îÌÜ†Ïä§</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öà" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('Ï•¨ÏãúÍæ∏Îõ∞Î•¥');closeBrand();">Ï•¨ÏãúÍæ∏Îõ∞Î•¥</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öà" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏßÄÎØ∏Ï∂î');closeBrand();">ÏßÄÎØ∏Ï∂î</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Öã</h1>
+                                                      <div class="brand" char="„Öã" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÏΩîÏπò');closeBrand();">ÏΩîÏπò</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öã" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌÅ¨Î¶¨Îìú');closeBrand();">ÌÅ¨Î¶¨Îìú</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öã" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌÅ¥Î¶∞');closeBrand();">ÌÅ¥Î¶∞</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Öå</h1>
+                                                      <div class="brand" char="„Öå" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌÜ∞Ìè¨Îìú');closeBrand();">ÌÜ∞Ìè¨Îìú</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>„Öç</h1>
+                                                      <div class="brand" char="„Öç" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌååÏΩîÎùºÎ∞ò');closeBrand();">ÌååÏΩîÎùºÎ∞ò</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öç" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌéòÎùºÍ∞ÄÎ™®');closeBrand();">ÌéòÎùºÍ∞ÄÎ™®</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öç" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌîÑÎùºÍ≥†ÎÇòÎ•¥');closeBrand();">ÌîÑÎùºÍ≥†ÎÇòÎ•¥</a>
+                                                      </div>
+                                                      <div class="brand" char="„Öç" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('ÌîÑÎùºÎã§');closeBrand();">ÌîÑÎùºÎã§</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
+                                                                
                                                             </li>
                                                         </div>
                                                     </ul>
@@ -257,33 +406,33 @@
                                         </div>
                                         <div class="category_brand">
                                             <div class="open">
-                                                <!--º∫∫∞ ≈¨∏ØΩ√ º∫∫∞ √¢ √‚∑¬-->
-                                                <a href="#" onclick="controlGender()">º∫∫∞</a>
+                                                <!--ÏÑ±Î≥Ñ ÌÅ¥Î¶≠Ïãú ÏÑ±Î≥Ñ Ï∞Ω Ï∂úÎ†•-->
+                                                <a href="#" onclick="controlGender()">ÏÑ±Î≥Ñ</a>
                                                 <div id="myGender" id="brand_sort_outer" class="slide_brand" style="top:-200px; opacity: 0; height:0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Gender
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeGender()">
-                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="¥›±‚">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="Îã´Í∏∞">
                                                             </a>
                                                         </h1>
-                                                        <!--≥ª∫Œ Ω∫≈©∑— øµø™-->
+                                                        <!--ÎÇ¥Î∂Ä Ïä§ÌÅ¨Î°§ ÏòÅÏó≠-->
                                                         <div class="scroll_wrapper scrollbar_inner" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-left: 30px; margin-right: 0px; max-height: 600px; overflow: hidden;">
-                                                                <!--º∫∫∞ ≈¨∏ØΩ√ listpage.html∑Œ ¿Ãµø(./listpage.html)-->
-                                                                <!--.jsp∑Œ ∫Ø∞Ê »ƒ listpage.htmlø° DB∞™ »£√‚-->
+                                                                <!--ÏÑ±Î≥Ñ ÌÅ¥Î¶≠Ïãú listpage.htmlÎ°ú Ïù¥Îèô(./listpage.html)-->
+                                                                <!--.jspÎ°ú Î≥ÄÍ≤Ω ÌõÑ listpage.htmlÏóê DBÍ∞í Ìò∏Ï∂ú-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">≥≤¿⁄</a></h1>
+                                                                        <h1><a href="./listpage.html">ÎÇ®Ïûê</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">ø©¿⁄</a></h1>
+                                                                        <h1><a href="./listpage.html">Ïó¨Ïûê</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">≥≤≥‡∞¯øÎ</a></h1>
+                                                                        <h1><a href="./listpage.html">ÎÇ®ÎÖÄÍ≥µÏö©</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -294,78 +443,78 @@
                                         </div>
                                         <div class="category_brand">
                                             <div class="open">
-                                                <!--∞Ëø≠ ≈¨∏ØΩ√ ∞Ëø≠ √¢ √‚∑¬-->
-                                                <a href="#" onclick="controlAccords()">∞Ëø≠</a>
+                                                <!--Í≥ÑÏó¥ ÌÅ¥Î¶≠Ïãú Í≥ÑÏó¥ Ï∞Ω Ï∂úÎ†•-->
+                                                <a href="#" onclick="controlAccords()">Í≥ÑÏó¥</a>
                                                 <div id="myAccords" id="brand_sort_outer" class="slide_brand" style="top:-300px; opacity: 0; height:0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Accords
                                                             <a href="javascript:void(0)" class="closebrand" onclick="closeAccords()">
-                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="¥›±‚">
+                                                                <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="Îã´Í∏∞">
                                                             </a>
                                                         </h1>
-                                                        <!--≥ª∫Œ Ω∫≈©∑— øµø™-->
-                                                        <div class="scroll_wrapper scrollbar_inner§ª" style="position: relative;">
+                                                        <!--ÎÇ¥Î∂Ä Ïä§ÌÅ¨Î°§ ÏòÅÏó≠-->
+                                                        <div class="scroll_wrapper scrollbar_inner„Öã" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-left: 70px; margin-right: 0px; max-height: 600px; overflow: hidden;">
-                                                                <!--∞Ëø≠ ≈¨∏ØΩ√ listpage.html∑Œ ¿Ãµø(./listpage.html)-->
-                                                                <!--.jsp∑Œ ∫Ø∞Ê »ƒ listpage.htmlø° DB∞™ »£√‚-->
+                                                                <!--Í≥ÑÏó¥ ÌÅ¥Î¶≠Ïãú listpage.htmlÎ°ú Ïù¥Îèô(./listpage.html)-->
+                                                                <!--.jspÎ°ú Î≥ÄÍ≤Ω ÌõÑ listpage.htmlÏóê DBÍ∞í Ìò∏Ï∂ú-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">«¡∑Á∆º</a></h1>
+                                                                        <h1><a href="./listpage.html">ÌîÑÎ£®Ìã∞</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">Ω√∆Æ∑ØΩ∫</a></h1>
+                                                                        <h1><a href="./listpage.html">ÏãúÌä∏Îü¨Ïä§</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">«√∑Œ∑≤</a></h1>
+                                                                        <h1><a href="./listpage.html">ÌîåÎ°úÎü¥</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">»≠¿Ã∆Æ«√∑Œ∑≤</a></h1>
+                                                                        <h1><a href="./listpage.html">ÌôîÏù¥Ìä∏ÌîåÎ°úÎü¥</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">Ω∫∆ƒ¿ÃΩ√</a></h1>
+                                                                        <h1><a href="./listpage.html">Ïä§ÌååÏù¥Ïãú</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">øÏµ</a></h1>
+                                                                        <h1><a href="./listpage.html">Ïö∞Îîî</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">±◊∏∞/«„∫Í</a></h1>
+                                                                        <h1><a href="./listpage.html">Í∑∏Î¶∞/ÌóàÎ∏å</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">∏”Ω∫≈©/æ⁄πˆ</a></h1>
+                                                                        <h1><a href="./listpage.html">Î®∏Ïä§ÌÅ¨/Ïï∞Î≤Ñ</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">Ω∫¿ß∆Æ</a></h1>
+                                                                        <h1><a href="./listpage.html">Ïä§ÏúÑÌä∏</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">∑π¡¯/πﬂªÔ</a></h1>
+                                                                        <h1><a href="./listpage.html">Î†àÏßÑ/Î∞úÏÇº</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">≥ª√ﬂ∑≤</a></h1>
+                                                                        <h1><a href="./listpage.html">ÎÇ¥Ï∂îÎü¥</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">«¡∑πΩ¨/æ∆∑Œ∏∂</a></h1>
+                                                                        <h1><a href="./listpage.html">ÌîÑÎ†àÏâ¨/ÏïÑÎ°úÎßà</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -374,7 +523,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--ªÛ¥‹ ƒ´≈◊∞Ì∏Æ ºˆµø √‚∑¬(∞Ì¡§ øµø™) = EDT, EDP-->
+                                        <!--ÏÉÅÎã® Ïπ¥ÌÖåÍ≥†Î¶¨ ÏàòÎèô Ï∂úÎ†•(Í≥†Ï†ï ÏòÅÏó≠) = EDT, EDP-->
                                         <ul class="category_list">
                                             <li class="no_child">
                                                 <a href="./listpage.html" class="category">EDT</a>
@@ -391,23 +540,30 @@
                     </div>
                 </div>
 
-                <!--∞Àªˆ øµø™[openNav() ¿Ã»ƒ ∞Àªˆ√¢ øµø™]-->
+                <!--Í≤ÄÏÉâ ÏòÅÏó≠[openNav() Ïù¥ÌõÑ Í≤ÄÏÉâÏ∞Ω ÏòÅÏó≠]-->
                 <div id="mySearch" class="slide_search" style="top: -350px; opacity: 0;">
                     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
-                        <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="¥›±‚">
+                        <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="Îã´Í∏∞">
                     </a>
                     <div class="search_inner">
-                        <!--∞Àªˆ√¢ form method="get" πÊΩƒ¿∏∑Œ search ≥—∞‹¡‹-->
-                        <form id="searchBarForm" action="./search.html" method="get" target="_self" enctype="multipart/form-data">
-                            <input id="banner_action" name="banner_action" value="" type="hidden">
-                            <!--∞Àªˆ « µÂ-->
-                            <div class="search_field">
-                                <fieldset title="∞ÀªˆæÓ∏¶ ¿‘∑¬«ÿ¡÷ººø‰."> <input id="keyword" name="keyword" fw-filter="" fw-label="∞ÀªˆæÓ" fw-msg="" class="inputTypeText" placeholder="«‚ºˆ ¿Ã∏ß¿∏∑Œ ∞Àªˆ" onmousedown="clickSearchForm(this)" value="" type="text">
-                                    <input type="image" src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" class="btn-sch" alt="∞Àªˆ¿ÃπÃ¡ˆ" onclick="submitSearchBanner(this); return false;">
-                                </fieldset>
-                            </div>
-                        </form>
-                        <!--ºº∫Œ∞Àªˆ øµø™ (ªË¡¶? ∫∏∑˘)-->
+                        <!--Í≤ÄÏÉâÏ∞Ω form method="get" Î∞©ÏãùÏúºÎ°ú search ÎÑòÍ≤®Ï§å-->
+                        
+                     <!--Í≤ÄÏÉâ ÌïÑÎìú-->
+                     <div class="search_field">
+                        <input type="radio" name="searchOpt" id="radio_brand"   value="brand" style="visibility: hidden;"> 
+                        <label for="radio_brand" id="radio_brand_label" onclick="brandLabelClick()">Î∏åÎûúÎìúÎ™Ö</label> 
+                        <input type="radio"   name="searchOpt" id="radio_name" value="name"   style="visibility: hidden;"> 
+                        <label for="radio_name"   id="radio_name_label" onclick="nameLabelClick()">Ìñ•ÏàòÎ™Ö</label>
+                        <fieldset title="Í≤ÄÏÉâÏñ¥Î•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî." onkeypress="enterSearchBanner(this);">
+                           <input id="keyword1" name="keyword" fw-label="Í≤ÄÏÉâÏñ¥"   class="inputTypeText" type="text" value="" />
+                           <button id="btn1" type="button" class="btn-sch" alt="Í≤ÄÏÉâÏù¥ÎØ∏ÏßÄ" onclick="brandSearch()">
+                              <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="Í≤ÄÏÉâ">
+                           </button>
+                        </fieldset>
+                     </div>
+
+                 
+                        <!--ÏÑ∏Î∂ÄÍ≤ÄÏÉâ ÏòÅÏó≠ (ÏÇ≠Ï†ú? Î≥¥Î•ò)-->
                         <div class="xans-element- xans-search xans-search-hotkeyword detail_search">
 
                         </div>
@@ -415,13 +571,13 @@
                 </div>
             </div>
         </div>
-        <!--∏ﬁ¿Œ «‚ºˆ √‚∑¬ («œ¥‹ ∫Œ∫– / DB∑Œ »£√‚)-->
+        <!--Î©îÏù∏ Ìñ•Ïàò Ï∂úÎ†• (ÌïòÎã® Î∂ÄÎ∂Ñ / DBÎ°ú Ìò∏Ï∂ú)-->
         <div id="container">
             <div id="contents">
                 <div class="main">
-                    <!--ƒ´≈◊∞Ì∏Æ ∑£¥˝ ≥Î√‚ øµø™ !√ﬂ»ƒ ∏ﬁº≠µÂ∑Œ ±∏«ˆ øπ¡§ = .main_content n∞≥ √‚∑¬!-->
+                    <!--Ïπ¥ÌÖåÍ≥†Î¶¨ ÎûúÎç§ ÎÖ∏Ï∂ú ÏòÅÏó≠ !Ï∂îÌõÑ Î©îÏÑúÎìúÎ°ú Íµ¨ÌòÑ ÏòàÏ†ï = .main_content nÍ∞ú Ï∂úÎ†•!-->
                     <div class="main_content" id="">
-                        <!--ƒ´≈◊∞Ì∏Æ ¡¶∏Ò-->
+                        <!--Ïπ¥ÌÖåÍ≥†Î¶¨ Ï†úÎ™©-->
                         <div class="m_tab_area cboth">
                             <div class="main_title cboth">
                                 <div class="title_t">
@@ -429,181 +585,12 @@
                                 </div>
                             </div>
                         </div>
-                        <!--ƒ´≈◊∞Ì∏Æ∫∞ «‚ºˆ √‚∑¬ øµø™-->
+                        <!--Ïπ¥ÌÖåÍ≥†Î¶¨Î≥Ñ Ìñ•Ïàò Ï∂úÎ†• ÏòÅÏó≠-->
                         <div class="tabcontent current">
                             <div class="cboth ec-base-product">
-                                <div class="swiper-container swiper_tab swiper-container-horizontal">
-                                    <!--ul ≥ª∫Œø° li «œ≥™¥Á «‚ºˆ «—∞≥-->
-                                    <ul class="prdList swiper-wrapper" style="width: 2620px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">
-                                        <!--thumbnail == ªÁ¡¯ øµø™ / description == ±€¿⁄ øµø™-->
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <!--«‚ºˆ ¿ÃπÃ¡ˆ-->
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <!--«‚ºˆ ¿Ã∏ß-->
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <!--¥Î«•∞Ëø≠-->
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="swiper-slide" style="width: 232px; margin-right: 30px;">
-                                            <div class="box">
-                                                <div class="thumbnail">
-                                                    <div class="prdImg">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <img src="" alt="ª˘«√ªÁ¡¯">
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                                <div class="description">
-                                                    <div class="name">
-                                                        <a href="#" class="_evt_tracker">
-                                                            <span style="font-size: 15px;color: #111111;">ª˘«√«‚ºˆ</span>
-                                                        </a>
-                                                    </div>
-                                                    <ul class="spec">
-                                                        <li rel="∞Ëø≠">
-                                                            <span style="font-size: 14px;color: #999999;">ª˘«√∞Ëø≠</span>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                    <div class="swiper-scrollbar swiper-scrollbar-tab">
-                                        <div class="swiper-scrollbar-drag" style="transform: translate3d(0px,0px,0px); width: 300px; transition-duration: 0ms;"></div>
-                                    </div>
+                                <div id="prdList_wrap" class="swiper-container swiper_tab swiper-container-horizontal">
+                                    <!--ul ÎÇ¥Î∂ÄÏóê li ÌïòÎÇòÎãπ Ìñ•Ïàò ÌïúÍ∞ú-->
+                                    
                                 </div>
                             </div>
                         </div>
@@ -613,17 +600,39 @@
         </div>
     </div>
     <script>
-        /* ƒ´≈◊∞Ì∏Æ∫∞ ªÛ«∞ ¡¯ø≠ swiper_tab */
-        var swiper_tab = new Swiper('.swiper-container', {
-            direction: 'horizontal',
-            roundLengths: true,
-            slidesPerView: 5, // «—¡Ÿø° ∫∏¿Ã¥¬ «‚ºˆ ∞≥ºˆ
-            spaceBetween: 28,
-            scrollbar: {
-                el: '.swiper-scrollbar',
-                dragSize: 300
+      /* Ïπ¥ÌÖåÍ≥†Î¶¨Î≥Ñ ÏÉÅÌíà ÏßÑÏó¥ swiper_tab */
+      var swiper_tab = new Swiper('.swiper-container', {
+         direction : 'horizontal',
+         roundLengths : true,
+         slidesPerView : 5, // ÌïúÏ§ÑÏóê Î≥¥Ïù¥Îäî Ìñ•Ïàò Í∞úÏàò
+         spaceBetween : 28,
+         scrollbar : {
+            el : '.swiper-scrollbar',
+            dragSize : 300
+         }
+      });
+   </script>
+
+
+   <script>
+      function brandLabelClick() {
+         document.getElementById("radio_brand_label").style.fontWeight = "bold";
+         document.getElementById("radio_name_label").style.fontWeight = "normal";
+      }
+
+      function nameLabelClick() {
+         document.getElementById("radio_brand_label").style.fontWeight = "normal";
+         document.getElementById("radio_name_label").style.fontWeight = "bold";
+      }
+   </script>
+   
+   <script>function enterSearchBanner() {
+            var searchBarForm = document.getElementById('searchBarForm');
+            var value = document.getElementById("keyword").value;
+            if (event.keyCode == 13) {
+                brandSearch();
             }
-        });
+        }
     </script>
 </body>
 

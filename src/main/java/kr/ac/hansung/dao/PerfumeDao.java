@@ -60,6 +60,45 @@ public class PerfumeDao {
 		
 	}
 	
+	public List<Perfume> getPerfumesByAccord(String accord){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where accord=:accord";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("accord",accord);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}	
+	
+	public List<Perfume> getPerfumesByGender(String gender){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where gender=:gender";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("gender",gender);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}	
+	
+	public List<Perfume> getPerfumesByPower(String power){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where power=:power";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("power",power);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}	
+	
 	
 	
 	public Long addPerfume(Perfume perfume) {
