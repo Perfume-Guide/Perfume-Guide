@@ -96,6 +96,8 @@ public class PerfumeController {
 	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value = "brand", required = false) String brand,
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "accord", required = false) String accord,
+			@RequestParam(value = "gender", required = false) String gender,
+			@RequestParam(value = "power", required = false) String power,
 			@RequestParam(value = "image", required = false) String image) {
 
 		if (brand != null) {
@@ -117,6 +119,22 @@ public class PerfumeController {
 			return ResponseEntity.ok(perfumes);
 		} else if (accord != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByAccord(accord);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		} else if (gender != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByGender(gender);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		}else if (power != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByPower(power);
 
 			if (perfumes.isEmpty()) {
 				return new ResponseEntity<>(HttpStatus.NO_CONTENT);

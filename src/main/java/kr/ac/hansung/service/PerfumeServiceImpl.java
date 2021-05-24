@@ -32,7 +32,32 @@ public class PerfumeServiceImpl implements PerfumeService {
 		return perfumeRepository.getPerfumesByBrand(brand);
 	}
 	
+	@Override
+	public List<Perfume> getPerfumesByAccord(String accord) {
+		return perfumeRepository.getPerfumesByAccord(accord);
+	}
 
+	@Override
+	public List<Perfume> getPerfumesByName(String name) {
+		return perfumeRepository.getPerfumesByName(name);
+	}
+
+	@Override
+	public List<Perfume> getPerfumesByGender(String gender) {
+		return perfumeRepository.getPerfumesByGender(gender);
+	}
+
+	@Override
+	public List<Perfume> getPerfumesByPower(String power) {
+		return perfumeRepository.getPerfumesByPower(power);
+	}
+	
+	@Override
+	public List<Perfume> getPerfumesByImage(String image) {
+		return perfumeRepository.getPerfumesByImage(image);
+	}
+
+	
 	/*
 	 * @Override public Perfume createPerfume(String brand, String name) { Perfume
 	 * perfume = new Perfume(); perfume.setBrand(brand); perfume.setName(name);
@@ -64,6 +89,7 @@ public class PerfumeServiceImpl implements PerfumeService {
 		
 		perfume.setNiche(request.getNiche());
 		perfume.setAccord(request.getAccord());
+		perfume.setImage(request.getImage());
 		
 		Long id = perfumeRepository.addPerfume(perfume);
 		perfume.setId(id);        
@@ -83,19 +109,6 @@ public class PerfumeServiceImpl implements PerfumeService {
 		
 	}
 
-	@Override
-	public List<Perfume> getPerfumesByAccord(String accord) {
-		return perfumeRepository.getPerfumesByAccord(accord);
-	}
-
-	@Override
-	public List<Perfume> getPerfumesByName(String name) {
-		return perfumeRepository.getPerfumesByName(name);
-	}
-
-	@Override
-	public List<Perfume> getPerfumesByImage(String image) {
-		return perfumeRepository.getPerfumesByImage(image);
-	}
+	
 
 }

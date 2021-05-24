@@ -73,6 +73,32 @@ public class PerfumeDao {
 		
 	}
 	
+	public List<Perfume> getPerfumesByGender(String gender){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where gender=:gender";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("gender",gender);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}	
+	
+	public List<Perfume> getPerfumesByPower(String power){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where power=:power";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("power",power);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}
+	
 	public List<Perfume> getPerfumesByImage(String image){
 		Session session = sessionFactory.getCurrentSession();
 		String hql = "from Perfume where image=:image";
@@ -86,7 +112,6 @@ public class PerfumeDao {
 		
 	}
 	
-	
 	public Long addPerfume(Perfume perfume) {
 		Session session = sessionFactory.getCurrentSession();
 		Long id = (Long) session.save(perfume);
@@ -94,13 +119,6 @@ public class PerfumeDao {
 		return id;
 	}
 	
-	
-	
-	
-	
-	
-	
-
 	public void deletePerfume(Perfume perfume) {
 		Session session = sessionFactory.getCurrentSession();
 		session.delete(perfume);

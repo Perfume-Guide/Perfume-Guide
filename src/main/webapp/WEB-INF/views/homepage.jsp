@@ -13,7 +13,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
     <!--js 연동-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js?ver=2"></script>
    
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -104,23 +104,200 @@
                      // $('#req' + i).text(val.name)
              })
 
-         }
+         } 
      })
      closeBrand()
  }
 
-//brandAjax("CK")
+ function genderAjax(gender) {
+     var mGender = gender //mBrand 바꾸면 그 brand 불러옴
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'gender=' + mGender,
+         success: function(data) {
 
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.gender)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<img src="" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         } 
+     })
+     closeBrand()
+ }
+ 
+ function accordAjax(accord) {
+     var mAccord = accord //mBrand 바꾸면 그 brand 불러옴
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'accord=' + mAccord,
+         success: function(data) {
+
+        	 if(!data) {
+        		 closeBrand();
+        		 return false;
+        	 }
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.accord)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<img src="" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         }
+     })
+     closeBrand()
+ }
+ 
+ function powerAjax(power) {
+     var mPower = power //mBrand 바꾸면 그 brand 불러옴
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'power=' + mPower,
+         success: function(data) {
+
+        	 if(!data) {
+        		 closeBrand();
+        		 return false;
+        	 }
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.power)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<img src="" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="#" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         }
+     })
+     closeBrand()
+ }
+ 
 function brandSearch() {
 	
 	var mBrand = $('#keyword1').val() //mBrand 바꾸면 그 brand 불러옴
 	var mOption = $(':input:radio[name=searchOpt]:checked').val()
-	/* if(mOption =='brand') {
-		mBrand = 'brand'
-	} else {
-		mBrand = 'name'
-	} */
-	//document.write(mOption)
 		$.ajax({
 	        url:'${pageContext.request.contextPath}/api/perfumes/search?searchOpt=' + mOption
 	        , method : 'GET'
@@ -136,9 +313,6 @@ function brandSearch() {
 	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 					$.each(res, function(i, val) {
 						$(".title_t").text(val.brand)
-						//$("#simple img").attr("src", "${pageContext.request.contextPath}/resources/image.1_걸.jpg");
-			             
-	                 //document.write(val.name)
 	                 if (i % 4 == 0) { // 한줄에 네 개씩
 	                     prdList_num++
 	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -171,7 +345,6 @@ function brandSearch() {
 	                         '</div>' +
 	                         '</div>' +
 	                         '</li>')
-	                     // $('#req' + i).text(val.name)
 	                     
 	             })
 
@@ -179,21 +352,7 @@ function brandSearch() {
 	     })
 	     closeBrand()
 }
-//brandSearch("겐조")
 
-</script>
-
-<script>
-function move() {
-    $(req1).ready(function() {
-    	$.ajax({
-	        success :  function(data){
-				
-	        	location.href = "./listpage.html"
-	        }
-	    })
-    })
-}
 </script>
    
     <!--css 연동-->
@@ -201,8 +360,8 @@ function move() {
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/bootstrap.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/homepage.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css?ver=1">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?ver=1">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css?ver=2">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?ver=2">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
     <title>퍼퓸가이드</title>
 </head>
@@ -255,7 +414,7 @@ function move() {
                                                 <div id="myBrand" id="brand_sort_outer" class="slide_brand" style="top:-600px; opacity: 0; height: 0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Brands
-                                                            <a href="javascript:void(0)" class="closebrand" onclick="closeBrand()">
+                                                            <a href="#" class="closebrand" onclick="closeBrand()">
                                                                 <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
@@ -265,172 +424,172 @@ function move() {
                                                                 <!--브랜드명 클릭시 listpage.html로 이동(./listpage.html)-->
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
                                                                 <div class="brand_link">
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>C</h1>
-                                                                        <div class="brand" char="C" style="display: block;">
-                                                                            <a href="./listpage.html">CK</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㄱ</h1>
-                                                                        <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="javascript:void(0)" onclick="brandAjax('게스')">게스</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="#" onclick="brandAjax('겐조')">겐조</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="javascript:void(0)"  onclick="brandSearch('구찌')">구찌</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄱ" style="display: block;">
-                                                                            <a href="./listpage.html">끌로에</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㄴ</h1>
-                                                                        <div class="brand" char="ㄴ" style="display: block;">
-                                                                            <a href="./listpage.html">나르시소 로드리게즈</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㄷ</h1>
-                                                                        <div class="brand" char="ㄷ" style="display: block;">
-                                                                            <a href="./listpage.html">돌체앤가바나</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄷ" style="display: block;">
-                                                                            <a href="./listpage.html">디올</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄷ" style="display: block;">
-                                                                            <a href="./listpage.html">딥디크</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㄹ</h1>
-                                                                        <div class="brand" char="ㄹ" style="display: block;">
-                                                                            <a href="./listpage.html">랄프로렌</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㄹ" style="display: block;">
-                                                                            <a href="./listpage.html">랑방</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅁ</h1>
-                                                                        <div class="brand" char="ㅁ" style="display: block;">
-                                                                            <a href="./listpage.html">마크제이콥스</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅁ" style="display: block;">
-                                                                            <a href="./listpage.html">메르세데스 벤츠</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅁ" style="display: block;">
-                                                                            <a href="./listpage.html">몽블랑</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅂ</h1>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">바이레도</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">발렌티노</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">버버리</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">베르사체</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">분더샵</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅂ" style="display: block;">
-                                                                            <a href="./listpage.html">불가리</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅅ</h1>
-                                                                        <div class="brand" char="ㅅ" style="display: block;">
-                                                                            <a href="./listpage.html">산타마리아노벨라</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅅ" style="display: block;">
-                                                                            <a href="./listpage.html">샤넬</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅅ" style="display: block;">
-                                                                            <a href="./listpage.html">쇼파드</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅇ</h1>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">아리아나그란데</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">아베크롬비</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">아쿠아 디 파르마</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">안나수이</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">에르메스</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">엘리자베스아덴</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅇ" style="display: block;">
-                                                                            <a href="./listpage.html">입생로랑</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅈ</h1>
-                                                                        <div class="brand" char="ㅈ" style="display: block;">
-                                                                            <a href="./listpage.html">조말론</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅈ" style="display: block;">
-                                                                            <a href="./listpage.html">존바바토스</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅈ" style="display: block;">
-                                                                            <a href="./listpage.html">쥬시꾸뛰르</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅈ" style="display: block;">
-                                                                            <a href="./listpage.html">지미추</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅋ</h1>
-                                                                        <div class="brand" char="ㅋ" style="display: block;">
-                                                                            <a href="./listpage.html">코치</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅋ" style="display: block;">
-                                                                            <a href="./listpage.html">크리드</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅋ" style="display: block;">
-                                                                            <a href="./listpage.html">클린</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅌ</h1>
-                                                                        <div class="brand" char="ㅌ" style="display: block;">
-                                                                            <a href="./listpage.html">톰포드</a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1>ㅍ</h1>
-                                                                        <div class="brand" char="ㅍ" style="display: block;">
-                                                                            <a href="./listpage.html">파코라반</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅍ" style="display: block;">
-                                                                            <a href="./listpage.html">페라가모</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅍ" style="display: block;">
-                                                                            <a href="./listpage.html">프라고나르</a>
-                                                                        </div>
-                                                                        <div class="brand" char="ㅍ" style="display: block;">
-                                                                            <a href="./listpage.html">프라다</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>C</h1>
+                                                      <div class="brand" char="C" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('CK');closeBrand();">CK</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㄱ</h1>
+                                                      <div class="brand" char="ㄱ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('게스');closeBrand();">게스</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄱ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('겐조');closeBrand();">겐조</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄱ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('구찌');closeBrand();">구찌</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄱ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('끌로에');closeBrand();">끌로에</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㄴ</h1>
+                                                      <div class="brand" char="ㄴ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('나르시소 로드리게즈');closeBrand();">나르시소 로드리게즈</a>
+                                                      </div>
+                                                   </div>                                                                        
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㄷ</h1>
+                                                      <div class="brand" char="ㄷ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('돌체앤가바나');closeBrand();">돌체앤가바나</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄷ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('디올');closeBrand();">디올</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄷ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('딥디크');closeBrand();">딥디크</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㄹ</h1>
+                                                      <div class="brand" char="ㄹ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('랄프로렌');closeBrand();">랄프로렌</a>
+                                                      </div>
+                                                      <div class="brand" char="ㄹ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('랑방');closeBrand();">랑방</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅁ</h1>
+                                                      <div class="brand" char="ㅁ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('마크제이콥스');closeBrand();">마크제이콥스</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅁ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('메르세데스 벤츠');closeBrand();">메르세데스 벤츠</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅁ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('몽블랑');closeBrand();">몽블랑</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅂ</h1>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('바이레도');closeBrand();">바이레도</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('발렌티노');closeBrand();">발렌티노</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('버버리');closeBrand();">버버리</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('베르사체');closeBrand();">베르사체</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('분더샵');closeBrand();">분더샵</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅂ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('불가리');closeBrand();">불가리</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅅ</h1>
+                                                      <div class="brand" char="ㅅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('산타마리아노벨라');closeBrand();">산타마리아노벨라</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('샤넬');closeBrand();">샤넬</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅅ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('쇼파드');closeBrand();">쇼파드</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅇ</h1>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('아리아나그란데');closeBrand();">아리아나그란데</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('아베크롬비');closeBrand();">아베크롬비</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('아쿠아 디 파르마');closeBrand();">아쿠아 디 파르마</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('안나수이');closeBrand();">안나수이</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('에르메스');closeBrand();">에르메스</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('엘리자베스아덴');closeBrand();">엘리자베스아덴</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅇ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('입생로랑');closeBrand();">입생로랑</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅈ</h1>
+                                                      <div class="brand" char="ㅈ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('조말론');closeBrand();">조말론</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅈ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('존바바토스');closeBrand();">존바바토스</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅈ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('쥬시꾸뛰르');closeBrand();">쥬시꾸뛰르</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅈ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('지미추');closeBrand();">지미추</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅋ</h1>
+                                                      <div class="brand" char="ㅋ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('코치');closeBrand();">코치</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅋ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('크리드');closeBrand();">크리드</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅋ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('클린');closeBrand();">클린</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅌ</h1>
+                                                      <div class="brand" char="ㅌ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('톰포드');closeBrand();">톰포드</a>
+                                                      </div>
+                                                   </div>
+                                                   <div class="brand_group" style="display: block;">
+                                                      <h1>ㅍ</h1>
+                                                      <div class="brand" char="ㅍ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('파코라반');closeBrand();">파코라반</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅍ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('페라가모');closeBrand();">페라가모</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅍ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('프라고나르');closeBrand();">프라고나르</a>
+                                                      </div>
+                                                      <div class="brand" char="ㅍ" style="display: block;">
+                                                         <a href="#" onclick="brandAjax('프라다');closeBrand();">프라다</a>
+                                                      </div>
+                                                   </div>
+                                                </div>
                                                             </li>
                                                         </div>
                                                     </ul>
@@ -444,7 +603,7 @@ function move() {
                                                 <div id="myGender" id="brand_sort_outer" class="slide_brand" style="top:-200px; opacity: 0; height:0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Gender
-                                                            <a href="javascript:void(0)" class="closebrand" onclick="closeGender()">
+                                                            <a href="#" class="closebrand" onclick="closeGender()">
                                                                 <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
@@ -455,17 +614,17 @@ function move() {
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">남자</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('남자')">남자</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">여자</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('여자')">여자</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">남녀공용</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('남녀공용')">남녀공용</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -481,7 +640,7 @@ function move() {
                                                 <div id="myAccords" id="brand_sort_outer" class="slide_brand" style="top:-300px; opacity: 0; height:0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Accords
-                                                            <a href="javascript:void(0)" class="closebrand" onclick="closeAccords()">
+                                                            <a href="#" class="closebrand" onclick="closeAccords()">
                                                                 <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
@@ -492,62 +651,63 @@ function move() {
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">프루티</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('프루티');closeBrand();">프루티</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">시트러스</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('시트러스')">시트러스</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">플로럴</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('플로럴')">플로럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">화이트플로럴</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('화이트플로럴')">화이트플로럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">스파이시</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('스파이시')">스파이시</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">우디</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('우디')">우디</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">그린/허브</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('그린')">그린/허브</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">머스크/앰버</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('머스크')">머스크/앰버</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">스위트</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('스위트')">스위트</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">레진/발삼</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('레진')">레진/발삼</a></h1>
+                                                                        <!-- 레진/발삼x -->
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">내추럴</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('내추럴')">내추럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="./listpage.html">프레쉬/아로마</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('아로마')">프레쉬/아로마</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -559,10 +719,10 @@ function move() {
                                         <!--상단 카테고리 수동 출력(고정 영역) = EDT, EDP-->
                                         <ul class="category_list">
                                             <li class="no_child">
-                                                <a href="./listpage.html" class="category">EDT</a>
+                                                <a href="#" onclick="powerAjax('EDT')" class="category">EDT</a>
                                             </li>
                                             <li class="no_child">
-                                                <a href="./listpage.html" class="category">EDP</a>
+                                                <a href="#" onclick="powerAjax('EDP')" class="category">EDP</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -575,7 +735,7 @@ function move() {
 
                 <!--검색 영역[openNav() 이후 검색창 영역]-->
                 <div id="mySearch" class="slide_search" style="top: -350px; opacity: 0;">
-                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">
+                    <a href="#" class="closebtn" onclick="closeNav()">
                         <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                     </a>
                     <div class="search_inner">
@@ -587,10 +747,10 @@ function move() {
                         <label for="radio_brand" id="radio_brand_label" onclick="brandLabelClick()">브랜드명</label> 
                         <input type="radio"   name="searchOpt" id="radio_name" value="name"   style="visibility: hidden;"> 
                         <label for="radio_name"   id="radio_name_label" onclick="nameLabelClick()">향수명</label>
-                        <fieldset form="searchBarForm" title="검색어를 입력해주세요." onkeypress="">
-                           <input id="keyword1" name="keyword" fw-label="검색어"   class="inputTypeText" type="text" value="" />
-                           <button id="btn1" type="button" class="btn-sch" alt="검색이미지"   onclick="brandSearch()">
-                              <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="검색">
+                        <fieldset form="searchBarForm" title="검색어를 입력해주세요." onkeypress="enterSearchBanner(this);">
+                           <input id="keyword1" name="keyword" fw-label="검색어" class="inputTypeText" type="text" value="" />
+                           <button id="btn1" type="button" class="btn-sch" alt="검색이미지" onclick="brandSearch()">
+                              <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="검색"">
                            </button>
                         </fieldset>
                      </div>
@@ -645,7 +805,14 @@ function move() {
          }
       });
    </script>
-
+	<script>function enterSearchBanner() {
+            var searchBarForm = document.getElementById('searchBarForm');
+            var value = document.getElementById("keyword1").value;
+            if (event.keyCode == 13) {
+            	brandSearch();
+            }
+        }
+    </script>
 
    <script>
       function brandLabelClick() {
