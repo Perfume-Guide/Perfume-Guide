@@ -16,6 +16,8 @@ public interface PerfumeService {
 	
 	List<Perfume> getPerfumesByName(String name);
 	
+	List<Perfume> getPerfumesByBrandAndName(String brand, String name);
+	
 	List<Perfume> getPerfumesByAccord(String accord);
 	
 	List<Perfume> getPerfumesByGender(String gender);

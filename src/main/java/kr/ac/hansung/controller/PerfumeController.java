@@ -181,7 +181,27 @@ public class PerfumeController {
 			@RequestParam(value = "power", required = false) String power
 			) {
 
-		if (brand != null) {
+		
+		if (brand!=null && name != null) {
+			
+			final List<Perfume> perfumes = perfumeService.getPerfumesByBrandAndName(brand, name);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+			
+		}
+		else if (name != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		} else if (brand != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
 
 			if (perfumes.isEmpty()) {
@@ -190,15 +210,7 @@ public class PerfumeController {
 
 			return ResponseEntity.ok(perfumes);
 
-		} else if (name != null) {
-			final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
-
-			if (perfumes.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return ResponseEntity.ok(perfumes);
-		} else if (accord != null) {
+		}  else if (accord != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByAccord(accord);
 
 			if (perfumes.isEmpty()) {
