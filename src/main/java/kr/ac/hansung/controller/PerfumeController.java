@@ -27,7 +27,7 @@ public class PerfumeController {
 	@Autowired
 	private PerfumeService perfumeService;
 
-	// db전체 불러오기
+	// db�쟾泥� 遺덈윭�삤湲�
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
@@ -97,10 +97,28 @@ public class PerfumeController {
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "accord", required = false) String accord,
 			@RequestParam(value = "gender", required = false) String gender,
-			@RequestParam(value = "power", required = false) String power,
-			@RequestParam(value = "image", required = false) String image) {
+			@RequestParam(value = "power", required = false) String power) {
 
-		if (brand != null) {
+if (brand!=null && name != null) {
+			
+			final List<Perfume> perfumes = perfumeService.getPerfumesByBrandAndName(brand, name);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+			
+		}
+		else if (name != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		} else if (brand != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
 
 			if (perfumes.isEmpty()) {
@@ -109,15 +127,7 @@ public class PerfumeController {
 
 			return ResponseEntity.ok(perfumes);
 
-		} else if (name != null) {
-			final List<Perfume> perfumes = perfumeService.getPerfumesByName(name);
-
-			if (perfumes.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return ResponseEntity.ok(perfumes);
-		} else if (accord != null) {
+		}  else if (accord != null) {
 			final List<Perfume> perfumes = perfumeService.getPerfumesByAccord(accord);
 
 			if (perfumes.isEmpty()) {
@@ -141,15 +151,7 @@ public class PerfumeController {
 			}
 
 			return ResponseEntity.ok(perfumes);
-		} else if (image != null) {
-			final List<Perfume> perfumes = perfumeService.getPerfumesByImage(image);
-
-			if (perfumes.isEmpty()) {
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			}
-
-			return ResponseEntity.ok(perfumes);
-		} else {
+		}else {
 			final List<Perfume> perfumes = perfumeService.getAllPerfumes();
 
 			if (perfumes.isEmpty()) {
@@ -208,14 +210,14 @@ public class PerfumeController {
 	      }
 	   }
 	
-	// DTO(Data Transfer Object) : 계층간 데이터 교환을 위한 객체, 여기서는 클라이언트(Postman)에서 오는 데이터를
-	// 수신할 목적으로 사용
+	// DTO(Data Transfer Object) : 怨꾩링媛� �뜲�씠�꽣 援먰솚�쓣 �쐞�븳 媛앹껜, �뿬湲곗꽌�뒗 �겢�씪�씠�뼵�듃(Postman)�뿉�꽌 �삤�뒗 �뜲�씠�꽣瑜�
+	// �닔�떊�븷 紐⑹쟻�쑝濡� �궗�슜
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<?> createPerfume(@RequestBody @Valid PerfumeDto request) {
 
 		// Creating a new category in the application...
 
-		// 생성자 인자가 너무 많다... 빌드패턴?
+		// �깮�꽦�옄 �씤�옄媛� �꼫臾� 留롫떎... 鍮뚮뱶�뙣�꽩?
 		// final Perfume perfume = perfumeService.createPerfume(request.getBrand(),
 		// request.getName());
 		final Perfume perfume = perfumeService.createPerfume(request);

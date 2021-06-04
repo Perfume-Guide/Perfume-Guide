@@ -1,4 +1,4 @@
-/* container ÏòÅÏó≠ CSS */
+/* container øµø™ CSS */
 
 #container {
     min-width: 0 !important;
@@ -14,6 +14,11 @@
     margin: 0 auto;
     padding: 0;
     float: none;
+}
+
+#container img {
+    width: 200px;
+    height: 200px;
 }
 
 @media screen and (max-width: 1599px) {
@@ -145,6 +150,41 @@
     color: #2e2e2e;
 }
 
+.ec-base-product #prdDetail {
+    height: 500px;
+}
+
+.ec-base-product #prdDetail li {
+    display: block;
+    text-align: center;
+    font-size: x-large;
+    color: #111;
+    margin-bottom: 30px;
+}
+
+.ec-base-product #prdDetail li#DetailTop {
+    font-size: large;
+    color: firebrick;
+    margin-top: 100px;
+}
+
+.ec-base-product #prdDetail li#DetailMiddle {
+    font-size: large;
+    color: sandybrown;
+    margin-top: 30px;
+}
+
+.ec-base-product #prdDetail li#DetailBottom {
+    font-size: large;
+    color: royalblue;
+    margin-top: 30px;
+}
+
+.ec-base-product #prdDetail img {
+    width: 200px;
+    height: 200px;
+}
+
 .ec-base-product .spec {
     margin: 0;
 }
@@ -153,7 +193,7 @@
     text-align: left;
 }
 
-.ec-base-product .spec li[rel="Í≥ÑÏó¥"] {
+.ec-base-product .spec li[rel="∞Ëø≠"] {
     padding-top: 8px;
     font-weight: 300;
     line-height: 1;

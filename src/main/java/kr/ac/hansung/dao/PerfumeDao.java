@@ -60,6 +60,20 @@ public class PerfumeDao {
 		
 	}
 	
+	public List<Perfume> getPerfumesByBrandAndName(String brand, String name){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where brand=:brand and name=:name";		
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("brand",brand);
+		query.setParameter("name",name);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}
+	
 	public List<Perfume> getPerfumesByAccord(String accord){
 		Session session = sessionFactory.getCurrentSession();
 		String hql = "from Perfume where accord=:accord";

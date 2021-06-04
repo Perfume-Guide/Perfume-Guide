@@ -57,7 +57,10 @@ public class PerfumeServiceImpl implements PerfumeService {
 		return perfumeRepository.getPerfumesByImage(image);
 	}
 
-	
+	@Override
+	public List<Perfume> getPerfumesByBrandAndName(String brand, String name) {
+		return perfumeRepository.getPerfumesByBrandAndName(brand, name);
+	}
 	/*
 	 * @Override public Perfume createPerfume(String brand, String name) { Perfume
 	 * perfume = new Perfume(); perfume.setBrand(brand); perfume.setName(name);

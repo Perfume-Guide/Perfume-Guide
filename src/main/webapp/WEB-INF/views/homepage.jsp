@@ -13,7 +13,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
     <!--js 연동-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js?ver=2"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js?ver=1"></script>
    
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -49,7 +49,127 @@
 	} 
 }
  */
+ 
+ function RandomArr(d) {
 
+     for(var c = d.length - 1; c > 0; c--)
+
+     {
+
+         var b = Math.floor(Math.random() * (c + 1));
+
+         var a = d[c]; d[c] = d[b]; d[b] = a;
+
+     }
+
+     return d
+
+ }
+
+
+ function homeAjax() {
+     $.ajax({
+         url: 'api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         success: function(data) {
+
+
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             var prd_num = 1
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             var arr = ["CK_ALL","CK_BE", "게스_걸", "게스_데어", "구찌_뱀부"]
+             
+             var random = RandomArr(res) // 랜덤으로 출력 // 베스트 아이템을 정해서 출력하는게 좋을듯 
+             							// 뒤로 가기 하면 다시 랜덤으로 생성해서
+             
+            
+             $.each(random, function(i, val) {
+            	 $(".title_t").text('Best')
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li id="prd' + prd_num + '" style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="${pageContext.request.contextPath}/detailpage.html?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="${pageContext.request.contextPath}/detailpage.html?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '<br/>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                         prd_num++
+             })
+
+         } 
+     })
+     closeBrand();
+ }
+ homeAjax()
+ 
+ /* function detailAjax(brand, name) {
+     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
+     var mName = name //mName 바꾸면 그 name 불러옴
+     $.ajax({
+         url: 'api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'brand=' + mBrand + '&name=' + mName,
+         success: function(data) {
+
+             var res = JSON.parse(data)
+
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+
+             $.each(res, function(i, val) {
+            	 
+                 //document.write(val.name)
+                 $(".title_t").text(val.brand)
+                 $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
+                     '<li><img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="사진"></li>' +
+                     '<li>' + val.name + '</li>' +
+                     '<li id="DetailTop">탑 노트 : </li>' +
+                     '<li id="DetailMiddle">미들 노트 : </li>' +
+                     '<li id="DetailBottom">바텀 노트 : </li>' +
+                     '</ul>')
+                    /*  history.pushState({
+                    	 //data: "${pageContext.request.contextPath}/",
+                		 page: val.name
+                     }), null, "${pageContext.request.contextPath}?page=1" 
+                //history.pushState(null, null, "${pageContext.request.contextPath}?name=" + val.name);
+             })
+             
+         }
+     })
+ }
  function brandAjax(brand) {
      var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
      $.ajax({
@@ -63,7 +183,7 @@
 
              var res = JSON.parse(data)
              var prdList_num = -1
-             
+             var prd_num = 1
              $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 			
              $.each(res, function(i, val) {
@@ -73,20 +193,20 @@
                      prdList_num++
                      $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
                  }
-                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                 $("#prdList" + prdList_num).append('<li id="prd' + prd_num + '" style="width: 232px; margin-right: 30px;">' +
                          '<div class="box">' +
                          '<div class="thumbnail">' +
                          '<!--향수 이미지-->' +
                          '<div class="prdImg">' +
-                         '<a href="#" class="_evt_tracker">' +
-                         '<img src="" alt="샘플사진">' +
+                         '<a href="javascript:void(0);"  onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
                          '</a>' +
                          '</div>' +
                          '</div>' +
                          '<div class="description">' +
                          '<!--향수 이름-->' +
                          '<div class="name">' +
-                         '<a href="#" class="_evt_tracker">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
                          '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                          '<!-- ajax 변경한 부분 -->' +
                          '<span id="req0"></span>' +
@@ -98,17 +218,45 @@
                          '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
                          '</li>' +
                          '</ul>' +
+                         '<br/>' +
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
+                         prd_num++
+                         // $('#req' + i).text(val.name)
+                         //history.pushState(null, null, "${pageContext.request.contextPath}/list=" + val.brand);
              })
 
          } 
      })
-     closeBrand()
- }
+     closeBrand();
+     /* history.pushState({
+    	 data: "${pageContext.request.contextPath}/",
+		 //page: 2
+     }), null, "${pageContext.request.contextPath}/#" 
+ } */
+/*  $(window).on('popstate', function(event) {
+     window.location = document.location.href;
+ }); */
 
+/*  $(window).on('popstate', function (event) { 
+	 const data = event.originalEvent.state; 
+	 $.ajax({ 
+		 url: data.data, 
+		 data: {page:data.page, type: data.type, keyword: data.keyword}, 
+		 type: "get", 
+		 success: (result) => { 
+			 $(".content").html(result); 
+			 //alert(JSON.stringify(data)); 
+			 //검색 처리 위해서 
+			 //$("#type").val(data.type||"t"); 
+			 //$("#keyword").val(data.keyword); 
+		} 
+		 
+	 }) 
+	 
+ }); */
+ 
  function genderAjax(gender) {
      var mGender = gender //mBrand 바꾸면 그 brand 불러옴
      $.ajax({
@@ -137,15 +285,15 @@
                          '<div class="thumbnail">' +
                          '<!--향수 이미지-->' +
                          '<div class="prdImg">' +
-                         '<a href="#" class="_evt_tracker">' +
-                         '<img src="" alt="샘플사진">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
                          '</a>' +
                          '</div>' +
                          '</div>' +
                          '<div class="description">' +
                          '<!--향수 이름-->' +
                          '<div class="name">' +
-                         '<a href="#" class="_evt_tracker">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
                          '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                          '<!-- ajax 변경한 부분 -->' +
                          '<span id="req0"></span>' +
@@ -157,6 +305,7 @@
                          '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
                          '</li>' +
                          '</ul>' +
+                         '<br/>' +
                          '</div>' +
                          '</div>' +
                          '</li>')
@@ -200,15 +349,15 @@
                          '<div class="thumbnail">' +
                          '<!--향수 이미지-->' +
                          '<div class="prdImg">' +
-                         '<a href="#" class="_evt_tracker">' +
-                         '<img src="" alt="샘플사진">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
                          '</a>' +
                          '</div>' +
                          '</div>' +
                          '<div class="description">' +
                          '<!--향수 이름-->' +
                          '<div class="name">' +
-                         '<a href="#" class="_evt_tracker">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
                          '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                          '<!-- ajax 변경한 부분 -->' +
                          '<span id="req0"></span>' +
@@ -220,6 +369,7 @@
                          '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
                          '</li>' +
                          '</ul>' +
+                         '<br/>' +
                          '</div>' +
                          '</div>' +
                          '</li>')
@@ -263,15 +413,15 @@
                          '<div class="thumbnail">' +
                          '<!--향수 이미지-->' +
                          '<div class="prdImg">' +
-                         '<a href="#" class="_evt_tracker">' +
-                         '<img src="" alt="샘플사진">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
                          '</a>' +
                          '</div>' +
                          '</div>' +
                          '<div class="description">' +
                          '<!--향수 이름-->' +
                          '<div class="name">' +
-                         '<a href="#" class="_evt_tracker">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
                          '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                          '<!-- ajax 변경한 부분 -->' +
                          '<span id="req0"></span>' +
@@ -283,6 +433,7 @@
                          '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
                          '</li>' +
                          '</ul>' +
+                         '<br/>' +
                          '</div>' +
                          '</div>' +
                          '</li>')
@@ -322,15 +473,15 @@ function brandSearch() {
 	                         '<div class="thumbnail">' +
 	                         '<!--향수 이미지-->' +
 	                         '<div class="prdImg">' +
-	                         '<a href="#" class="_evt_tracker">' +
-	                         '<img id="simple" src="#" alt="샘플사진">' +
+	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+	                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
 	                         '</a>' +
 	                         '</div>' +
 	                         '</div>' +
 	                         '<div class="description">' +
 	                         '<!--향수 이름-->' +
 	                         '<div class="name">' +
-	                         '<a href="#" class="_evt_tracker">' +
+	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
 	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
 	                         '<!-- ajax 변경한 부분 -->' +
 	                         '<span id="req0"></span>' +
@@ -342,6 +493,7 @@ function brandSearch() {
 	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
 	                         '</li>' +
 	                         '</ul>' +
+	                        // '<br/>' +
 	                         '</div>' +
 	                         '</div>' +
 	                         '</li>')
@@ -362,7 +514,7 @@ function brandSearch() {
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector1.css?ver=2">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/header_sector2.css?ver=2">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/container.css?ver=3">
     <title>퍼퓸가이드</title>
 </head>
 
@@ -410,11 +562,11 @@ function brandSearch() {
                                         <div class="category_brand">
                                             <div class="open">
                                                 <!--브랜드별 클릭시 브랜드 전체보기 창 출력-->
-                                                <a href="#" onclick="openBrand()">브랜드별</a>
+                                                <a href="#none" onclick="openBrand()">브랜드별</a>
                                                 <div id="myBrand" id="brand_sort_outer" class="slide_brand" style="top:-600px; opacity: 0; height: 0px;">
                                                     <ul class="brand_sort">
                                                         <h1 class="brand_sort_title">Brands
-                                                            <a href="#" class="closebrand" onclick="closeBrand()">
+                                                            <a href="" class="closebrand" onclick="closeBrand()">
                                                                 <img src="${pageContext.request.contextPath}/resources/image/close_btn.png" alt="닫기">
                                                             </a>
                                                         </h1>
@@ -427,16 +579,16 @@ function brandSearch() {
                                                    <div class="brand_group" style="display: block;">
                                                       <h1>C</h1>
                                                       <div class="brand" char="C" style="display: block;">
-                                                         <a href="#" onclick="brandAjax('CK');closeBrand();">CK</a>
+                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=CK" onclick="closeBrand()">CK</a>
                                                       </div>
                                                    </div>
                                                    <div class="brand_group" style="display: block;">
                                                       <h1>ㄱ</h1>
                                                       <div class="brand" char="ㄱ" style="display: block;">
-                                                         <a href="#" onclick="brandAjax('게스');closeBrand();">게스</a>
+                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=게스" onclick="closeBrand()">게스</a>
                                                       </div>
                                                       <div class="brand" char="ㄱ" style="display: block;">
-                                                         <a href="#" onclick="brandAjax('겐조');closeBrand();">겐조</a>
+                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=겐조 " onclick="closeBrand()">겐조</a>
                                                       </div>
                                                       <div class="brand" char="ㄱ" style="display: block;">
                                                          <a href="#" onclick="brandAjax('구찌');closeBrand();">구찌</a>
@@ -614,17 +766,17 @@ function brandSearch() {
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="genderAjax('남자')">남자</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('남자');controlGender();">남자</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="genderAjax('여자')">여자</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('여자');controlGender();">여자</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="genderAjax('남녀공용')">남녀공용</a></h1>
+                                                                        <h1><a href="#" onclick="genderAjax('남녀공용');controlGender();">남녀공용</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -651,63 +803,57 @@ function brandSearch() {
                                                                 <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('프루티');closeBrand();">프루티</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('프루티');closeAccords();">프루티</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('시트러스')">시트러스</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('시트러스');closeAccords();">시트러스</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('플로럴')">플로럴</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('플로럴');closeAccords();">플로럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('화이트플로럴')">화이트플로럴</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('화이트플로럴');closeAccords();">화이트플로럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('스파이시')">스파이시</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('스파이시');closeAccords();">스파이시</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('우디')">우디</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('우디');closeAccords();">우디</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('그린')">그린/허브</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('그린');closeAccords();">그린/허브</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('머스크')">머스크/앰버</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('머스크');closeAccords();">머스크/앰버</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('스위트')">스위트</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('스위트');closeAccords();">스위트</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('레진')">레진/발삼</a></h1>
-                                                                        <!-- 레진/발삼x -->
+                                                                        <h1><a href="#" onclick="accordAjax('내추럴');closeAccords();">내추럴</a></h1>
                                                                     </div>
                                                                 </div>
                                                                 <div class="brand_link">
                                                                     <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('내추럴')">내추럴</a></h1>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="brand_link">
-                                                                    <div class="brand_group" style="display: block;">
-                                                                        <h1><a href="#" onclick="accordAjax('아로마')">프레쉬/아로마</a></h1>
+                                                                        <h1><a href="#" onclick="accordAjax('아로마');closeAccords();">프레쉬/아로마</a></h1>
                                                                     </div>
                                                                 </div>
                                                             </li>
@@ -749,7 +895,7 @@ function brandSearch() {
                         <label for="radio_name"   id="radio_name_label" onclick="nameLabelClick()">향수명</label>
                         <fieldset form="searchBarForm" title="검색어를 입력해주세요." onkeypress="enterSearchBanner(this);">
                            <input id="keyword1" name="keyword" fw-label="검색어" class="inputTypeText" type="text" value="" />
-                           <button id="btn1" type="button" class="btn-sch" alt="검색이미지" onclick="brandSearch()">
+                           <button id="btn1" type="button" class="btn-sch" alt="검색이미지" onclick="brandSearch();closeNav();">
                               <img src="${pageContext.request.contextPath}/resources/image/top_search_icon.png" alt="검색"">
                            </button>
                         </fieldset>
