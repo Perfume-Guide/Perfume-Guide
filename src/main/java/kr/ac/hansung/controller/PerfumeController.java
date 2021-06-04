@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.entity.Perfume;
+import kr.ac.hansung.entity.PerfumeDetail;
 import kr.ac.hansung.exception.NotFoundException;
+import kr.ac.hansung.service.PerfumeDetailService;
 import kr.ac.hansung.service.PerfumeService;
 
 /* URL: /api/categories
@@ -34,6 +36,9 @@ public class PerfumeController {
 
 	@Autowired
 	private PerfumeService perfumeService;
+	
+	@Autowired
+	private PerfumeDetailService detailService;
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
@@ -58,6 +63,7 @@ public class PerfumeController {
 
 		return new ResponseEntity<Perfume>(perfume, HttpStatus.OK);
 	}
+	
 
 	@RequestMapping(path = "/search", method = RequestMethod.GET)
 	public ResponseEntity<?> retrievePerfumeByBrand(
@@ -93,86 +99,20 @@ public class PerfumeController {
 		}
 	}
 
-	/*
-	 * @RequestMapping(path = "/search", method = RequestMethod.GET) public
-	 * ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value = "keyword",
-	 * required = false) String keyword,
-	 * 
-	 * @RequestParam(value = "brand", required = false) String brand,
-	 * 
-	 * @RequestParam(value = "name", required = false) String name,
-	 * 
-	 * @RequestParam(value = "accord", required = false) String accord) {
-	 * 
-	 * if (keyword.equals("brand")) { // if brand is null ? >> exeption 처리 final
-	 * List<Perfume> perfumes = perfumeService.getPerfumesByBrand(brand);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes);
-	 * 
-	 * } else if (keyword.equals("name")) { final List<Perfume> perfumes =
-	 * perfumeService.getPerfumesByName(name);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); } else if (keyword.equals("accord")) {
-	 * final List<Perfume> perfumes = perfumeService.getPerfumesByAccord(accord);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); } else { final List<Perfume> perfumes =
-	 * perfumeService.getAllPerfumes();
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); }
-	 * 
-	 * }
-	 */
+	@GetMapping(path = "/{id}/details")
+	public ResponseEntity<?> retrieveDetailById(@PathVariable Long id){
+		
+		PerfumeDetail detail = detailService.getDetailById(id);
+		
+		if(detail == null) {
+			throw new NotFoundException(id);
+		}
+				
+		return ResponseEntity.ok(detail);
+	}
 
-	/*
-	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
-	 * retrievePerfumeByBrand(@RequestParam(value = "brand", required = false)
-	 * String brand,
-	 * 
-	 * @RequestParam(value = "name", required = false) String name,
-	 * 
-	 * @RequestParam(value = "accord", required = false) String accord) {
-	 * 
-	 * if (brand != null) { final List<Perfume> perfumes =
-	 * perfumeService.getPerfumesByBrand(brand);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes);
-	 * 
-	 * } else if (name != null) { final List<Perfume> perfumes =
-	 * perfumeService.getPerfumesByName(name);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); } else if (accord != null) { final
-	 * List<Perfume> perfumes = perfumeService.getPerfumesByAccord(accord);
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); } else { final List<Perfume> perfumes =
-	 * perfumeService.getAllPerfumes();
-	 * 
-	 * if (perfumes.isEmpty()) { return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-	 * }
-	 * 
-	 * return ResponseEntity.ok(perfumes); } }
-	 */
-
+	
+	
 	@RequestMapping(path = "/keyword", method = RequestMethod.GET)
 	public ResponseEntity<?> retrievePerfumeByBrand(@RequestParam(value = "brand", required = false) String brand,
 			@RequestParam(value = "name", required = false) String name,

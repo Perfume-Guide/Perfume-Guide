@@ -9,254 +9,25 @@
     <!--모바일 우선-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!--swiper 연동-->
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper_bundle.css" />
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/swiper_bundle.css?1" />
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js?2"></script>
     <!--js 연동-->
     <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/search.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js?ver=1"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
+   
+   <% 
+
+request.setCharacterEncoding("UTF-8"); //받아올 데이터의 인코딩
+
+String brand = request.getParameter("brand"); 
+String name = request.getParameter("name"); 
+//out.print(brand);
+%>
    
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-/* function reqAjax1() {
-    $.ajax({
-        url:'api/perfumes/test'
-        , method : 'GET'
-        , contentType: "application/json"
-        , dataType: "text"
-        , success :  function(resp){
-           $('#req1').text(resp)
-            
-        }
-    })	
-} */
 
-/* function reqAjax1(id) {
-	var mId = id //mId 바꾸면 그 id 불러옴
-	if(mId == 1) {
-		$.ajax({
-	        url:'api/perfumes/'+mId
-	        , method : 'GET'
-	        , contentType: "application/json"
-	        , dataType: "text"
-	        , data : 'id='+mId
-	        , success :  function(data){
-	        	var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
-	        
-	        	$('#req1').text(json)
-	        }
-	    })
-	} 
-}
- */
- 
- function RandomArr(d) {
-
-     for(var c = d.length - 1; c > 0; c--)
-
-     {
-
-         var b = Math.floor(Math.random() * (c + 1));
-
-         var a = d[c]; d[c] = d[b]; d[b] = a;
-
-     }
-
-     return d
-
- }
-
-
- function homeAjax() {
-     $.ajax({
-         url: 'api/perfumes/keyword/',
-         method: 'GET',
-         contentType: "application/json",
-         dataType: "text",
-         traditional: true,
-         success: function(data) {
-
-
-             var res = JSON.parse(data)
-             var prdList_num = -1
-             var prd_num = 1
-             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-			
-             var arr = ["CK_ALL","CK_BE", "게스_걸", "게스_데어", "구찌_뱀부"]
-             
-             var random = RandomArr(res) // 랜덤으로 출력 // 베스트 아이템을 정해서 출력하는게 좋을듯 
-             							// 뒤로 가기 하면 다시 랜덤으로 생성해서
-             
-            
-             $.each(random, function(i, val) {
-            	 $(".title_t").text('Best')
-                 //document.write(val.name)
-                 if (i % 4 == 0) { // 한줄에 네 개씩
-                     prdList_num++
-                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
-                 }
-                 $("#prdList" + prdList_num).append('<li id="prd' + prd_num + '" style="width: 232px; margin-right: 30px;">' +
-                         '<div class="box">' +
-                         '<div class="thumbnail">' +
-                         '<!--향수 이미지-->' +
-                         '<div class="prdImg">' +
-                         '<a href="${pageContext.request.contextPath}/detailpage.html?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
-                         '</a>' +
-                         '</div>' +
-                         '</div>' +
-                         '<div class="description">' +
-                         '<!--향수 이름-->' +
-                         '<div class="name">' +
-                         '<a href="${pageContext.request.contextPath}/detailpage.html?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
-                         '<!-- ajax 변경한 부분 -->' +
-                         '<span id="req0"></span>' +
-                         '</a>' +
-                         '</div>' +
-                         '<!--대표계열-->' +
-                         '<ul class="spec">' +
-                         '<li rel="계열">' +
-                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
-                         '</li>' +
-                         '</ul>' +
-                         '<br/>' +
-                         '</div>' +
-                         '</div>' +
-                         '</li>')
-                         prd_num++
-             })
-
-         } 
-     })
-     closeBrand();
- }
- homeAjax()
- 
- /* function detailAjax(brand, name) {
-     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
-     var mName = name //mName 바꾸면 그 name 불러옴
-     $.ajax({
-         url: 'api/perfumes/keyword/',
-         method: 'GET',
-         contentType: "application/json",
-         dataType: "text",
-         traditional: true,
-         data: 'brand=' + mBrand + '&name=' + mName,
-         success: function(data) {
-
-             var res = JSON.parse(data)
-
-             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-
-             $.each(res, function(i, val) {
-            	 
-                 //document.write(val.name)
-                 $(".title_t").text(val.brand)
-                 $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
-                     '<li><img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="사진"></li>' +
-                     '<li>' + val.name + '</li>' +
-                     '<li id="DetailTop">탑 노트 : </li>' +
-                     '<li id="DetailMiddle">미들 노트 : </li>' +
-                     '<li id="DetailBottom">바텀 노트 : </li>' +
-                     '</ul>')
-                    /*  history.pushState({
-                    	 //data: "${pageContext.request.contextPath}/",
-                		 page: val.name
-                     }), null, "${pageContext.request.contextPath}?page=1" 
-                //history.pushState(null, null, "${pageContext.request.contextPath}?name=" + val.name);
-             })
-             
-         }
-     })
- }
- function brandAjax(brand) {
-     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
-     $.ajax({
-         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
-         method: 'GET',
-         contentType: "application/json",
-         dataType: "text",
-         traditional: true,
-         data: 'brand=' + mBrand,
-         success: function(data) {
-
-             var res = JSON.parse(data)
-             var prdList_num = -1
-             var prd_num = 1
-             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-			
-             $.each(res, function(i, val) {
-            	 $(".title_t").text(val.brand)
-                 //document.write(val.name)
-                 if (i % 4 == 0) { // 한줄에 네 개씩
-                     prdList_num++
-                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
-                 }
-                 $("#prdList" + prdList_num).append('<li id="prd' + prd_num + '" style="width: 232px; margin-right: 30px;">' +
-                         '<div class="box">' +
-                         '<div class="thumbnail">' +
-                         '<!--향수 이미지-->' +
-                         '<div class="prdImg">' +
-                         '<a href="javascript:void(0);"  onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
-                         '</a>' +
-                         '</div>' +
-                         '</div>' +
-                         '<div class="description">' +
-                         '<!--향수 이름-->' +
-                         '<div class="name">' +
-                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
-                         '<!-- ajax 변경한 부분 -->' +
-                         '<span id="req0"></span>' +
-                         '</a>' +
-                         '</div>' +
-                         '<!--대표계열-->' +
-                         '<ul class="spec">' +
-                         '<li rel="계열">' +
-                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
-                         '</li>' +
-                         '</ul>' +
-                         '<br/>' +
-                         '</div>' +
-                         '</div>' +
-                         '</li>')
-                         prd_num++
-                         // $('#req' + i).text(val.name)
-                         //history.pushState(null, null, "${pageContext.request.contextPath}/list=" + val.brand);
-             })
-
-         } 
-     })
-     closeBrand();
-     /* history.pushState({
-    	 data: "${pageContext.request.contextPath}/",
-		 //page: 2
-     }), null, "${pageContext.request.contextPath}/#" 
- } */
-/*  $(window).on('popstate', function(event) {
-     window.location = document.location.href;
- }); */
-
-/*  $(window).on('popstate', function (event) { 
-	 const data = event.originalEvent.state; 
-	 $.ajax({ 
-		 url: data.data, 
-		 data: {page:data.page, type: data.type, keyword: data.keyword}, 
-		 type: "get", 
-		 success: (result) => { 
-			 $(".content").html(result); 
-			 //alert(JSON.stringify(data)); 
-			 //검색 처리 위해서 
-			 //$("#type").val(data.type||"t"); 
-			 //$("#keyword").val(data.keyword); 
-		} 
-		 
-	 }) 
-	 
- }); */
- 
  function genderAjax(gender) {
      var mGender = gender //mBrand 바꾸면 그 brand 불러옴
      $.ajax({
@@ -285,7 +56,7 @@
                          '<div class="thumbnail">' +
                          '<!--향수 이미지-->' +
                          '<div class="prdImg">' +
-                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
+                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +                         
                          '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
                          '</a>' +
                          '</div>' +
@@ -310,7 +81,9 @@
                          '</div>' +
                          '</li>')
                      // $('#req' + i).text(val.name)
-             })
+             }
+             
+             )
 
          } 
      })
@@ -579,16 +352,16 @@ function brandSearch() {
                                                    <div class="brand_group" style="display: block;">
                                                       <h1>C</h1>
                                                       <div class="brand" char="C" style="display: block;">
-                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=CK" onclick="closeBrand()">CK</a>
+                                                         <a href="#" onclick="brandAjax('CK');closeBrand();">CK</a>
                                                       </div>
                                                    </div>
                                                    <div class="brand_group" style="display: block;">
                                                       <h1>ㄱ</h1>
                                                       <div class="brand" char="ㄱ" style="display: block;">
-                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=게스" onclick="closeBrand()">게스</a>
+                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=게스" onclick="brandAjax('게스');closeBrand();">게스</a>
                                                       </div>
                                                       <div class="brand" char="ㄱ" style="display: block;">
-                                                         <a href="${pageContext.request.contextPath}/listpage.html?brand=겐조 " onclick="closeBrand()">겐조</a>
+                                                         <a href="#" onclick="brandAjax('겐조');closeBrand();">겐조</a>
                                                       </div>
                                                       <div class="brand" char="ㄱ" style="display: block;">
                                                          <a href="#" onclick="brandAjax('구찌');closeBrand();">구찌</a>
@@ -971,6 +744,168 @@ function brandSearch() {
          document.getElementById("radio_name_label").style.fontWeight = "bold";
       }
    </script>
+   
+       <script>
+
+
+	var brand = "<%=brand%>"
+	var name = "<%=name%>"
+	//var perfume_id=1
+	
+	
+	//function promise_function(){
+	var _promise = function(parm){
+		return new Promise(function(resolve, reject){
+			$.ajax({
+		         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+		         method: 'GET',
+		         contentType: "application/json",
+		         dataType: "text",
+		         traditional: true,
+		         data: 'brand=' + brand + '&name=' + name,
+		         
+		         success: function(data) {
+					
+		             var res = JSON.parse(data);
+		             
+		             var perfume_id = res[0].id;
+		             //var perfume_id = data[0].id;
+		             
+		             //alert(perfume_id);
+		             
+		             //alert(perfume_id);
+		             if(perfume_id!=null)
+		             	 resolve(perfume_id);
+		             else
+		            	 reject(Error("실패!"));
+		             
+		            /*  $.each(res, function(i, val) {
+		            	 perfume_id = val.perfume_id;
+		            	 resolve(perfume_id);
+		             })   */		             
+		         } // success
+		         
+		        
+		         
+		     });	// ajax		
+		});	// return new Promise
+	};
+	
+	_promise(true).then(function(perfume_id){
+		
+		$.ajax({
+	         url: '${pageContext.request.contextPath}/api/perfumes/'+perfume_id+'/details',
+	         method: 'GET',
+	         contentType: "application/json",
+	         dataType: "text",
+	         traditional: true,
+	         //data: 'brand=' + mBrand + '&name=' + mName,
+	         success: function(data) {
+				
+	             var res = JSON.parse(data)
+				
+	             var brand = res.perfume.brand;
+	             var name = res.perfume.name;
+	             
+	             
+	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+
+	             //document.write(brand);
+	             
+	             
+	             $(".title_t").text(brand)
+                 $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
+                     '<li><img src="${pageContext.request.contextPath}/resources/image/products/'+brand+'_'+name+'.jpg" alt="사진"></li>' +
+                     '<li>' + name + '</li>' +
+                     '<li id="DetailTop">탑 노트 : </li>' +
+                     '<li id="DetailMiddle">미들 노트 : </li>' +
+                     '<li id="DetailBottom">바텀 노트 : </li>' +
+                     '<li id="Explanation">설명 : '+res.explanation+'</li>' +
+                     '<li id="link">판매처 : <a href="'+res.link+'"> 링크 </a> </li>' +
+                     '</ul>') 	
+	              
+	             
+	             
+	             
+	             
+	             
+	             //$.each(res, function(i, val) {
+	             //$.each(data, function(i, val) {
+	            	 
+	            	 //var brand = val.perfume.brand;
+	            	 //alert(brand);
+	            	 //document.write(val.explanation);
+	            	 
+	            	 /*
+	            	 var brand = val.perfume.brand;
+	            	 var name = val.perfume.name;
+	            	 
+	            	 
+	                 $(".title_t").text(brand)
+	                 $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
+	                     '<li><img src="${pageContext.request.contextPath}/resources/image/products/'+brand+'_'+name+'.jpg" alt="사진"></li>' +
+	                     '<li>' + name + '</li>' +
+	                     '<li id="DetailTop">탑 노트 : </li>' +
+	                     '<li id="DetailMiddle">미들 노트 : </li>' +
+	                     '<li id="DetailBottom">바텀 노트 : </li>' +
+	                     '<li id="Explanation">설명 : '+val.explanation+'</li>' +
+	                     '</ul>') 	
+	                  */
+	                  
+	             //})	// each
+	             
+	         }	// success
+	     })	// ajax
+		
+		
+		
+	}, function(error){
+		alert(error);
+	});
+	
+	
+	
+function detailAjax() {
+	return new Promise(function(resolve, reject){
+	   
+	     $.ajax({
+	         url: '${pageContext.request.contextPath}/api/perfumes/'+perfume_id+'/details',
+	         method: 'GET',
+	         contentType: "application/json",
+	         //dataType: "text",
+	         traditional: true,
+	         //data: 'brand=' + mBrand + '&name=' + mName,
+	         success: function(data) {
+				//document.write(data)
+	              var res = JSON.parse(data)
+				//document.write(data)
+	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+
+	             $.each(res, function(i, val) {
+	            	 
+	                 //document.write(val.name)
+	                 $(".title_t").text(val.brand)
+	                 $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
+	                     '<li><img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="사진"></li>' +
+	                     '<li>' + val.name + '</li>' +
+	                     '<li id="DetailTop">탑 노트 : </li>' +
+	                     '<li id="DetailMiddle">미들 노트 : </li>' +
+	                     '<li id="DetailBottom">바텀 노트 : </li>' +
+	                     '<li id="Explanation">설명 : '+val.explanation+'</li>' +
+	                     '<li id="Explanation">링크 : '+val.link+'</li>' +
+	                     '</ul>') 	                    
+	             })	// each
+	             
+	         }	// success
+	     })	// ajax
+	 });	// return new Promise
+	
+}
+
+
+	
+	
+</script>
 </body>
 
 </html>
