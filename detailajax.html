@@ -12,11 +12,11 @@
             success: function(data) {
 
                 var res = JSON.parse(data)
+                var res_brand = res.brand
 
                 $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 
                 $.each(res, function(i, val) {
-                    //document.write(val.name)
                     $(".title_t").text(val.brand + " " + val.name)
                     $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
                         '<li><img src="경로/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
@@ -26,7 +26,6 @@
                         '<li id="DetailBottom">바텀 노트 : </li>' +
                         '</ul>')
                 })
-
             }
         })
     }

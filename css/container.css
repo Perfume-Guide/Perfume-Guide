@@ -151,7 +151,8 @@
 }
 
 .ec-base-product #prdDetail {
-    height: 500px;
+    height: auto;
+    margin-bottom: 50px;
 }
 
 .ec-base-product #prdDetail li {
