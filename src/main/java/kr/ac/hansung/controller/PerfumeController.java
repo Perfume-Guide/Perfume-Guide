@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kr.ac.hansung.dto.PerfumeDto;
 import kr.ac.hansung.entity.Perfume;
+import kr.ac.hansung.entity.PerfumeDetail;
 import kr.ac.hansung.exception.NotFoundException;
+import kr.ac.hansung.service.PerfumeDetailService;
 import kr.ac.hansung.service.PerfumeService;
 
 @RestController
@@ -27,7 +30,8 @@ public class PerfumeController {
 	@Autowired
 	private PerfumeService perfumeService;
 
-	// db�쟾泥� 遺덈윭�삤湲�
+	@Autowired
+	private PerfumeDetailService detailService;
 
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
@@ -90,6 +94,18 @@ public class PerfumeController {
 	 * 
 	 * return ResponseEntity.ok(perfumes); } }
 	 */
+	
+	@GetMapping(path = "/{id}/details")
+	public ResponseEntity<?> retrieveDetailById(@PathVariable Long id){
+		
+		PerfumeDetail detail = detailService.getDetailById(id);
+		
+		if(detail == null) {
+			throw new NotFoundException(id);
+		}
+				
+		return ResponseEntity.ok(detail);
+	}
 	
 	@ResponseBody
 	@RequestMapping(path = "/keyword", method = RequestMethod.GET)
