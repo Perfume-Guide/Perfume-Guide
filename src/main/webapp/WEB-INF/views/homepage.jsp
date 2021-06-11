@@ -361,7 +361,7 @@ function brandSearch() {
                     <div class="search_menu">
                         <li class="search_perfume">
                             <!--검색 아이콘 클릭시 openNav() 실행 (./js/search.js)-->
-                            <a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" onclick="openNav()">
+                            <a href="#none" onclick="openNav()">
                                 <img src="${pageContext.request.contextPath}/resources/image/search_icon.png" alt="search_icon">
                             </a>
                         </li>
