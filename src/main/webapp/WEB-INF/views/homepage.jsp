@@ -81,7 +81,9 @@
              var prd_num = 1
              $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 			
-             var arr = ["CK_ALL","CK_BE", "게스_걸", "게스_데어", "구찌_뱀부"]
+             var premiumList = ["샤넬_No.5","샤넬_블루 드 샤넬", "바이레도_블랑쉬", "바이레도_선데이즈드", "크리드_어벤투스", "크리드_스프링 플라워","디올_블루밍부케", "디올_소바쥬 EDP", "딥디크_도손", "딥디크_베티베리오"]
+             var summerList = ["CK_이터니티 아쿠아 포맨","랑방_걸 인 카프리", "랄프로렌_랄프", "돌체앤가바나_라이트블루", "클린_쿨 코튼 EDP", "조말론_우드 세이지 앤 씨솔트","존바바토스_아티산 블루", "메르세데스 벤츠_클럽 블루 프레쉬", "메르세데스 벤츠_셀렉트 데이", "몽블랑_스타워커"]
+             var woodList = ["CK_ONE","겐조_대나무 옴므", "구찌_구찌 바이 뿌르옴므", "끌로에_노마드 EDP", "디올_화렌화이트", "랄프로렌_폴로 그린","몽블랑_익스플로러", "존바바토스_닉조나스 실버", "지미추_어반 히어로", "톰포드_오드 우드"]
              
             // var random = RandomArr(res) // 랜덤으로 출력 // 베스트 아이템을 정해서 출력하는게 좋을듯 
              							// 뒤로 가기 하면 다시 랜덤으로 생성해서
@@ -92,8 +94,8 @@
              $("#prdList_wrap").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
              			
              $.each(res, function(i, val) {
-            	 if(arr.includes(val.brand+'_'+val.name) == true) {
-            		 $(".title_t").text('Best')
+            	 if(premiumList.includes(val.brand+'_'+val.name) == true) {
+            		 $("#title_premium").text('PREMIUM')
             		 $(".prdList.swiper-wrapper").append('<!--thumbnail == 사진 영역 / description == 글자 영역-->' +
             				 '<li class="swiper-slide" style="width: 232px; margin-right: 30px;">' +
                              
@@ -145,6 +147,122 @@
                 }
              });
 
+             
+             // summer
+             $("#prdList_wrap1").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
+  			
+             $.each(res, function(i, val) {
+            	 if(summerList.includes(val.brand+'_'+val.name) == true) {
+            		 $("#title_summer").text('SUMMER')
+            		 $(".prdList.swiper-wrapper").append('<!--thumbnail == 사진 영역 / description == 글자 영역-->' +
+            				 '<li class="swiper-slide" style="width: 232px; margin-right: 30px;">' +
+                             
+            				 '<div class="box">' +
+                             '<div class="thumbnail">' +
+                             '<!--향수 이미지-->' +
+                             '<div class="prdImg">' +
+                             '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+                             '</a>' +
+                             '</div>' +
+                             '</div>' +
+                             '<div class="description">' +
+                             '<!--향수 이름-->' +
+                             '<div class="name">' +
+                             '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                             '<!-- ajax 변경한 부분 -->' +
+                             //'<span id="req0"></span>' +
+                             '</a>' +
+                             '</div>' +
+                             '<!--대표계열-->' +
+                             '<ul class="spec">' +
+                             '<li rel="계열">' +
+                             '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                             '</li>' +
+                             '</ul>' +
+                             '<br/>' +
+                             '</div>' +
+                             '</div>' +
+                             '</li>')
+            	 }
+            	 
+             })
+             $("#prdList_wrap1").append('</ul>' +
+                   '<div class="swiper-scrollbar swiper-scrollbar-tab" style="display: block !important; visibility: visible; margin-bottom: 30px;">' +
+                   '<div class="swiper-scrollbar-drag" style="display: block !important; transform: translate3d(0px,0px,0px); width: 300px; transition-duration: 0ms;"></div>' +
+                   '</div>')
+             
+             /* 카테고리별 상품 진열 swiper_tab */
+             var swiper_tab1 = new Swiper('.swiper-container', {
+                direction : 'horizontal',
+                roundLengths : true,
+                slidesPerView : 5, // 한줄에 보이는 향수 개수
+                spaceBetween : 28,
+                scrollbar : {
+                   el : '.swiper-scrollbar',
+                   dragSize : 300
+                }
+             });
+             
+             
+             // wood
+             $("#prdList_wrap2").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
+   			
+             $.each(res, function(i, val) {
+            	 if(woodList.includes(val.brand+'_'+val.name) == true) {
+            		 $("#title_wood").text('WOOD')
+            		 $(".prdList.swiper-wrapper").append('<!--thumbnail == 사진 영역 / description == 글자 영역-->' +
+            				 '<li class="swiper-slide" style="width: 232px; margin-right: 30px;">' +
+                             
+            				 '<div class="box">' +
+                             '<div class="thumbnail">' +
+                             '<!--향수 이미지-->' +
+                             '<div class="prdImg">' +
+                             '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+                             '</a>' +
+                             '</div>' +
+                             '</div>' +
+                             '<div class="description">' +
+                             '<!--향수 이름-->' +
+                             '<div class="name">' +
+                             '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                             '<!-- ajax 변경한 부분 -->' +
+                             //'<span id="req0"></span>' +
+                             '</a>' +
+                             '</div>' +
+                             '<!--대표계열-->' +
+                             '<ul class="spec">' +
+                             '<li rel="계열">' +
+                             '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                             '</li>' +
+                             '</ul>' +
+                             '<br/>' +
+                             '</div>' +
+                             '</div>' +
+                             '</li>')
+            	 }
+            	 
+             })
+             $("#prdList_wrap2").append('</ul>' +
+                   '<div class="swiper-scrollbar swiper-scrollbar-tab" style="display: block !important; visibility: visible; margin-bottom: 30px;">' +
+                   '<div class="swiper-scrollbar-drag" style="display: block !important; transform: translate3d(0px,0px,0px); width: 300px; transition-duration: 0ms;"></div>' +
+                   '</div>')
+             
+             /* 카테고리별 상품 진열 swiper_tab */
+             var swiper_tab2 = new Swiper('.swiper-container', {
+                direction : 'horizontal',
+                roundLengths : true,
+                slidesPerView : 5, // 한줄에 보이는 향수 개수
+                spaceBetween : 28,
+                scrollbar : {
+                   el : '.swiper-scrollbar',
+                   dragSize : 300
+                }
+             });
+             
          } 
      })
      closeBrand();
@@ -180,16 +298,16 @@ function brandSearch() {
 	                         '<div class="thumbnail">' +
 	                         '<!--향수 이미지-->' +
 	                         '<div class="prdImg">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
 	                         '</a>' +
 	                         '</div>' +
 	                         '</div>' +
 	                         '<div class="description">' +
 	                         '<!--향수 이름-->' +
 	                         '<div class="name">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
 	                         '<!-- ajax 변경한 부분 -->' +
 	                         '<span id="req0"></span>' +
 	                         '</a>' +
@@ -243,7 +361,7 @@ function brandSearch() {
                     <div class="search_menu">
                         <li class="search_perfume">
                             <!--검색 아이콘 클릭시 openNav() 실행 (./js/search.js)-->
-                            <a href="#none" onclick="openNav()">
+                            <a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" onclick="openNav()">
                                 <img src="${pageContext.request.contextPath}/resources/image/search_icon.png" alt="search_icon">
                             </a>
                         </li>
@@ -627,17 +745,29 @@ function brandSearch() {
                         <!--카테고리 제목-->
                         <div class="m_tab_area cboth">
                             <div class="main_title cboth">
-                                <div class="title_t">
-                                    Sample
+                                <div id="title_premium" class="title_t">
+                                    PREMIUM
                                 </div>
                             </div>
                         </div>
                         <!--카테고리별 향수 출력 영역-->
                         <div class="tabcontent current" style="margin-left: 50px">
                             <div class="cboth ec-base-product">
-                                <div id="prdList_wrap" class="swiper-container swiper_tab swiper-container-horizontal">
-                                    <!--ul 내부에 li 하나당 향수 한개-->
-                                    
+                                <div id="prdList_wrap" class="swiper-container swiper_tab swiper-container-horizontal" style="margin-bottom: 50px">
+                                </div>
+                                <div class="main_title cboth">
+                                <div id="title_summer" class="title_t">
+                                    SUMMER
+                                </div>
+                            </div>
+                                <div id="prdList_wrap1" class="swiper-container swiper_tab1 swiper-container-horizontal" style="margin-bottom: 50px">
+                                </div>
+                                <div class="main_title cboth">
+                                <div id="title_wood" class="title_t">
+                                    WOOD
+                                </div>
+                            </div>
+                                <div id="prdList_wrap2" class="swiper-container swiper_tab2 swiper-container-horizontal" style="margin-bottom: 50px">
                                 </div>
                             </div>
                         </div>

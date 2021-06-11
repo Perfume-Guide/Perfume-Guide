@@ -808,8 +808,14 @@ function brandSearch() {
                             '<li id="DetailBottom">바텀 노트 : ' + val.bottom1 + ' &nbsp;  ' + val.bottom2 + ' &nbsp;  ' + val.bottom3 + '</li>' +
                             //'<li id="brandList">'+val.brand+' / '+val.name+'</li>' +
                             '<li id="Explanation">' +
-                            '<a href="https://search.shopping.naver.com/search/all?catId=50000002&frm=NVSHCAT&origQuery=' + val.brand + '%20' + val.name + '&pagingIndex=1&pagingSize=40&productSet=total&query=' + val.brand + '%20' + val.name + '&sort=rel&timestamp=&viewType=list#">' +
+                            '<a title="네이버 쇼핑" href="https://search.shopping.naver.com/search/all?catId=50000002&frm=NVSHCAT&origQuery=' + val.brand + '%20' + val.name + '&pagingIndex=1&pagingSize=40&productSet=total&query=' + val.brand + '%20' + val.name + '&sort=rel&timestamp=&viewType=list#" target="_blank">' +
                             '<img src="${pageContext.request.contextPath}/resources/image/naver.png" style="width: 40px; height: 40px;">' +
+                            '</a>' +
+                            '<a title="번개장터 검색" href="https://m.bunjang.co.kr/search/products?q=' + val.brand + '%20' + val.name + '" target="_blank">' +
+                            '<img src="${pageContext.request.contextPath}/resources/image/bunjang.png" style="width: 40px; height: 40px;">' +
+                            '</a>' +
+                            '<a title="다나와 검색" href="http://search.danawa.com/dsearch.php?query=' + val.brand + '+' + val.name + '+향수&tab=main" target="_blank">' +
+                            '<img src="${pageContext.request.contextPath}/resources/image/danawa.png" style="width: 30px; height: 30px;">' +
                             '</a>' +
                             '</li>' +
                             '</ul>')

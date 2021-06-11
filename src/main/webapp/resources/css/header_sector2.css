@@ -1,4 +1,4 @@
-/* Çì´õ ¼½ÅÍ2 css */
+/* ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½2 css */
 
 #header .sector2 {
     position: relative;
@@ -37,7 +37,7 @@
 }
 
 
-/* »ó´Ü Ä«Å×°í¸® ¿µ¿ª css */
+/* ï¿½ï¿½ï¿½ Ä«ï¿½×°ï¿½ ï¿½ï¿½ï¿½ï¿½ css */
 
 #main_category {
     float: left;
@@ -69,7 +69,7 @@
 }
 
 
-/* ºê·£µå ÀüÃ¼º¸±â css */
+/* ï¿½ê·£ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ css */
 
 .category_brand {
     float: left;
@@ -83,7 +83,7 @@
 }
 
 
-/* ºê·£µå Å¬¸¯½Ã Ãâ·ÂµÇ´Â Ã¢ css */
+/* ï¿½ê·£ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÂµÇ´ï¿½ Ã¢ css */
 
 .slide_brand {
     width: 100%;
@@ -133,7 +133,7 @@
 }
 
 
-/* ºê·£µå ÀüÃ¼º¸±â ³»ÀÇ css */
+/* ï¿½ê·£ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ css */
 
 .slide_brand .scrollbar_inner {
     max-height: 500px;
@@ -178,14 +178,14 @@
 }
 
 
-/* ¼ºº° Å¬¸¯½Ã Ãâ·ÂÃ¢ css */
+/* ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¢ css */
 
 div#myGender li.scrollbar_inner div.brand_group {
     text-align: right;
 }
 
 
-/* °Ë»ö Å¬¸¯½Ã Ãâ·ÂµÇ´Â Ã¢ css */
+/* ï¿½Ë»ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ÂµÇ´ï¿½ Ã¢ css */
 
 .slide_search {
     width: 100%;
@@ -269,7 +269,7 @@ div#myGender li.scrollbar_inner div.brand_group {
 }
 
 
-/* °Ë»öÃ¢ ´Ý±â ¹öÆ° */
+/* ï¿½Ë»ï¿½Ã¢ ï¿½Ý±ï¿½ ï¿½ï¿½Æ° */
 
 .closebtn img {
     width: 70px;
