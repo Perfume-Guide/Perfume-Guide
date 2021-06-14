@@ -3,28 +3,52 @@
         var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
         var mName = name //mName 바꾸면 그 name 불러옴
         $.ajax({
-            url: 'api/perfumes/keyword/',
+            url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
             method: 'GET',
             contentType: "application/json",
             dataType: "text",
             traditional: true,
             data: 'brand=' + mBrand + '&name=' + mName,
             success: function(data) {
-
+                //document.write(data)
                 var res = JSON.parse(data)
-                var res_brand = res.brand
 
+                //document.write(data)
                 $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 
                 $.each(res, function(i, val) {
-                    $(".title_t").text(val.brand + " " + val.name)
+                    val.top1 = isEmpty(val.top1)
+                    val.top2 = isEmpty(val.top2)
+                    val.top3 = isEmpty(val.top3)
+                    val.middle1 = isEmpty(val.middle1)
+                    val.middle2 = isEmpty(val.middle2)
+                    val.middle3 = isEmpty(val.middle3)
+                    val.bottom1 = isEmpty(val.bottom1)
+                    val.bottom2 = isEmpty(val.bottom2)
+                    val.bottom3 = isEmpty(val.bottom3)
+                    $(".title_t").text(val.brand)
                     $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
-                        '<li><img src="경로/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
-                        '<li>' + val.brand + ' ' + val.name + '</li>' +
-                        '<li id="DetailTop">탑 노트 : </li>' +
-                        '<li id="DetailMiddle">미들 노트 : </li>' +
-                        '<li id="DetailBottom">바텀 노트 : </li>' +
-                        '</ul>')
+                            '<li><img src="${pageContext.request.contextPath}/resources/image/products/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
+                            '<li>' + val.name + '</li>' +
+                            '<li id="DetailTop">탑 노트 : ' + val.top1 + ' ' + val.top2 + ' ' + val.top3 + '</li>' +
+                            //'<li>'+val.top1+' '+val.top2+' '+val.top3+'</li>' +
+                            '<li id="DetailMiddle">미들 노트 : ' + val.middle1 + ' ' + val.middle2 + ' ' + val.middle3 + '</li>' +
+                            '<li id="DetailBottom">바텀 노트 : ' + val.bottom1 + ' ' + val.bottom2 + ' ' + val.bottom3 + '</li>' +
+                            //'<li id="brandList">'+val.brand+' / '+val.name+'</li>' +
+                            '<li id="Explanation">' +
+                            '<a title="네이버 쇼핑" href="https://search.shopping.naver.com/search/all?catId=50000002&frm=NVSHCAT&origQuery=' + val.brand + '%20' + val.name + '&pagingIndex=1&pagingSize=40&productSet=total&query=' + val.brand + '%20' + val.name + '&sort=rel&timestamp=&viewType=list#" target="_blank">' +
+                            '<img src="${pageContext.request.contextPath}/resources/image/naver.png" style="width: 40px; height: 40px;">' +
+                            '</a>' +
+                            '<a title="번개장터 검색" href="https://m.bunjang.co.kr/search/products?q=' + val.brand + '%20' + val.name + '" target="_blank">' +
+                            '<img src="${pageContext.request.contextPath}/resources/image/bunjang.png" style="width: 40px; height: 40px;">' +
+                            '</a>' +
+                            '<a title="다나와 검색" href="http://search.danawa.com/dsearch.php?query=' + val.brand + '+' + val.name + '+향수&tab=main" target="_blank">' +
+                            '<img src="${pageContext.request.contextPath}/resources/image/danawa.png" style="width: 30px; height: 30px;">' +
+                            '</a>' +
+                            '</li>' +
+                            '</ul>')
+                        // } 
+                        //document.write(JSON.stringify(val['top1']))
                 })
             }
         })
