@@ -717,7 +717,7 @@ function brandSearch() {
 							</div>
 						</div>
 						<!--카테고리별 향수 출력 영역-->
-						<div class="tabcontent current" style="margin-left: 50px">
+						<div class="tabcontent current">
 							<div class="cboth ec-base-product">
 								<div id="prdList_wrap" class="swiper-container swiper_tab swiper-container-horizontal">
 									
@@ -802,10 +802,12 @@ function brandSearch() {
                     $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
                             '<li><img src="${pageContext.request.contextPath}/resources/image/products/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
                             '<li>' + val.name + '</li>' +
-                            '<li id="DetailTop">탑 노트 : ' + val.top1 + ' &nbsp;  ' + val.top2 + ' &nbsp;  ' + val.top3 + '</li>' +
+                            '<div style="margin-left: 40%;">' +                            
+                            '<li id="DetailTop" style="text-align: left;">탑 노트 : ' + val.top1 + ' &nbsp;  ' + val.top2 + ' &nbsp;  ' + val.top3 + '</li>' +
                             //'<li>'+val.top1+' '+val.top2+' '+val.top3+'</li>' +
-                            '<li id="DetailMiddle">미들 노트 : ' + val.middle1 + ' &nbsp; ' + val.middle2 + ' &nbsp;  ' + val.middle3 + '</li>' +
-                            '<li id="DetailBottom">바텀 노트 : ' + val.bottom1 + ' &nbsp;  ' + val.bottom2 + ' &nbsp;  ' + val.bottom3 + '</li>' +
+                            '<li id="DetailMiddle" style="text-align: left;">미들 노트 : ' + val.middle1 + ' &nbsp; ' + val.middle2 + ' &nbsp;  ' + val.middle3 + '</li>' +
+                            '<li id="DetailBottom" style="text-align: left;">바텀 노트 : ' + val.bottom1 + ' &nbsp;  ' + val.bottom2 + ' &nbsp;  ' + val.bottom3 + '</li>' +
+                            '</div>' +
                             //'<li id="brandList">'+val.brand+' / '+val.name+'</li>' +
                             '<li id="Explanation">' +
                             '<a title="네이버 쇼핑" href="https://search.shopping.naver.com/search/all?catId=50000002&frm=NVSHCAT&origQuery=' + val.brand + '%20' + val.name + '&pagingIndex=1&pagingSize=40&productSet=total&query=' + val.brand + '%20' + val.name + '&sort=rel&timestamp=&viewType=list#" target="_blank">' +
@@ -842,7 +844,7 @@ function brandSearch() {
             var res = JSON.parse(data)
             //var prdList_num = -1
             //var prd_num = 1
-			$("#prdList_wrap").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
+			$("#prdList_wrap").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; margin-left: 50px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
            
 			$.each(res, function(i, val) {
             	

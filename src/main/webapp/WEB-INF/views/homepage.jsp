@@ -287,8 +287,19 @@ function brandSearch() {
 	             var prdList_num = -1
 
 	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+	             
+	             
 					$.each(res, function(i, val) {
-						$(".title_t").text(val.brand)
+						if (mOption == "brand") {
+							location.href = "${pageContext.request.contextPath}/listpage?brand=" + val.brand
+						}
+						else if (mOption == "name") {
+							location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
+						}
+						
+								
+								
+								$(".title_t").text(val.brand)
 	                 if (i % 4 == 0) { // 한줄에 네 개씩
 	                     prdList_num++
 	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
