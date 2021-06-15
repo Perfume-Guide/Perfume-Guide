@@ -26,8 +26,11 @@ public class HomeController {
 	}
 		
 	@RequestMapping(value = "/listpage", method = RequestMethod.GET)
-	public String listPage(@RequestParam(value="brand") String brand,
-			@RequestParam(value = "name", required = false) String name) {
+	public String listPage(@RequestParam(value="brand", required=false) String brand,
+			@RequestParam(value = "name", required = false) String name,
+			@RequestParam(value = "gender", required = false) String gender,
+			@RequestParam(value = "accord", required = false) String accord,
+			@RequestParam(value = "power", required = false) String power) {
 		
 		return "listpage";
 	}

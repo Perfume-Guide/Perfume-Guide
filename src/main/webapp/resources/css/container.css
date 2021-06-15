@@ -1,4 +1,4 @@
-/* container 영역 CSS */
+/* container ¿µ¿ª CSS */
 
 #container {
     min-width: 0 !important;
@@ -151,7 +151,8 @@
 }
 
 .ec-base-product #prdDetail {
-    height: 500px;
+    height: auto;
+    margin-bottom: 50px;
 }
 
 .ec-base-product #prdDetail li {
@@ -193,7 +194,7 @@
     text-align: left;
 }
 
-.ec-base-product .spec li[rel="계열"] {
+.ec-base-product .spec li[rel="°è¿­"] {
     padding-top: 8px;
     font-weight: 300;
     line-height: 1;

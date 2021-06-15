@@ -9,9 +9,11 @@ function openBrand() {
 }
 
 function closeBrand() {
-    document.getElementById("myBrand").style.top = "-600px";
-    document.getElementById("myBrand").style.opacity = "0";
-    document.getElementById("myBrand").style.height = "0px";
+	if ( document.getElementById('myBrand') !== null ) {
+    	document.getElementById("myBrand").style.top = "-600px";
+    	document.getElementById("myBrand").style.opacity = "0";
+    	document.getElementById("myBrand").style.height = "0px";
+	}
 }
 
 // myGender 컨트롤
