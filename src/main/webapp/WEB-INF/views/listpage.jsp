@@ -45,8 +45,19 @@ function brandSearch() {
 	             var prdList_num = -1
 
 	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+	             
+	             
 					$.each(res, function(i, val) {
-						$(".title_t").text(val.brand)
+						if (mOption == "brand") {
+							location.href = "${pageContext.request.contextPath}/listpage?brand=" + val.brand
+						}
+						else if (mOption == "name") {
+							location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
+						}
+						
+						/* 		
+								
+								$(".title_t").text(val.brand)
 	                 if (i % 4 == 0) { // 한줄에 네 개씩
 	                     prdList_num++
 	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -56,16 +67,16 @@ function brandSearch() {
 	                         '<div class="thumbnail">' +
 	                         '<!--향수 이미지-->' +
 	                         '<div class="prdImg">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
 	                         '</a>' +
 	                         '</div>' +
 	                         '</div>' +
 	                         '<div class="description">' +
 	                         '<!--향수 이름-->' +
 	                         '<div class="name">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
 	                         '<!-- ajax 변경한 부분 -->' +
 	                         '<span id="req0"></span>' +
 	                         '</a>' +
@@ -79,7 +90,7 @@ function brandSearch() {
 	                        // '<br/>' +
 	                         '</div>' +
 	                         '</div>' +
-	                         '</li>')
+	                         '</li>') */
 	                     
 	             })
 
@@ -503,9 +514,7 @@ function brandSearch() {
                         <!--카테고리 제목-->
                         <div class="m_tab_area cboth">
                             <div class="main_title cboth">
-                                <div class="title_t">
-                                    Sample
-                                </div>
+                                <div class="title_t"></div>
                             </div>
                         </div>
                         <!--카테고리별 향수 출력 영역-->
@@ -582,7 +591,7 @@ function brandSearch() {
 			
             $.each(res, function(i, val) {
             	
-           	 $(".title_t").text(val.brand)
+           	 $(".title_t").text(val.eng_brand)
                 //document.write(val.name)
                 if (i % 4 == 0) { // 한줄에 네 개씩
                     prdList_num++
@@ -820,6 +829,72 @@ function accordAjax(accord) {
      closeBrand()
  }
  powerAjax(power);
+ 
+ 
+ function noteAjax(note) {
+     var mNote = note //mBrand 바꾸면 그 brand 불러옴
+     $.ajax({
+         url: '${pageContext.request.contextPath}/api/perfumes/keyword/',
+         method: 'GET',
+         contentType: "application/json",
+         dataType: "text",
+         traditional: true,
+         data: 'note=' + mNote,
+         success: function(data) {
+
+        	 if(!data) {
+        		 closeBrand();
+        		 return false;
+        	 }
+             var res = JSON.parse(data)
+             var prdList_num = -1
+             
+             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+			
+             $.each(res, function(i, val) {
+            	 $(".title_t").text(val.accord)
+                 //document.write(val.name)
+                 if (i % 4 == 0) { // 한줄에 네 개씩
+                     prdList_num++
+                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+                 }
+                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+                         '<div class="box">' +
+                         '<div class="thumbnail">' +
+                         '<!--향수 이미지-->' +
+                         '<div class="prdImg">' +
+                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+                         '</a>' +
+                         '</div>' +
+                         '</div>' +
+                         '<div class="description">' +
+                         '<!--향수 이름-->' +
+                         '<div class="name">' +
+                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+                         '<!-- ajax 변경한 부분 -->' +
+                         '<span id="req0"></span>' +
+                         '</a>' +
+                         '</div>' +
+                         '<!--대표계열-->' +
+                         '<ul class="spec">' +
+                         '<li rel="계열">' +
+                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+                         '</li>' +
+                         '</ul>' +
+                         '<br/>' +
+                         '</div>' +
+                         '</div>' +
+                         '</li>')
+                     // $('#req' + i).text(val.name)
+             })
+
+         }
+     })
+ }
+ noteAjax(note);
+ 
 </script>
 </body>
 

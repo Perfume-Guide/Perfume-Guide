@@ -32,6 +32,7 @@
 
 .main_content {
     margin: 0 auto;
+    padding-left: 5%;
 }
 
 .main_title {
@@ -42,7 +43,7 @@
 
 .title_t {
     color: #111;
-    font-size: 21px;
+    font-size: 30px;
     font-weight: 500;
     text-align: center;
     letter-spacing: 0.300em;
@@ -206,4 +207,26 @@
 .swiper-container-horizontal>.swiper-scrollbar {
     position: absolute;
     z-index: 50;
+}
+
+#DetailTop figure {
+    width: auto;
+    height: 30px;
+    margin: 0 5px;
+}
+
+#DetailMiddle figure {
+    width: auto;
+    height: 30px;
+    margin: 0 5px;
+}
+
+#DetailBottom figure {
+    width: auto;
+    height: 30px;
+    margin: 0 5px;
+}
+
+#prdDetail div#Detail {
+    text-align: left;
 }

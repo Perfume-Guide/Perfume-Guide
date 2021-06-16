@@ -1,9 +1,15 @@
 package kr.ac.hansung.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.python.core.PyFunction;
+import org.python.core.PyInteger;
+import org.python.core.PyObject;
+import org.python.core.ThreadState;
+import org.python.util.PythonInterpreter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,17 +52,6 @@ public class PerfumeController {
 	 * }
 	 */
 	
-	@RequestMapping(path = "/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> retrievePerfume(@PathVariable("id") Long id) {
-		Perfume perfume = perfumeService.getPerfumeById(id);
-
-		if (perfume == null) {
-			throw new NotFoundException(id);
-		}
-
-		return new ResponseEntity<Perfume>(perfume, HttpStatus.OK);
-	}
-
 	//@ResponseBody
 	/*
 	 * @RequestMapping(method = RequestMethod.GET) public ResponseEntity<?>
@@ -113,7 +108,9 @@ public class PerfumeController {
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "accord", required = false) String accord,
 			@RequestParam(value = "gender", required = false) String gender,
-			@RequestParam(value = "power", required = false) String power) {
+			@RequestParam(value = "power", required = false) String power,
+			@RequestParam(value = "note", required = false) String note,
+			@RequestParam(value = "eng_brand", required = false) String eng_brand) {
 
 if (brand!=null && name != null) {
 			
@@ -167,6 +164,22 @@ if (brand!=null && name != null) {
 			}
 
 			return ResponseEntity.ok(perfumes);
+		}else if (note != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByNote(note);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
+		}else if (eng_brand != null) {
+			final List<Perfume> perfumes = perfumeService.getPerfumesByEngBrand(eng_brand);
+
+			if (perfumes.isEmpty()) {
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			}
+
+			return ResponseEntity.ok(perfumes);
 		}else {
 			final List<Perfume> perfumes = perfumeService.getAllPerfumes();
 
@@ -207,8 +220,16 @@ if (brand!=null && name != null) {
 		         }
 
 		         return ResponseEntity.ok(perfumes);
-		  } else if (searchOpt.equals("image") && keyword != null) {
-		         List<Perfume> perfumes = perfumeService.getPerfumesByImage(keyword);
+		  } else if (searchOpt.equals("note") && keyword != null) {
+		         List<Perfume> perfumes = perfumeService.getPerfumesByNote(keyword);
+
+		         if (perfumes.isEmpty()) {
+		            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		         }
+
+		         return ResponseEntity.ok(perfumes);
+		  } else if (searchOpt.equals("eng_brand") && keyword != null) {
+		         List<Perfume> perfumes = perfumeService.getPerfumesByEngBrand(keyword);
 
 		         if (perfumes.isEmpty()) {
 		            return new ResponseEntity<>(HttpStatus.NO_CONTENT);

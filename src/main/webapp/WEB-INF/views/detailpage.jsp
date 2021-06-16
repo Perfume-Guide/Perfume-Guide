@@ -16,7 +16,7 @@
 	src="${pageContext.request.contextPath}/resources/js/search.js"></script>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/dropdown.js"></script>
-
+	
 <% 
 
 request.setCharacterEncoding("UTF-8"); //받아올 데이터의 인코딩
@@ -218,65 +218,76 @@ String name = request.getParameter("name");
      closeBrand()
  }
  
-function brandSearch() {
-	
-	var mBrand = $('#keyword1').val() //mBrand 바꾸면 그 brand 불러옴
-	var mOption = $(':input:radio[name=searchOpt]:checked').val()
-		$.ajax({
-	        url:'${pageContext.request.contextPath}/api/perfumes/search?searchOpt=' + mOption
-	        , method : 'GET'
-	        , contentType: "application/json"
-	        , dataType: "text"
-	        , traditional: true
-	        , data : 'keyword=' + mBrand
-	        , success :  function(data){
+ function brandSearch() {
+		
+		var mBrand = $('#keyword1').val() //mBrand 바꾸면 그 brand 불러옴
+		var mOption = $(':input:radio[name=searchOpt]:checked').val()
+			$.ajax({
+		        url:'${pageContext.request.contextPath}/api/perfumes/search?searchOpt=' + mOption
+		        , method : 'GET'
+		        , contentType: "application/json"
+		        , dataType: "text"
+		        , traditional: true
+		        , data : 'keyword=' + mBrand
+		        , success :  function(data){
 
-	             var res = JSON.parse(data)
-	             var prdList_num = -1
+		             var res = JSON.parse(data)
+		             var prdList_num = -1
 
-	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-					$.each(res, function(i, val) {
-						$(".title_t").text(val.brand)
-	                 if (i % 4 == 0) { // 한줄에 네 개씩
-	                     prdList_num++
-	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
-	                 }
-	                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
-	                         '<div class="box">' +
-	                         '<div class="thumbnail">' +
-	                         '<!--향수 이미지-->' +
-	                         '<div class="prdImg">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '<div class="description">' +
-	                         '<!--향수 이름-->' +
-	                         '<div class="name">' +
-	                         '<a href="javascript:void(0);" onclick="detailAjax(&#39;' + val.brand + '&#39;, &#39;' + val.name + '&#39;)" class="_evt_tracker">' +
-	                         '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
-	                         '<!-- ajax 변경한 부분 -->' +
-	                         '<span id="req0"></span>' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '<!--대표계열-->' +
-	                         '<ul class="spec">' +
-	                         '<li rel="계열">' +
-	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
-	                         '</li>' +
-	                         '</ul>' +
-	                        // '<br/>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '</li>')
-	                     
-	             })
+		             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
+		             
+		             
+						$.each(res, function(i, val) {
+							if (mOption == "brand") {
+								location.href = "${pageContext.request.contextPath}/listpage?brand=" + val.brand
+							}
+							else if (mOption == "name") {
+								location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
+							}
+							
+									
+									
+									$(".title_t").text(val.brand)
+		                 if (i % 4 == 0) { // 한줄에 네 개씩
+		                     prdList_num++
+		                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
+		                 }
+		                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
+		                         '<div class="box">' +
+		                         '<div class="thumbnail">' +
+		                         '<!--향수 이미지-->' +
+		                         '<div class="prdImg">' +
+		                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+	                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
+		                         '</a>' +
+		                         '</div>' +
+		                         '</div>' +
+		                         '<div class="description">' +
+		                         '<!--향수 이름-->' +
+		                         '<div class="name">' +
+		                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
+	                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
+		                         '<!-- ajax 변경한 부분 -->' +
+		                         '<span id="req0"></span>' +
+		                         '</a>' +
+		                         '</div>' +
+		                         '<!--대표계열-->' +
+		                         '<ul class="spec">' +
+		                         '<li rel="계열">' +
+		                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
+		                         '</li>' +
+		                         '</ul>' +
+		                        // '<br/>' +
+		                         '</div>' +
+		                         '</div>' +
+		                         '</li>')
+		                     
+		             })
 
-	         }
-	     })
-	     closeBrand()
-}
+		         }
+		     })
+		     closeBrand()
+	}
 
 </script>
 
@@ -713,7 +724,7 @@ function brandSearch() {
 						<!--카테고리 제목-->
 						<div class="m_tab_area cboth">
 							<div class="main_title cboth">
-								<div class="title_t">Sample</div>
+								<div class="title_t"></div>
 							</div>
 						</div>
 						<!--카테고리별 향수 출력 영역-->
@@ -750,6 +761,7 @@ function brandSearch() {
          document.getElementById("radio_name_label").style.fontWeight = "bold";
       }
    </script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
 
 	<script>
 
@@ -787,7 +799,7 @@ function brandSearch() {
 
                 //document.write(data)
                 //$("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-
+			 	
                 $.each(res, function(i, val) {
                     val.top1 = isEmpty(val.top1)
                     val.top2 = isEmpty(val.top2)
@@ -798,17 +810,27 @@ function brandSearch() {
                     val.bottom1 = isEmpty(val.bottom1)
                     val.bottom2 = isEmpty(val.bottom2)
                     val.bottom3 = isEmpty(val.bottom3)
-                    $(".title_t").text(val.brand)
+                    $(".title_t").text(val.eng_brand)
                     $("#prdList_wrap").append('<ul id="prdDetail" class="prdList">' +
-                            '<li><img src="${pageContext.request.contextPath}/resources/image/products/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
+                    		'<li><img src="${pageContext.request.contextPath}/resources/image/products/' + val.brand + '_' + val.name + '.jpg" alt="사진"></li>' +
                             '<li>' + val.name + '</li>' +
-                            '<div style="margin-left: 40%;">' +                            
-                            '<li id="DetailTop" style="text-align: left;">탑 노트 : ' + val.top1 + ' &nbsp;  ' + val.top2 + ' &nbsp;  ' + val.top3 + '</li>' +
+                            
+                            '<div id="Detail">' +
+                            '<li id="DetailTop">탑 노트 : ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top1 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top1 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top1 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top2 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top2 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top2 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top3 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top3 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top3 + '</figcaption></figure>' + '</li>' +
                             //'<li>'+val.top1+' '+val.top2+' '+val.top3+'</li>' +
-                            '<li id="DetailMiddle" style="text-align: left;">미들 노트 : ' + val.middle1 + ' &nbsp; ' + val.middle2 + ' &nbsp;  ' + val.middle3 + '</li>' +
-                            '<li id="DetailBottom" style="text-align: left;">바텀 노트 : ' + val.bottom1 + ' &nbsp;  ' + val.bottom2 + ' &nbsp;  ' + val.bottom3 + '</li>' +
+                            '<li id="DetailMiddle">미들 노트 : ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.middle1 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.middle1 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.middle1 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.middle2 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.middle2 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.middle2 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.middle3 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.middle3 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.middle3 + '</figcaption></figure>' + '</li>' +
+                            '<li id="DetailBottom">바텀 노트 : ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.bottom1 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.bottom1 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.bottom1 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.bottom2 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.bottom2 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.bottom2 + '</figcaption></figure>' + ' ' +
+                            '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.bottom3 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.bottom3 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.bottom3 + '</figcaption></figure>' + '</li>' +
                             '</div>' +
-                            //'<li id="brandList">'+val.brand+' / '+val.name+'</li>' +
+                            
                             '<li id="Explanation">' +
                             '<a title="네이버 쇼핑" href="https://search.shopping.naver.com/search/all?catId=50000002&frm=NVSHCAT&origQuery=' + val.brand + '%20' + val.name + '&pagingIndex=1&pagingSize=40&productSet=total&query=' + val.brand + '%20' + val.name + '&sort=rel&timestamp=&viewType=list#" target="_blank">' +
                             '<img src="${pageContext.request.contextPath}/resources/image/naver.png" style="width: 40px; height: 40px;">' +
@@ -848,7 +870,7 @@ function brandSearch() {
            
 			$.each(res, function(i, val) {
             	
-           	 $(".title_t").text(val.brand)
+           	 //$(".title_t").text(val.brand)
                 $(".prdList.swiper-wrapper").append('<!--thumbnail == 사진 영역 / description == 글자 영역-->' +
                             '<li class="swiper-slide" style="width: 232px; margin-right: 30px;">' +
                             '<div class="box">' +
@@ -905,8 +927,35 @@ function brandSearch() {
 }
 	listAjax(brand);
 
+// python 만들면 이걸로
+/* 	 function pythonAjax() {
+	     $.ajax({
+	         url: '${pageContext.request.contextPath}/api/perfumes/test/',
+	         method: 'GET',
+	         contentType: "application/json",
+	         dataType: "text",
+	         traditional: true,
+	         //data: 'power=' + mPower,
+	         success: function(data) {
+
+	        	 if(!data) {
+	        		 closeBrand();
+	        		 return false;
+	        	 }
+	             var res = JSON.parse(data)
+	             var prdList_num = -1
+	             //document.write(data)
+	             $(".title_t").text(data)
+	        
+
+	         }
+	     })
+	     closeBrand()
+	 }
+	 pythonAjax(); */
+	
 </script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/swiper_bundle.js"></script>
+
 </body>
 
 </html>

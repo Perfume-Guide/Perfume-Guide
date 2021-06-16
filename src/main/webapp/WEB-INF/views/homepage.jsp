@@ -298,7 +298,7 @@ function brandSearch() {
 						}
 						
 								
-								
+					/* 			
 								$(".title_t").text(val.brand)
 	                 if (i % 4 == 0) { // 한줄에 네 개씩
 	                     prdList_num++
@@ -332,7 +332,7 @@ function brandSearch() {
 	                        // '<br/>' +
 	                         '</div>' +
 	                         '</div>' +
-	                         '</li>')
+	                         '</li>') */
 	                     
 	             })
 

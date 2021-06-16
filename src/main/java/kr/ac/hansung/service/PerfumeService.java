@@ -23,7 +23,9 @@ public interface PerfumeService {
 
 	List<Perfume> getPerfumesByPower(String power);
 
-	List<Perfume> getPerfumesByImage(String image);
+	List<Perfume> getPerfumesByNote(String note);
+	
+	List<Perfume> getPerfumesByEngBrand(String eng_brand);
 
 	// Perfume createPerfume(String brand, String name);
 	Perfume createPerfume(PerfumeDto request);

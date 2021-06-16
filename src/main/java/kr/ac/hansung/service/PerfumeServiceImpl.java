@@ -15,8 +15,8 @@ import kr.ac.hansung.entity.Perfume;
 public class PerfumeServiceImpl implements PerfumeService {
 
 	@Autowired
-    private PerfumeDao perfumeRepository;
-	
+	private PerfumeDao perfumeRepository;
+
 	@Override
 	public List<Perfume> getAllPerfumes() {
 		return perfumeRepository.getPerfumes();
@@ -26,12 +26,12 @@ public class PerfumeServiceImpl implements PerfumeService {
 	public Perfume getPerfumeById(Long id) {
 		return perfumeRepository.getPerfumeById(id);
 	}
-	
+
 	@Override
-	public List<Perfume> getPerfumesByBrand(String brand){
+	public List<Perfume> getPerfumesByBrand(String brand) {
 		return perfumeRepository.getPerfumesByBrand(brand);
 	}
-	
+
 	@Override
 	public List<Perfume> getPerfumesByAccord(String accord) {
 		return perfumeRepository.getPerfumesByAccord(accord);
@@ -51,10 +51,15 @@ public class PerfumeServiceImpl implements PerfumeService {
 	public List<Perfume> getPerfumesByPower(String power) {
 		return perfumeRepository.getPerfumesByPower(power);
 	}
-	
+
 	@Override
-	public List<Perfume> getPerfumesByImage(String image) {
-		return perfumeRepository.getPerfumesByImage(image);
+	public List<Perfume> getPerfumesByNote(String note) {
+		return perfumeRepository.getPerfumesByNote(note);
+	}
+
+	@Override
+	public List<Perfume> getPerfumesByEngBrand(String eng_brand) {
+		return perfumeRepository.getPerfumesByEngBrand(eng_brand);
 	}
 
 	@Override
@@ -69,7 +74,7 @@ public class PerfumeServiceImpl implements PerfumeService {
 	 * 
 	 * return perfume; }
 	 */
-	
+
 	@Override
 	public Perfume createPerfume(PerfumeDto request) {
 		Perfume perfume = new Perfume();
@@ -77,41 +82,39 @@ public class PerfumeServiceImpl implements PerfumeService {
 		perfume.setName(request.getName());
 		perfume.setGender(request.getGender());
 		perfume.setPower(request.getPower());
-		
+
 		perfume.setTop1(request.getTop1());
 		perfume.setTop2(request.getTop2());
 		perfume.setTop3(request.getTop3());
-		
+
 		perfume.setMiddle1(request.getMiddle1());
 		perfume.setMiddle2(request.getMiddle2());
 		perfume.setMiddle3(request.getMiddle3());
-		
+
 		perfume.setBottom1(request.getBottom1());
 		perfume.setBottom2(request.getBottom2());
 		perfume.setBottom3(request.getBottom3());
-		
+
 		perfume.setNiche(request.getNiche());
 		perfume.setAccord(request.getAccord());
-		perfume.setImage(request.getImage());
-		
+		// perfume.setNote(request.getNote());
+
 		Long id = perfumeRepository.addPerfume(perfume);
-		perfume.setId(id);        
-		
-        return perfume;
+		perfume.setId(id);
+
+		return perfume;
 	}
 
 	@Override
 	public void updatePerfume(Perfume perfume) {
 		perfumeRepository.updatePerfume(perfume);
-		
+
 	}
 
 	@Override
 	public void deletePerfume(Perfume perfume) {
 		perfumeRepository.deletePerfume(perfume);
-		
-	}
 
-	
+	}
 
 }

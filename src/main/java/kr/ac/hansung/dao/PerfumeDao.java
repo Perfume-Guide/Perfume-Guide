@@ -113,12 +113,25 @@ public class PerfumeDao {
 		
 	}
 	
-	public List<Perfume> getPerfumesByImage(String image){
+	public List<Perfume> getPerfumesByNote(String note){
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "from Perfume where image=:image";
+		String hql = "from Perfume where top1=:note or top2=:note or top3=:note or middle1=:note or middle2=:note or middle3=:note or bottom1=:note or bottom2=:note or bottom3=:note";
 		
 		Query<Perfume> query = session.createQuery(hql, Perfume.class);
-		query.setParameter("image",image);
+		query.setParameter("note",note);
+		
+		List<Perfume> perfumes = query.getResultList();
+		
+		return perfumes;
+		
+	}
+	
+	public List<Perfume> getPerfumesByEngBrand(String eng_brand){
+		Session session = sessionFactory.getCurrentSession();
+		String hql = "from Perfume where eng_brand=:eng_brand";
+		
+		Query<Perfume> query = session.createQuery(hql, Perfume.class);
+		query.setParameter("eng_brand",eng_brand);
 		
 		List<Perfume> perfumes = query.getResultList();
 		
