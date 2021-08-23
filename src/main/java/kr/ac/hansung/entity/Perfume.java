@@ -46,6 +46,4 @@ public class Perfume extends AbstractEntity {
 	
 	private String eng_brand;
 	
-	// imgurl
-
 }

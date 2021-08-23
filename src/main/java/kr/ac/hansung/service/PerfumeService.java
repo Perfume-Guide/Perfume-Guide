@@ -27,7 +27,6 @@ public interface PerfumeService {
 	
 	List<Perfume> getPerfumesByEngBrand(String eng_brand);
 
-	// Perfume createPerfume(String brand, String name);
 	Perfume createPerfume(PerfumeDto request);
 
 	void updatePerfume(Perfume category);

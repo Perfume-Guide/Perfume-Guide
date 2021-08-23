@@ -66,15 +66,7 @@ public class PerfumeServiceImpl implements PerfumeService {
 	public List<Perfume> getPerfumesByBrandAndName(String brand, String name) {
 		return perfumeRepository.getPerfumesByBrandAndName(brand, name);
 	}
-	/*
-	 * @Override public Perfume createPerfume(String brand, String name) { Perfume
-	 * perfume = new Perfume(); perfume.setBrand(brand); perfume.setName(name);
-	 * 
-	 * Long id = perfumeRepository.addPerfume(perfume); perfume.setId(id);
-	 * 
-	 * return perfume; }
-	 */
-
+	
 	@Override
 	public Perfume createPerfume(PerfumeDto request) {
 		Perfume perfume = new Perfume();
@@ -97,7 +89,7 @@ public class PerfumeServiceImpl implements PerfumeService {
 
 		perfume.setNiche(request.getNiche());
 		perfume.setAccord(request.getAccord());
-		// perfume.setNote(request.getNote());
+		perfume.setEng_brand(request.getEng_brand());
 
 		Long id = perfumeRepository.addPerfume(perfume);
 		perfume.setId(id);

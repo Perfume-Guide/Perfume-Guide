@@ -2,10 +2,6 @@ package kr.ac.hansung.controller;
 
 import java.util.Locale;
 
-import org.python.core.PyFunction;
-import org.python.core.PyInteger;
-import org.python.core.PyObject;
-import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -33,7 +29,8 @@ public class HomeController {
 			@RequestParam(value = "name", required = false) String name,
 			@RequestParam(value = "gender", required = false) String gender,
 			@RequestParam(value = "accord", required = false) String accord,
-			@RequestParam(value = "power", required = false) String power) {
+			@RequestParam(value = "power", required = false) String power,
+			@RequestParam(value = "note", required = false) String note) {
 
 		return "listpage";
 	}
@@ -44,10 +41,10 @@ public class HomeController {
 
 		return "detailpage";
 	}
+	
+	@RequestMapping(value = "/errorpage", method = RequestMethod.GET)
+	public String errorPage(@RequestParam(value = "keyword") String keyword) {
 
-	@RequestMapping(value = "/template", method = RequestMethod.GET)
-	public String template(Locale locale, Model model) {
-
-		return "template";
+		return "errorpage";
 	}
 }

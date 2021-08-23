@@ -22,6 +22,7 @@ String brand = request.getParameter("brand");
 String gender = request.getParameter("gender");
 String accord = request.getParameter("accord");
 String power = request.getParameter("power");
+String note = request.getParameter("note");
 %>
    
 <script
@@ -40,13 +41,21 @@ function brandSearch() {
 	        , traditional: true
 	        , data : 'keyword=' + mBrand
 	        , success :  function(data){
-
+	        	if(data == null) {
+	        		if (mOption == "brand") {
+	        			location.href = "${pageContext.request.contextPath}/errorpage?keyword=" + mBrand
+					}
+					else if (mOption == "name") {
+						location.href = "${pageContext.request.contextPath}/errorpage?keyword=" +  mBrand
+					}	 
+	        		
+	        	}
+	        	
 	             var res = JSON.parse(data)
 	             var prdList_num = -1
 
 	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-	             
-	             
+	             	        
 					$.each(res, function(i, val) {
 						if (mOption == "brand") {
 							location.href = "${pageContext.request.contextPath}/listpage?brand=" + val.brand
@@ -54,43 +63,6 @@ function brandSearch() {
 						else if (mOption == "name") {
 							location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
 						}
-						
-						/* 		
-								
-								$(".title_t").text(val.brand)
-	                 if (i % 4 == 0) { // 한줄에 네 개씩
-	                     prdList_num++
-	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
-	                 }
-	                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
-	                         '<div class="box">' +
-	                         '<div class="thumbnail">' +
-	                         '<!--향수 이미지-->' +
-	                         '<div class="prdImg">' +
-	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '<div class="description">' +
-	                         '<!--향수 이름-->' +
-	                         '<div class="name">' +
-	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
-	                         '<!-- ajax 변경한 부분 -->' +
-	                         '<span id="req0"></span>' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '<!--대표계열-->' +
-	                         '<ul class="spec">' +
-	                         '<li rel="계열">' +
-	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
-	                         '</li>' +
-	                         '</ul>' +
-	                        // '<br/>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '</li>') */
 	                     
 	             })
 
@@ -572,6 +544,7 @@ function brandSearch() {
 	var gender = "<%=gender%>"
 	var accord = "<%=accord%>"
 	var power = "<%=power%>"
+	var note = "<%=note%>"
 		
 	function brandAjax(brand) {
     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
@@ -586,7 +559,6 @@ function brandSearch() {
 
             var res = JSON.parse(data)
             var prdList_num = -1
-            var prd_num = 1
             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
 			
             $.each(res, function(i, val) {
@@ -597,7 +569,7 @@ function brandSearch() {
                     prdList_num++
                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
                 }
-                $("#prdList" + prdList_num).append('<li id="prd' + prd_num + '" style="width: 232px; margin-right: 30px;">' +
+                $("#prdList" + prdList_num).append('<li id="prd" style="width: 232px; margin-right: 30px;">' +
                         '<div class="box">' +
                         '<div class="thumbnail">' +
                         '<!--향수 이미지-->' +
@@ -626,19 +598,11 @@ function brandSearch() {
                         '</div>' +
                         '</div>' +
                         '</li>')
-                        prd_num++
-                        //location.href = "${pageContext.request.contextPath}/listpage.html?brand=" + val.brand + '&name=' + val.name + '"
-                        // $('#req' + i).text(val.name)
-                        //history.pushState(null, null, "${pageContext.request.contextPath}/list=" + val.brand);
             })
 
         } 
     })
     closeBrand();
-    /* history.pushState({
-   	 data: "${pageContext.request.contextPath}/",
-		 //page: 2
-    }), null, "${pageContext.request.contextPath}/#" */
 }
 brandAjax(brand);
 
@@ -695,7 +659,6 @@ brandAjax(brand);
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          } 
@@ -759,7 +722,6 @@ function accordAjax(accord) {
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          }
@@ -821,7 +783,6 @@ function accordAjax(accord) {
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          }
@@ -850,10 +811,9 @@ function accordAjax(accord) {
              var prdList_num = -1
              
              $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-			
+			$(".title_t").text(mNote)
              $.each(res, function(i, val) {
-            	 $(".title_t").text(val.accord)
-                 //document.write(val.name)
+            	 
                  if (i % 4 == 0) { // 한줄에 네 개씩
                      prdList_num++
                      $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -887,7 +847,6 @@ function accordAjax(accord) {
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          }
