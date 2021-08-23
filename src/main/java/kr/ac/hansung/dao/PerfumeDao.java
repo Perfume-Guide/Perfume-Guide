@@ -115,10 +115,9 @@ public class PerfumeDao {
 	
 	public List<Perfume> getPerfumesByNote(String note){
 		Session session = sessionFactory.getCurrentSession();
-		String hql = "from Perfume where top1=:note or top2=:note or top3=:note or middle1=:note or middle2=:note or middle3=:note or bottom1=:note or bottom2=:note or bottom3=:note";
-		
+		String hql = "from Perfume where top1 like :note or top2 like :note or top3 like :note or middle1 like :note or middle2 like :note or middle3 like :note or bottom1 like :note or bottom2 like :note or bottom3 like :note";
 		Query<Perfume> query = session.createQuery(hql, Perfume.class);
-		query.setParameter("note",note);
+		query.setParameter("note",  "%" + note + "%");
 		
 		List<Perfume> perfumes = query.getResultList();
 		

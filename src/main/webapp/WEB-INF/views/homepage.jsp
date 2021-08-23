@@ -17,55 +17,6 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
-/* function reqAjax1() {
-    $.ajax({
-        url:'api/perfumes/test'
-        , method : 'GET'
-        , contentType: "application/json"
-        , dataType: "text"
-        , success :  function(resp){
-           $('#req1').text(resp)
-            
-        }
-    })	
-} */
-
-/* function reqAjax1(id) {
-	var mId = id //mId 바꾸면 그 id 불러옴
-	if(mId == 1) {
-		$.ajax({
-	        url:'api/perfumes/'+mId
-	        , method : 'GET'
-	        , contentType: "application/json"
-	        , dataType: "text"
-	        , data : 'id='+mId
-	        , success :  function(data){
-	        	var json = JSON.parse(data).name //뒤에 가져올 컬럼명 바꾸면 됨
-	        
-	        	$('#req1').text(json)
-	        }
-	    })
-	} 
-}
- */
- 
- function RandomArr(d) {
-
-     for(var c = d.length - 1; c > 0; c--)
-
-     {
-
-         var b = Math.floor(Math.random() * (c + 1));
-
-         var a = d[c]; d[c] = d[b]; d[b] = a;
-
-     }
-
-     return d
-
- }
-
-
  function homeAjax() {
      $.ajax({
          url: 'api/perfumes/keyword/',
@@ -75,7 +26,6 @@
          traditional: true,
          success: function(data) {
 
-
              var res = JSON.parse(data)
              var prdList_num = 0
              var prd_num = 1
@@ -84,13 +34,7 @@
              var premiumList = ["샤넬_No.5","샤넬_블루 드 샤넬", "바이레도_블랑쉬", "바이레도_선데이즈드", "크리드_어벤투스", "크리드_스프링 플라워","디올_블루밍부케", "디올_소바쥬 EDP", "딥디크_도손", "딥디크_베티베리오"]
              var summerList = ["CK_이터니티 아쿠아 포맨","랑방_걸 인 카프리", "랄프로렌_랄프", "돌체앤가바나_라이트블루", "클린_쿨 코튼 EDP", "조말론_우드 세이지 앤 씨솔트","존바바토스_아티산 블루", "메르세데스 벤츠_클럽 블루 프레쉬", "메르세데스 벤츠_셀렉트 데이", "몽블랑_스타워커"]
              var woodList = ["CK_ONE","겐조_대나무 옴므", "구찌_구찌 바이 뿌르옴므", "끌로에_노마드 EDP", "디올_화렌화이트", "랄프로렌_폴로 그린","몽블랑_익스플로러", "존바바토스_닉조나스 실버", "지미추_어반 히어로", "톰포드_오드 우드"]
-             
-            // var random = RandomArr(res) // 랜덤으로 출력 // 베스트 아이템을 정해서 출력하는게 좋을듯 
-             							// 뒤로 가기 하면 다시 랜덤으로 생성해서
-             
-             //if(arr.includes("게스_걸")) {
-            //	 document.write(arr.includes("게스_걸"))
-            // }				
+             	
              $("#prdList_wrap").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
              			
              $.each(res, function(i, val) {
@@ -114,7 +58,6 @@
                              '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
                              '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                              '<!-- ajax 변경한 부분 -->' +
-                             //'<span id="req0"></span>' +
                              '</a>' +
                              '</div>' +
                              '<!--대표계열-->' +
@@ -172,7 +115,6 @@
                              '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
                              '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                              '<!-- ajax 변경한 부분 -->' +
-                             //'<span id="req0"></span>' +
                              '</a>' +
                              '</div>' +
                              '<!--대표계열-->' +
@@ -230,7 +172,6 @@
                              '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
                              '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                              '<!-- ajax 변경한 부분 -->' +
-                             //'<span id="req0"></span>' +
                              '</a>' +
                              '</div>' +
                              '<!--대표계열-->' +
@@ -282,58 +223,28 @@ function brandSearch() {
 	        , traditional: true
 	        , data : 'keyword=' + mBrand
 	        , success :  function(data){
+	        	if(data == null) {
+	        		if (mOption == "brand") {
+	        			location.href = "${pageContext.request.contextPath}/errorpage?keyword=" + mBrand
+					}
+					else if (mOption == "name") {
+						location.href = "${pageContext.request.contextPath}/errorpage?keyword=" +  mBrand
+					}	 
+	        		
+	        	}
 
 	             var res = JSON.parse(data)
 	             var prdList_num = -1
 
 	             $("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-	             
-	             
+	             	             
 					$.each(res, function(i, val) {
 						if (mOption == "brand") {
 							location.href = "${pageContext.request.contextPath}/listpage?brand=" + val.brand
 						}
 						else if (mOption == "name") {
 							location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
-						}
-						
-								
-					/* 			
-								$(".title_t").text(val.brand)
-	                 if (i % 4 == 0) { // 한줄에 네 개씩
-	                     prdList_num++
-	                     $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
-	                 }
-	                 $("#prdList" + prdList_num).append('<li style="width: 232px; margin-right: 30px;">' +
-	                         '<div class="box">' +
-	                         '<div class="thumbnail">' +
-	                         '<!--향수 이미지-->' +
-	                         '<div class="prdImg">' +
-	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                             '<img src="${pageContext.request.contextPath}/resources/image/products/'+val.brand+'_'+val.name+'.jpg" alt="샘플사진">' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '<div class="description">' +
-	                         '<!--향수 이름-->' +
-	                         '<div class="name">' +
-	                         '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
-                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
-	                         '<!-- ajax 변경한 부분 -->' +
-	                         '<span id="req0"></span>' +
-	                         '</a>' +
-	                         '</div>' +
-	                         '<!--대표계열-->' +
-	                         '<ul class="spec">' +
-	                         '<li rel="계열">' +
-	                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
-	                         '</li>' +
-	                         '</ul>' +
-	                        // '<br/>' +
-	                         '</div>' +
-	                         '</div>' +
-	                         '</li>') */
-	                     
+						}	                     
 	             })
 
 	         }
@@ -409,8 +320,7 @@ function brandSearch() {
                                                         <!--내부 스크롤 영역-->
                                                         <div class="scroll_wrapper scrollbar_inner" style="position: relative;">
                                                             <li class="scrollbar_inner scroll_content" style="height: auto; margin-bottom: 0px; margin-right: 0px; max-height: 600px;">
-                                                                <!--브랜드명 클릭시 listpage.html로 이동(./listpage.html)-->
-                                                                <!--.jsp로 변경 후 listpage.html에 DB값 호출-->
+                                                               
                                                                 <div class="brand_link">
                                                    <div class="brand_group" style="display: block;">
                                                       <h1>C</h1>

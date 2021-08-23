@@ -23,7 +23,6 @@ request.setCharacterEncoding("UTF-8"); //받아올 데이터의 인코딩
 
 String brand = request.getParameter("brand"); 
 String name = request.getParameter("name"); 
-//out.print(brand);
 %>
 
 <script
@@ -48,7 +47,6 @@ String name = request.getParameter("name");
 			
              $.each(res, function(i, val) {
             	 $(".title_t").text(val.gender)
-                 //document.write(val.name)
                  if (i % 4 == 0) { // 한줄에 네 개씩
                      prdList_num++
                      $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -82,7 +80,6 @@ String name = request.getParameter("name");
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          } 
@@ -112,7 +109,7 @@ String name = request.getParameter("name");
 			
              $.each(res, function(i, val) {
             	 $(".title_t").text(val.accord)
-                 //document.write(val.name)
+            	 
                  if (i % 4 == 0) { // 한줄에 네 개씩
                      prdList_num++
                      $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -146,7 +143,6 @@ String name = request.getParameter("name");
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          }
@@ -176,7 +172,7 @@ String name = request.getParameter("name");
 			
              $.each(res, function(i, val) {
             	 $(".title_t").text(val.power)
-                 //document.write(val.name)
+
                  if (i % 4 == 0) { // 한줄에 네 개씩
                      prdList_num++
                      $("#prdList_wrap").append('<ul id="prdList' + prdList_num + '" class="prdList"></ul>')
@@ -210,7 +206,6 @@ String name = request.getParameter("name");
                          '</div>' +
                          '</div>' +
                          '</li>')
-                     // $('#req' + i).text(val.name)
              })
 
          }
@@ -230,7 +225,17 @@ String name = request.getParameter("name");
 		        , traditional: true
 		        , data : 'keyword=' + mBrand
 		        , success :  function(data){
+		        	if(data == null) {
+		        		if (mOption == "brand") {
+		        			location.href = "${pageContext.request.contextPath}/errorpage?keyword=" + mBrand
+						}
+						else if (mOption == "name") {
+							location.href = "${pageContext.request.contextPath}/errorpage?keyword=" +  mBrand
+						}	 
+		        		
+		        	}
 
+		        	
 		             var res = JSON.parse(data)
 		             var prdList_num = -1
 
@@ -245,8 +250,6 @@ String name = request.getParameter("name");
 								location.href = "${pageContext.request.contextPath}/detailpage?brand=" + val.brand + '&name=' + val.name
 							}
 							
-									
-									
 									$(".title_t").text(val.brand)
 		                 if (i % 4 == 0) { // 한줄에 네 개씩
 		                     prdList_num++
@@ -277,7 +280,6 @@ String name = request.getParameter("name");
 		                         '<span style="font-size: 14px;color: #999999;">' + val.accord + '</span>' +
 		                         '</li>' +
 		                         '</ul>' +
-		                        // '<br/>' +
 		                         '</div>' +
 		                         '</div>' +
 		                         '</li>')
@@ -772,15 +774,10 @@ String name = request.getParameter("name");
 		function isEmpty(value){
 
 	    if(value == null || value.length === 0) {
-
 	           return "";
-
 	     } else{
-
 	            return value;
-
 	     }
-
 	}
 	
 	function detailAjax(brand, name) {
@@ -793,13 +790,10 @@ String name = request.getParameter("name");
             dataType: "text",
             traditional: true,
             data: 'brand=' + mBrand + '&name=' + mName,
+            async: false,
             success: function(data) {
-                //document.write(data)
                 var res = JSON.parse(data)
 
-                //document.write(data)
-                //$("#prdList_wrap").html('') // 초기화 (리스트 비우기)
-			 	
                 $.each(res, function(i, val) {
                     val.top1 = isEmpty(val.top1)
                     val.top2 = isEmpty(val.top2)
@@ -820,7 +814,6 @@ String name = request.getParameter("name");
                             '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top1 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top1 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top1 + '</figcaption></figure>' + ' ' +
                             '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top2 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top2 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top2 + '</figcaption></figure>' + ' ' +
                             '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.top3 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.top3 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.top3 + '</figcaption></figure>' + '</li>' +
-                            //'<li>'+val.top1+' '+val.top2+' '+val.top3+'</li>' +
                             '<li id="DetailMiddle">미들 노트 : ' +
                             '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.middle1 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.middle1 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.middle1 + '</figcaption></figure>' + ' ' +
                             '<figure style="display: inline-block;"><a href="${pageContext.request.contextPath}/listpage?note=' + val.middle2 + '"><img src="${pageContext.request.contextPath}/resources/image/notes_img/img/' + val.middle2 + '.jpg" onerror="this.style.display=&#39;none&#39;" alt="" style="width:40px; height:40px;"></a><figcaption style="margin-top: 15px; font-size: small;">' + val.middle2 + '</figcaption></figure>' + ' ' +
@@ -843,15 +836,11 @@ String name = request.getParameter("name");
                             '</a>' +
                             '</li>' +
                             '</ul>')
-                        // } 
-                        //document.write(JSON.stringify(val['top1']))
                 })
             }
         })
     }
-	detailAjax(brand, name);
-
-
+	
 	function listAjax(brand) {
     var mBrand = brand //mBrand 바꾸면 그 brand 불러옴
     $.ajax({
@@ -864,13 +853,10 @@ String name = request.getParameter("name");
         success: function(data) {
 
             var res = JSON.parse(data)
-            //var prdList_num = -1
-            //var prd_num = 1
 			$("#prdList_wrap").append('<ul class="prdList swiper-wrapper" style="width: 2620px; height: 250px; margin-left: 50px; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms;">')
            
 			$.each(res, function(i, val) {
             	
-           	 //$(".title_t").text(val.brand)
                 $(".prdList.swiper-wrapper").append('<!--thumbnail == 사진 영역 / description == 글자 영역-->' +
                             '<li class="swiper-slide" style="width: 232px; margin-right: 30px;">' +
                             '<div class="box">' +
@@ -888,7 +874,6 @@ String name = request.getParameter("name");
                             '<a href="${pageContext.request.contextPath}/detailpage?brand=' + val.brand + '&name=' + val.name + '" class="_evt_tracker">' +
                             '<span style="font-size: 15px;color: #111111;">' + val.name + '</span>' +
                             '<!-- ajax 변경한 부분 -->' +
-                           // '<span id="req0"></span>' +
                             '</a>' +
                             '</div>' +
                             '<!--대표계열-->' +
@@ -925,35 +910,8 @@ String name = request.getParameter("name");
     })
     closeBrand();
 }
+	detailAjax(brand, name);
 	listAjax(brand);
-
-// python 만들면 이걸로
-/* 	 function pythonAjax() {
-	     $.ajax({
-	         url: '${pageContext.request.contextPath}/api/perfumes/test/',
-	         method: 'GET',
-	         contentType: "application/json",
-	         dataType: "text",
-	         traditional: true,
-	         //data: 'power=' + mPower,
-	         success: function(data) {
-
-	        	 if(!data) {
-	        		 closeBrand();
-	        		 return false;
-	        	 }
-	             var res = JSON.parse(data)
-	             var prdList_num = -1
-	             //document.write(data)
-	             $(".title_t").text(data)
-	        
-
-	         }
-	     })
-	     closeBrand()
-	 }
-	 pythonAjax(); */
-	
 </script>
 
 </body>
